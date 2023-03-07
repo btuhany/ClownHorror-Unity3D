@@ -9,71 +9,47 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range (2,10)] float _walkSpeed;
     [SerializeField][Range(10, 20)] float _sprintSpeed;
     [SerializeField][Range(2f,15)] float _jumpHeight;
-    [SerializeField][Range(1,7)] float _gravityScale;
 
-        
-    [Header("GroundCheck")]
-    [SerializeField] Transform groundCheck;
-    [SerializeField] float groundDistance;
-    [SerializeField] LayerMask groundMask;
-
-    float _movementSpeed;
-    const float _gravity = -9.81f;
-    bool _isGrounded;
-    Vector3 velocity;
-
-    CharacterController _controller;
+    HeadBob _headbob;
+    CharacterControllerMovement _character;
     PcInput _input;
-
 
     private void Awake()
     {
-        _controller= GetComponent<CharacterController>();
+        _character= GetComponent<CharacterControllerMovement>();
+        _headbob= GetComponent<HeadBob>();
         _input = new PcInput();
     }
     private void Update()
     {
-        //groundCheck
-        _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        HandleInput();
 
-        HandleMovement();
-        HandleGravity();
     }
 
-    void HandleMovement()
+    void HandleInput()
     {
-        float vertical = _input.VerticalAxis;
-        float horizontal = _input.HorizontalAxis;
-
-        if (_input.Sprint)
-            _movementSpeed = _sprintSpeed;
+        Vector3 direction = transform.right * _input.HorizontalAxis + transform.forward * _input.VerticalAxis;
+        if(direction == Vector3.zero)
+        {
+            _headbob.ResetPosition();
+        }
+        else if (_input.Sprint)
+        {
+            _character.GroundMovement(direction, _sprintSpeed);
+            _headbob.RunningHeadBob();
+        }
         else
-            _movementSpeed = _walkSpeed;
-
-
-        Vector3 direction = transform.right * horizontal + transform.forward * vertical;
-
-        //diagonal speed limit
-        if (Mathf.Abs(horizontal) + Mathf.Abs(vertical) > 1.7f)
         {
-            direction.Normalize();
+            _character.GroundMovement(direction, _walkSpeed);
+            _headbob.WalkingHeadBob();
         }
 
-        _controller.Move(direction * _movementSpeed * Time.deltaTime);
-    }
-    void HandleGravity()
-    {
-        
-        if (_isGrounded && velocity.y < 0)
+
+        if (_input.Jump)
         {
-            velocity.y = -2f;
+            _character.Jump(_jumpHeight);
         }
-        if (_input.Jump && _isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(_jumpHeight * (-2f) * _gravity);
-        }
-        velocity.y += _gravity * Time.deltaTime * _gravityScale;
-        _controller.Move(velocity * Time.deltaTime);
+
     }
     
 }

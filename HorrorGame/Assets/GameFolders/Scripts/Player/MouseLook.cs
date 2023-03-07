@@ -5,6 +5,7 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
     [SerializeField] Transform _player;
+    [Header("Sensitivity")]
     [SerializeField][Range(250f, 1000)] float _mouseXSensitivity;
     [SerializeField][Range(250f, 1000)] float _mouseYSensitivity;
     [Header("Vertical Clamp")]
