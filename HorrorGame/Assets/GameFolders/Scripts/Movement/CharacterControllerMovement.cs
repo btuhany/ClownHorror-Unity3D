@@ -38,6 +38,10 @@ public class CharacterControllerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
+        //else if(velocity.y < 0)
+        //{
+        //    _gravityScale *= 1.2f;
+        //}
  
         velocity.y += _gravity * Time.deltaTime * _gravityScale;
         _controller.Move(velocity * Time.deltaTime);

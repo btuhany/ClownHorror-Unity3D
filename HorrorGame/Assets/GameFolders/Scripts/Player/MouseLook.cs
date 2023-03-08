@@ -13,7 +13,7 @@ public class MouseLook : MonoBehaviour
     [SerializeField] float MaxVerticalAngle;
     
 
-    float yRotation;
+    float _yRotation;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -23,10 +23,10 @@ public class MouseLook : MonoBehaviour
         float vertical = Input.GetAxis("Mouse Y") * _mouseYSensitivity * Time.deltaTime;
         float horizontal = Input.GetAxis("Mouse X") * _mouseXSensitivity * Time.deltaTime;
 
-        yRotation -= vertical;
-        yRotation = Mathf.Clamp(yRotation, MinVerticalAngle, MaxVerticalAngle);
+        _yRotation -= vertical;
+        _yRotation = Mathf.Clamp(_yRotation, MinVerticalAngle, MaxVerticalAngle);
 
-        transform.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(_yRotation, 0f, 0f);
         _player.Rotate(Vector3.up * horizontal);
     }
 }
