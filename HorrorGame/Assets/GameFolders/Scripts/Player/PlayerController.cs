@@ -13,10 +13,11 @@ public class PlayerController : MonoBehaviour
     HeadBob _headbob;
     CharacterControllerMovement _character;
     PcInput _input;
-
+    SoundController _soundController;
     private void Awake()
     {
         _character= GetComponent<CharacterControllerMovement>();
+        _soundController= GetComponent<SoundController>();
         _headbob= GetComponent<HeadBob>();
         _input = new PcInput();
     }
@@ -36,11 +37,13 @@ public class PlayerController : MonoBehaviour
         else if (_input.Sprint)
         {
             _character.GroundMovement(direction, _sprintSpeed);
+            _soundController.PlayRunFootStep();
             _headbob.RunningHeadBob();
         }
         else
         {
             _character.GroundMovement(direction, _walkSpeed);
+            _soundController.PlayWalkFootStep();
             _headbob.WalkingHeadBob();
         }
 
