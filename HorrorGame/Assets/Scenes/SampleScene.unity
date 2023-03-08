@@ -186,6 +186,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 27.79
       objectReference: {fileID: 0}
+    - target: {fileID: -3542852092398272455, guid: f92caa0c0e402f549aa7459288d36afa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.92
+      objectReference: {fileID: 0}
+    - target: {fileID: -3542852092398272455, guid: f92caa0c0e402f549aa7459288d36afa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -3542852092398272455, guid: f92caa0c0e402f549aa7459288d36afa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.34
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f92caa0c0e402f549aa7459288d36afa, type: 3}
       propertyPath: m_Name
       value: qorqu
@@ -283,7 +295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685629623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.35, z: 0}
+  m_LocalPosition: {x: 0, y: 0.988, z: 1.469}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
