@@ -12,6 +12,7 @@ public class SoundController : MonoBehaviour
     [Header("Audio Clips")]
     [SerializeField] private List<AudioClip> _walkFootSteps = new List<AudioClip>();
     [SerializeField] private List<AudioClip> _runFootSteps = new List<AudioClip>();
+    [SerializeField] private AudioClip _toggleLight;
 
     private AudioSource _audioSource;
     private float _walkTimeCounter=0;
@@ -49,6 +50,10 @@ public class SoundController : MonoBehaviour
         if (_runTimeCounter > 0) return;
         _audioSource.PlayOneShot(_runFootSteps[Random.Range(0, _runFootSteps.Count)]);
         _runTimeCounter = _runTime;
+    }
+    public void PlayToggleLight()
+    {
+        _audioSource.PlayOneShot(_toggleLight);
     }
 
 

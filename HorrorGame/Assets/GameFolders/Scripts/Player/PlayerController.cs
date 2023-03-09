@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
         if(_input.Flashlight)
         {
             _flashLightController.Toggle();
+            _soundController.PlayToggleLight();
         }
     }
 
