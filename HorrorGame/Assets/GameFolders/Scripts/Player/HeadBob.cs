@@ -5,40 +5,43 @@ using UnityEngine;
 public class HeadBob : MonoBehaviour
 {
     [SerializeField] bool _enableStabilizing = true;
-    [SerializeField][Range(0f, 0.1f)] float _amplitudeWalking = 0.15f;
+    [SerializeField][Range(0f, 1f)] float _amplitudeWalking = 0.15f;
     [SerializeField][Range(0f, 30f)] float _freqWalking = 10f;
-    [SerializeField][Range(0f, 0.1f)] float _amplitudeRunning = 0.15f;
+    [SerializeField][Range(0f, 1f)] float _amplitudeRunning = 0.15f;
     [SerializeField][Range(0f, 30f)] float _freqRunning = 10f;
     [SerializeField] Transform _camera;
     [SerializeField] Transform _cameraHolder;
 
     float _timeCounter;
     Vector3 _startPos;
-    CharacterControllerMovement _character;
+    
 
     private void Awake()
     {
         _startPos= _camera.localPosition;
-        _character= GetComponent<CharacterControllerMovement>();
+       
     }
 
     public void WalkingHeadBob()
     {
         if (_enableStabilizing)
-            _camera.LookAt(FocusTarget());
-        _camera.localPosition += FootStepMotion(_amplitudeWalking, _freqWalking);
+            _cameraHolder.LookAt(FocusTarget());
+        _camera.localPosition += FootStepMotion(_amplitudeWalking, _freqWalking) * Time.deltaTime;
 
     }
     public void RunningHeadBob()
     {
         if (_enableStabilizing)
-            _camera.LookAt(FocusTarget());
-        _camera.localPosition += FootStepMotion(_amplitudeRunning, _freqRunning);
+            _cameraHolder.LookAt(FocusTarget());
+        _camera.localPosition += FootStepMotion(_amplitudeRunning, _freqRunning) * Time.deltaTime;
     }
     public void ResetPosition()
     {
+        
         if (_camera.localPosition == _startPos) return;
         _camera.localPosition = Vector3.Lerp(_camera.localPosition, _startPos, Time.deltaTime);
+        if (Vector3.Distance(_startPos, _camera.localPosition) < 0.3f)
+            _camera.localPosition = _startPos;
         _timeCounter = 0;
     }
     private Vector3 FocusTarget()

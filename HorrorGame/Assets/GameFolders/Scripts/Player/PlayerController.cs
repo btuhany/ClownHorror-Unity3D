@@ -14,11 +14,13 @@ public class PlayerController : MonoBehaviour
     CharacterControllerMovement _character;
     PcInput _input;
     SoundController _soundController;
+    FlashlightController _flashLightController;
     private void Awake()
     {
         _character= GetComponent<CharacterControllerMovement>();
         _soundController= GetComponent<SoundController>();
         _headbob= GetComponent<HeadBob>();
+        _flashLightController= GetComponentInChildren<FlashlightController>();
         _input = new PcInput();
     }
     private void Update()
@@ -46,11 +48,13 @@ public class PlayerController : MonoBehaviour
             _soundController.PlayWalkFootStep();
             _headbob.WalkingHeadBob();
         }
-
-
         if (_input.Jump)
         {
             _character.Jump(_jumpHeight);
+        }
+        if(_input.Flashlight)
+        {
+            _flashLightController.Toggle();
         }
 
     }

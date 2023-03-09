@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FlashlightController : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class FlashlightController : MonoBehaviour
 
 
     Light flashLight;
-    bool _isEnabled => flashLight.isActiveAndEnabled;
+    
     private void Awake()
     {
         flashLight = GetComponent<Light>();
@@ -19,14 +20,11 @@ public class FlashlightController : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if(flashLight.isActiveAndEnabled)
         {
-            flashLight.enabled = !_isEnabled;
-        }
-
-        HandleSway();
+            HandleSway();
+        }   
     }
-
     private void HandleSway()
     {
         float mouseX = Input.GetAxisRaw("Mouse X") * _multiplier;
@@ -38,5 +36,9 @@ public class FlashlightController : MonoBehaviour
         Quaternion targetRotation = rotationX* rotationY;
 
         transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, _smoothness * Time.deltaTime);
+    }
+    public void Toggle()
+    {
+        flashLight.enabled = !flashLight.isActiveAndEnabled;
     }
 }

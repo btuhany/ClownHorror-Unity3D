@@ -8,4 +8,5 @@ public class PcInput //: IInput
     public float HorizontalAxis => Input.GetAxis("Horizontal");
     public bool Jump => Input.GetButtonDown("Jump");
     public bool Sprint => Input.GetKey(KeyCode.LeftShift);
+    public bool Flashlight => Input.GetKeyDown(KeyCode.F);
 }
