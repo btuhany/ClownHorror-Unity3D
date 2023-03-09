@@ -8,8 +8,8 @@ public class FlashlightController : MonoBehaviour
 {
     [Header("Sway Controls")]
     [SerializeField] private float _smoothness;
-    [SerializeField] private float _multiplier;
-
+    [SerializeField] private float _xMultiplier;
+    [SerializeField] private float _yMultiplier;
 
     Light flashLight;
     
@@ -27,13 +27,13 @@ public class FlashlightController : MonoBehaviour
     }
     private void HandleSway()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * _multiplier;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * _multiplier;
+        float mouseX = Input.GetAxisRaw("Mouse X") * _xMultiplier;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * _yMultiplier;
 
         Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
         Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
 
-        Quaternion targetRotation = rotationX* rotationY;
+        Quaternion targetRotation = rotationY * rotationX;
 
         transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, _smoothness * Time.deltaTime);
     }

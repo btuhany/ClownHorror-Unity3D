@@ -6,8 +6,8 @@ public class MouseLook : MonoBehaviour
 {
     [SerializeField] Transform _player;
     [Header("Sensitivity")]
-    [SerializeField][Range(250f, 1000)] float _mouseXSensitivity;
-    [SerializeField][Range(250f, 1000)] float _mouseYSensitivity;
+    [SerializeField][Range(50f, 350f)] float _mouseXSensitivity;
+    [SerializeField][Range(50f, 350f)] float _mouseYSensitivity;
     [Header("Vertical Clamp")]
     [SerializeField] float MinVerticalAngle;
     [SerializeField] float MaxVerticalAngle;
