@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     PcInput _input;
     SoundController _soundController;
     FlashlightController _flashLightController;
+    Transform _transform;
     private void Awake()
     {
         _character= GetComponent<CharacterControllerMovement>();
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
         _headbob= GetComponent<HeadBob>();
         _groundCheck = GetComponent<GroundCheck>();
         _flashLightController= GetComponentInChildren<FlashlightController>();
+        _transform = GetComponent<Transform>();
         _input = new PcInput();
     }
     private void OnEnable()
@@ -40,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        Vector3 direction = transform.right * _input.HorizontalAxis + transform.forward * _input.VerticalAxis;
+        Vector3 direction = _transform.right * _input.HorizontalAxis + _transform.forward * _input.VerticalAxis;
         if(direction == Vector3.zero)
         {
             _headbob.ResetPosition();
