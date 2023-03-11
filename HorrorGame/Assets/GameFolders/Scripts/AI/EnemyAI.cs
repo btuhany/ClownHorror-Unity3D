@@ -25,15 +25,17 @@ public class EnemyAI : MonoBehaviour
     }
     private void Update()
     {
-        if(!_agentNavMesh.hasPath)
+        if(!_agentNavMesh.hasPath)  // changes automatically?! even it is not reached
         {
             if (!_goToInstance)
                 _agentNavMesh.SetDestination(GetPointForNavmesh.Instance.GetRandomPointFromTransform(transform, _radius));
             else
                 _agentNavMesh.SetDestination(GetPointForNavmesh.Instance.GetRandomPointFromInstance());
+
+            
         }
-        
-        
+        Debug.Log(_agentNavMesh.hasPath);
+
 
     }
 

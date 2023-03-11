@@ -35,13 +35,14 @@ public class GetPointForNavmesh : SingletonMonoObject<GetPointForNavmesh>
                 if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
                 {
                     return hit.position;
+                    
                 }
             }
             else
             {
             
 
-                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, areaMask))
+                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, ~areaMask))
                 {
                     return hit.position;
                 }
@@ -59,9 +60,9 @@ public class GetPointForNavmesh : SingletonMonoObject<GetPointForNavmesh>
     }
     public Vector3 GetRandomPointFromInstance()
     {
-        Vector3 point = RandomPoint(transform.position, _range);
+        Vector3 point = RandomPoint(transform.position, _range);      
         Debug.DrawRay(point, Vector3.up, Color.red, 1);
-        return RandomPoint(transform.position, _range);
+        return point;
     }
 #if UNITY_EDITOR
     private void OnDrawGizmos()
