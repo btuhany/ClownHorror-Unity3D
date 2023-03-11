@@ -6,9 +6,18 @@ using UnityEngine.AI;
 public class GetPointForNavmesh : SingletonMonoObject<GetPointForNavmesh>
 {
     [SerializeField] float _range;
+    [SerializeField] bool anotherArea;
+    [SerializeField] int exp;
+    [SerializeField] NavMeshAgent newAI;
+    int areaMask;
+   
     private void Awake()
     {
         SingletonThisObject(this);
+        areaMask = newAI.areaMask;
+        areaMask += 1 << NavMesh.GetAreaFromName("Everything");//turn on all
+        areaMask -= 1 << NavMesh.GetAreaFromName("Walkable");
+        
     }
 
     //Creates a random location vector3 from the center with a distance(range).
@@ -21,10 +30,23 @@ public class GetPointForNavmesh : SingletonMonoObject<GetPointForNavmesh>
         {
             Vector3 randomPoint = center + Random.insideUnitSphere * range;
             NavMeshHit hit;
-            if(NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            if(!anotherArea)
             {
-                return hit.position;
+                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+                {
+                    return hit.position;
+                }
             }
+            else
+            {
+            
+
+                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, areaMask))
+                {
+                    return hit.position;
+                }
+            }
+
         }
         return Vector3.zero;
     }

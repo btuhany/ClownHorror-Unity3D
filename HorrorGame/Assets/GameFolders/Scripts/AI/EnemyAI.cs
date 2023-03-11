@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Transform _player;
     [SerializeField] float _radius;
     [SerializeField] bool _goToInstance;
+    
     NavMeshAgent _agentNavMesh;
     Animator _animator;
     
@@ -31,7 +32,8 @@ public class EnemyAI : MonoBehaviour
             else
                 _agentNavMesh.SetDestination(GetPointForNavmesh.Instance.GetRandomPointFromInstance());
         }
-        if(_agentNavMesh.pathStatus)
+        
+        
 
     }
 
