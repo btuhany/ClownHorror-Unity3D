@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface AiState
 {
-    AiStateId GetId(); // [SerializeField] ?
+    AiStateId GetId(); 
     void Enter(AiEnemy enemy);
-    void Update(AiEnemy enemy);
+    void Update();
     void Exit(AiEnemy enemy);
 
 }

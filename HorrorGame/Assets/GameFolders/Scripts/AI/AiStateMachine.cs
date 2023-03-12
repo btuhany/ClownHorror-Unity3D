@@ -1,36 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+//AiStateId ===> Enum
+//AiStateIdArr ===> Enum array
 public class AiStateMachine 
 {
-    public AiState[] States;
-    public AiEnemy Enemy;
-    public AiStateId CurrentState;
-    public AiStateMachine(AiEnemy enemy)
+    private AiEnemy Ai;
+    private AiState[] _states; //Enum's array that can used to switch between states.
+    private AiStateId _currentState;  //Assigned at ChangeState
+    public AiStateMachine(AiEnemy enemy)   //Constructed at AiEnemy (gameobject).
     {
-        Enemy = enemy;
-        int numStates = System.Enum.GetNames(typeof(AiStateId)).Length;
-        States = new AiState[numStates];
+        Ai = enemy;
+        CreateEnumArray();
     }
-    public void RegisterState(AiState state)
+    public void ChangeState(AiStateId newState) 
     {
-        int index = (int)state.GetId();
-        States[index] = state;
+        GetState(_currentState)?.Exit(Ai);  //trigger the exit function of the current state.
+        _currentState = newState;           //assign the new state
+        GetState(_currentState)?.Enter(Ai); //trigger the enter function of the current state.
     }
-    public AiState GetState(AiStateId stateId)
+    public void RegisterState(AiState state) //used in the AiEnemy (gameobject). Example: _stateMachine.RegisterState(new AiChasePlayerState());
     {
-        int index = (int)stateId;
-        return States[index];
+        int index = (int)state.GetId();           // state.GetId() ==> returns enum. 
+        _states[index] = state;                   // Find the state from _states array.
     }
     public void Update()
     {
-        GetState(CurrentState)?.Update(Enemy);
+        GetState(_currentState)?.Update();
     }
-    public void ChangeState(AiStateId newState)
+    private AiState GetState(AiStateId stateId)  //From the given enum, returns the matching state in the class from arr
     {
-        GetState(CurrentState)?.Exit(Enemy);
-        CurrentState = newState;
-        GetState(CurrentState)?.Enter(Enemy);
+        int index = (int)stateId;
+        return _states[index];
+    }
+    private void CreateEnumArray()
+    {
+        int numStates = System.Enum.GetNames(typeof(AiStateId)).Length;
+        _states = new AiState[numStates];
     }
 }
