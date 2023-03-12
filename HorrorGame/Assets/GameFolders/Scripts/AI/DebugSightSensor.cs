@@ -13,7 +13,7 @@ public class DebugSightSensor : MonoBehaviour
     float _distance;
     Mesh _mesh;  //Represents the sensor
 
-    private void OnValidate()
+    private void Update()
     {
         _angle = _sensor.Angle;
         _height = _sensor.Height;

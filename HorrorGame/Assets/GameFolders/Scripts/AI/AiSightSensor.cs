@@ -20,10 +20,10 @@ public class AiSightSensor : MonoBehaviour
     [SerializeField] LayerMask _layers;
     [SerializeField] LayerMask _obstacleLayers;
 
-    private List<GameObject> _objectsInSightList = new List<GameObject>();
 
     Transform _transform;
-    Collider[] _colliders = new Collider[2];
+    Collider[] _colliders = new Collider[5];
+    private List<GameObject> _objectsInSightList = new List<GameObject>();
 
     public List<GameObject> ObjectsInSightList { get => _objectsInSightList; }
     public float Distance { get => _distance;}
@@ -51,18 +51,26 @@ public class AiSightSensor : MonoBehaviour
 
     private void ScanSphere()
     {
+        
         _count = Physics.OverlapSphereNonAlloc(_transform.position, _distance, _colliders, _layers, QueryTriggerInteraction.Collide);
 
         //add triggered collider gameobjects to the list
+
         _objectsInSightList.Clear();
         for (int i = 0; i < _count; i++)
-        {      
-            _objectsInSightList.Add(_colliders[i].gameObject);   
+        {
+            GameObject obj = _colliders[i].gameObject;
+            if(IsInSight(obj))
+            {
+                _objectsInSightList.Add(obj);
+            }
+               
         }
 
     }
     public bool IsInSight(GameObject obj)
     {
+
         Vector3 objPosInAiLocal = obj.gameObject.transform.position - _transform.position;
 
         if (objPosInAiLocal.y < 0 || objPosInAiLocal.y > _height)

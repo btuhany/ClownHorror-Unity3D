@@ -23,11 +23,21 @@ public class AiIdleState : IAiState
 
     public void Update()
     {
-        //change
-        float distance = (_ai.PlayerTransform.position -  _ai.transform.position).magnitude;
-        if(distance<10f)
+        if(_ai.SightSensor.ObjectsInSightList.Count > 0)
         {
-            _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
+            if(IsPlayerInSight())
+            {
+                _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
+            }
         }
+    }
+    private bool IsPlayerInSight()
+    {
+        foreach (var gameObj in _ai.SightSensor.ObjectsInSightList)
+        {
+            if (gameObj.CompareTag("Player"))
+                return true;
+        }
+        return false;
     }
 }

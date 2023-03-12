@@ -8,6 +8,7 @@ public class AiEnemy : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] AiStateId _initialState;
     [SerializeField] AiEnemyConfig _config;
+    public AiSightSensor SightSensor;
     AiStateMachine _stateMachine;
     NavMeshAgent _navMeshAgent;
 
@@ -18,7 +19,9 @@ public class AiEnemy : MonoBehaviour
 
     private void Awake()
     {
+        SightSensor = GetComponent<AiSightSensor>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+
         _stateMachine = new AiStateMachine(this);
         _stateMachine.RegisterState(new AiChasePlayerState(this));
         _stateMachine.RegisterState(new AiIdleState(this));
