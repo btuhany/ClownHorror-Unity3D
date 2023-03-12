@@ -11,7 +11,9 @@ public class EnemyAI : MonoBehaviour
     
     NavMeshAgent _agentNavMesh;
     Animator _animator;
-    
+
+    public float Radius { get => _radius; set => _radius = value; }
+
     private void Awake()
     {
         _agentNavMesh= GetComponent<NavMeshAgent>();
@@ -21,28 +23,19 @@ public class EnemyAI : MonoBehaviour
     }
     private void Start()
     {
-        _animator.SetBool("IsRunning", true);
+        
     }
     private void Update()
     {
-        if(!_agentNavMesh.hasPath)  // changes automatically?! even it is not reached
+        if (!_agentNavMesh.hasPath)  // changes automatically?! even it is not reached
         {
             if (!_goToInstance)
                 _agentNavMesh.SetDestination(GetPointForNavmesh.Instance.GetRandomPointFromTransform(transform, _radius));
             else
                 _agentNavMesh.SetDestination(GetPointForNavmesh.Instance.GetRandomPointFromInstance());
-
-            
         }
-        Debug.Log(_agentNavMesh.hasPath);
-
 
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, _radius);
-    }
-#endif
+
 }

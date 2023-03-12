@@ -9,8 +9,11 @@ public class GetPointForNavmesh : SingletonMonoObject<GetPointForNavmesh>
     [SerializeField] bool anotherArea;
     [SerializeField] int exp;
     [SerializeField] NavMeshAgent newAI;
+    [SerializeField] float _sampleRange = 1f;
     int areaMask;
-   
+
+    Vector3 _gizmoTransform;
+  
     private void Awake()
     {
         SingletonThisObject(this);
@@ -26,30 +29,27 @@ public class GetPointForNavmesh : SingletonMonoObject<GetPointForNavmesh>
 
     private Vector3 RandomPoint(Vector3 center, float range)
     {
-        for (int i = 0; i < 30; i++)   // 30?
+        Vector3 randomVector = Random.insideUnitSphere;
+        randomVector.y = 0f;
+        Vector3 randomPoint = center + randomVector * range;
+        NavMeshHit hit;
+        _gizmoTransform = randomPoint;
+        
+        if (!anotherArea)
         {
-            Vector3 randomPoint = center + Random.insideUnitSphere * range;
-            NavMeshHit hit;
-            if(!anotherArea)
-            {
-                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-                {
-                    return hit.position;
-                    
-                }
+            if (NavMesh.SamplePosition(randomPoint, out hit, _sampleRange, NavMesh.AllAreas))
+            { 
+                return hit.position;
             }
-            else
-            {
-            
-
-                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, ~areaMask))
-                {
-                    return hit.position;
-                }
-            }
-
         }
-        return Vector3.zero;
+        else
+        {
+            if (NavMesh.SamplePosition(randomPoint, out hit, _sampleRange, areaMask))
+            {
+                return hit.position;
+            }
+        }
+        return center;  //do something
     }
 
     public Vector3 GetRandomPointFromTransform(Transform gameObject, float radius)
@@ -64,10 +64,13 @@ public class GetPointForNavmesh : SingletonMonoObject<GetPointForNavmesh>
         Debug.DrawRay(point, Vector3.up, Color.red, 1);
         return point;
     }
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, _range);
+        Gizmos.DrawSphere(_gizmoTransform, _sampleRange);
+       
     }
 #endif
 }
