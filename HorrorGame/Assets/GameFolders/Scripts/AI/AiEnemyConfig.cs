@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[System.Serializable]
 [CreateAssetMenu()]
 public class AiEnemyConfig : ScriptableObject
 {

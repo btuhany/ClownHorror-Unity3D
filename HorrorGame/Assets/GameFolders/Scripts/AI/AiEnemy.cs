@@ -1,18 +1,19 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AiStateMachine))]
 public class AiEnemy : MonoBehaviour
 {
     [SerializeField] private Transform _playerTransform;
     [SerializeField] AiStateId _initialState;
     [SerializeField] AiEnemyConfig _config;
+    AiStateMachine _stateMachine;
     NavMeshAgent _navMeshAgent;
-    
-    private AiStateMachine _stateMachine;
 
-    public AiEnemyConfig Config { get => _config; set => _config = value; }
-    public NavMeshAgent NavMeshAgent { get => _navMeshAgent; set => _navMeshAgent = value; }
-    public Transform PlayerTransform { get => _playerTransform; set => _playerTransform = value; }
+    public AiEnemyConfig Config { get => _config; }
+    public Transform PlayerTransform { get => _playerTransform; }
+    public NavMeshAgent NavMeshAgent { get => _navMeshAgent; }
 
     private void Awake()
     {

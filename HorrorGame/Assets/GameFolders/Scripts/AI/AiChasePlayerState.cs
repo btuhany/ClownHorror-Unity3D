@@ -1,25 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-
-public class AiChasePlayerState : AiState
+public class AiChasePlayerState : IAiState
 {
-    [SerializeField] Transform _playerTransform;
-    NavMeshAgent _agent;
-    AiEnemyConfig _config;
-    AiEnemy _enemy;
+    AiEnemy _ai;
     public AiChasePlayerState(AiEnemy enemy)
     {
-        _enemy = enemy;
-        _config = enemy.Config;
-        _agent = enemy.NavMeshAgent;
+        _ai = enemy;
     }
-    public AiStateId GetId()
+    public AiStateId StateId => AiStateId.ChasePlayer;
+    public void Update()
     {
-        return AiStateId.ChasePlayer;
+        _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
     }
-    public void Enter(AiEnemy enemy)
+    public void Enter()
     {
         //if (_playerTransform.position==null)
         //{
@@ -27,17 +18,8 @@ public class AiChasePlayerState : AiState
         //}
     }
 
-    public void Exit(AiEnemy enemy)
-    {
-        
-    }
-
-
-    public void Update()
+    public void Exit()
     {
 
-
-            _agent.SetDestination(_enemy.PlayerTransform.position);
-        
     }
 }
