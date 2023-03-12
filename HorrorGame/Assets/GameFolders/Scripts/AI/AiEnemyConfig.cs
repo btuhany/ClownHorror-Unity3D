@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class AiEnemyConfig : ScriptableObject
 {
-    [SerializeField] private float _maxTime;
-    public float MaxDistance;
+    [Header("Chase Player State")]
+    [Range(0,5f)] public float  MaxSetDestTime;
+    
 }

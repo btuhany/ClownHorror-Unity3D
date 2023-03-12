@@ -14,12 +14,14 @@ public class AiEnemy : MonoBehaviour
     public AiEnemyConfig Config { get => _config; }
     public Transform PlayerTransform { get => _playerTransform; }
     public NavMeshAgent NavMeshAgent { get => _navMeshAgent; }
+    public AiStateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _stateMachine = new AiStateMachine(this);
         _stateMachine.RegisterState(new AiChasePlayerState(this));
+        _stateMachine.RegisterState(new AiIdleState(this));
     }
     private void OnEnable()
     {

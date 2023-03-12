@@ -15,7 +15,7 @@ public class DebugNavMeshAgent : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, _ai.Radius);
+        //Gizmos.DrawWireSphere(transform.position, _ai.Radius);
 
         if(Velocity)
         {

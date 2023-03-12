@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb1fba5965669f42b5886146eeb6bd4, type: 3}
   m_Name: aiEnemy_default_config
   m_EditorClassIdentifier: 
-  PlayerTransform: {fileID: 0}
-  _maxTime: 0
-  MaxDistance: 0
+  MaxSetDestTime: 0.54
