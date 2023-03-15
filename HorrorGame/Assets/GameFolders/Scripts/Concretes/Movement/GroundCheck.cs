@@ -16,7 +16,7 @@ public class GroundCheck : MonoBehaviour
     private void Update()
     {
         _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (_isGrounded && !_isGroundedLastFrame)
+        if (_isGrounded && !_isGroundedLastFrame)  //Check landing
             OnLanded?.Invoke();
         _isGroundedLastFrame = _isGrounded;
     }

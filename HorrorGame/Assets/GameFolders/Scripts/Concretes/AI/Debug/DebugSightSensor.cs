@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(AiSightSensor))]
+[RequireComponent(typeof(SightSensor))]
 public class DebugSightSensor : MonoBehaviour
 {
     [SerializeField] Color _meshColor = Color.red;
-    [SerializeField] AiSightSensor _sensor;
+    [SerializeField] SightSensor _sensor;
     [SerializeField] Transform _transform;
 
     float _angle;

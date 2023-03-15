@@ -5,10 +5,11 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AiStateMachine))]
 public class AiEnemy : MonoBehaviour
 {
+    public bool isHeard;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] AiStateId _initialState;
     [SerializeField] AiEnemyConfig _config;
-    public AiSightSensor SightSensor;
+    public SightSensor SightSensor;
     AiStateMachine _stateMachine;
     NavMeshAgent _navMeshAgent;
 
@@ -19,7 +20,7 @@ public class AiEnemy : MonoBehaviour
 
     private void Awake()
     {
-        SightSensor = GetComponent<AiSightSensor>();
+        SightSensor = GetComponent<SightSensor>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _stateMachine = new AiStateMachine(this);
@@ -34,4 +35,5 @@ public class AiEnemy : MonoBehaviour
     {
         _stateMachine.Update();
     }
+    
 }

@@ -23,13 +23,7 @@ public class AiIdleState : IAiState
 
     public void Update()
     {
-        if(_ai.SightSensor.ObjectsInSightList.Count > 0)
-        {
-            if(IsPlayerInSight())
-            {
-                _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
-            }
-        }
+        CheckPlayerInSight();
     }
     private bool IsPlayerInSight()
     {
@@ -39,5 +33,15 @@ public class AiIdleState : IAiState
                 return true;
         }
         return false;
+    }
+    private void CheckPlayerInSight()
+    {
+        if (_ai.SightSensor.ObjectsInSightList.Count > 0)
+        {
+            if (IsPlayerInSight())
+            {
+                _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
+            }
+        }
     }
 }

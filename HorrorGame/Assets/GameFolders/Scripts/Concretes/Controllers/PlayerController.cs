@@ -14,13 +14,13 @@ public class PlayerController : MonoBehaviour
     GroundCheck _groundCheck;
     CharacterControllerMovement _character;
     PcInput _input;
-    SoundController _soundController;
+    PlayerSoundController _soundController;
     FlashlightController _flashLightController;
     Transform _transform;
     private void Awake()
     {
         _character= GetComponent<CharacterControllerMovement>();
-        _soundController= GetComponent<SoundController>();
+        _soundController= GetComponent<PlayerSoundController>();
         _headbob= GetComponent<HeadBob>();
         _groundCheck = GetComponent<GroundCheck>();
         _flashLightController= GetComponentInChildren<FlashlightController>();

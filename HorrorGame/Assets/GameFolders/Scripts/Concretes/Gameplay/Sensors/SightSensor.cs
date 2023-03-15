@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class AiSightSensor : MonoBehaviour
+public class SightSensor : MonoBehaviour
 {
 
     [Header("Sight")]
