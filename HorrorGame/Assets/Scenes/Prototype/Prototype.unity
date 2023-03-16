@@ -1020,7 +1020,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431779070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.525, y: -0.898, z: 3.134}
+  m_LocalPosition: {x: 0, y: 0, z: 2.636}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2337,7 +2337,7 @@ Transform:
   m_GameObject: {fileID: 985091804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.1, y: 3.73, z: -44.25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.8, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2351,13 +2351,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985091804}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.36
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &1082966400
 GameObject:
@@ -3599,7 +3599,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 512
-  _pickUpDistance: 6
+  _pickUpDistance: 7.53
 --- !u!1 &9171099809630565
 GameObject:
   m_ObjectHideFlags: 0
@@ -5433,6 +5433,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5924030371016334531, guid: cc117bdcfca01274e95689c691774363, type: 3}
+      propertyPath: _throwingForce
+      value: 355
+      objectReference: {fileID: 0}
     - target: {fileID: 5924030371016334556, guid: cc117bdcfca01274e95689c691774363, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -5468,6 +5472,14 @@ PrefabInstance:
     - target: {fileID: 5924030371016334559, guid: cc117bdcfca01274e95689c691774363, type: 3}
       propertyPath: MinDistance
       value: 2.0435658
+      objectReference: {fileID: 0}
+    - target: {fileID: 5924030371538469721, guid: cc117bdcfca01274e95689c691774363, type: 3}
+      propertyPath: _mouseXSensitivity
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 5924030371538469721, guid: cc117bdcfca01274e95689c691774363, type: 3}
+      propertyPath: _mouseYSensitivity
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5924030371538469725, guid: cc117bdcfca01274e95689c691774363, type: 3}
       propertyPath: m_Layer

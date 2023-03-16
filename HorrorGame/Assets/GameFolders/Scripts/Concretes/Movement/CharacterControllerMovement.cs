@@ -10,10 +10,13 @@ public class CharacterControllerMovement : MonoBehaviour
 
     const float _gravity = -9.81f;
 
+
     Vector3 velocity;
 
     GroundCheck _groundCheck;
     CharacterController _controller;
+
+    public Vector3 Velocity { get => velocity; }
 
     private void Awake()
     {
@@ -39,7 +42,7 @@ public class CharacterControllerMovement : MonoBehaviour
     }
 
     public void GroundMovement(Vector3 direction, float speed)
-    {
+    {                                           //for throwing object
         //diagonal speed limit
         if (direction.magnitude > 1.7f)
         {

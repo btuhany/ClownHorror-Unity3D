@@ -20,10 +20,10 @@ public class MouseLook : MonoBehaviour
         
        
     }
-    private void Update()
+    private void LateUpdate()
     {
-        float vertical = Input.GetAxis("Mouse Y") * _mouseYSensitivity * Time.deltaTime;
-        float horizontal = Input.GetAxis("Mouse X") * _mouseXSensitivity * Time.deltaTime;
+        float vertical = Input.GetAxis("Mouse Y") * _mouseYSensitivity * Time.fixedDeltaTime;
+        float horizontal = Input.GetAxis("Mouse X") * _mouseXSensitivity * Time.fixedDeltaTime;
 
         _yRotation -= vertical;
         _yRotation = Mathf.Clamp(_yRotation, MinVerticalAngle, MaxVerticalAngle);

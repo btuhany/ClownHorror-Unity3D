@@ -10,21 +10,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range(10, 20)] float _sprintSpeed;
     [SerializeField][Range(2f,15)] float _jumpHeight;
 
+    [Header("Interact")]
+    [SerializeField][Range(100f, 500f)] float _throwingForce;
+
     HeadBob _headbob;
     GroundCheck _groundCheck;
     CharacterControllerMovement _character;
     PcInput _input;
     PlayerSoundController _soundController;
     FlashlightController _flashLightController;
+    PickUpDropObjMechanic _pickUpMechanic;
     Transform _transform;
     private void Awake()
     {
+        _transform = GetComponent<Transform>();
         _character= GetComponent<CharacterControllerMovement>();
         _soundController= GetComponent<PlayerSoundController>();
         _headbob= GetComponent<HeadBob>();
         _groundCheck = GetComponent<GroundCheck>();
         _flashLightController= GetComponentInChildren<FlashlightController>();
-        _transform = GetComponent<Transform>();
+        _pickUpMechanic = GetComponent<PickUpDropObjMechanic>();
         _input = new PcInput();
     }
     private void OnEnable()
@@ -70,6 +75,14 @@ public class PlayerController : MonoBehaviour
         {
             _flashLightController.Toggle();
             _soundController.PlayToggleLight();
+        }
+        if(_input.PickUpObj)
+        {
+            _pickUpMechanic.PickUpOrDrop();
+        }
+        if(_input.ThrowObj && _pickUpMechanic.IsHoldingObj)
+        {
+            _pickUpMechanic.ThrowObject(_throwingForce, direction);
         }
     }
 
