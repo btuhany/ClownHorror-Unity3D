@@ -49,7 +49,7 @@ public class PlayerSoundController : MonoBehaviour
     public void PlayWalkFootStep()
     {
         if (_walkTimeCounter > 0) return;
-           _audioSource.PlayOneShot(_walkFootSteps[Random.Range(0, _walkFootSteps.Count)]);
+            _audioSource.PlayOneShot(_walkFootSteps[Random.Range(0, _walkFootSteps.Count)]);
         CreateSoundWaves(_walkingSoundLevel, SoundType.Moderate, _layer);
         _walkTimeCounter = _walkTime;
     }
@@ -60,6 +60,7 @@ public class PlayerSoundController : MonoBehaviour
         CreateSoundWaves(_runningSoundLevel, SoundType.Serious, _layer);
         _runTimeCounter = _runTime;
     }
+
     public void PlayToggleLight()
     {
         _audioSource.PlayOneShot(_toggleLight);

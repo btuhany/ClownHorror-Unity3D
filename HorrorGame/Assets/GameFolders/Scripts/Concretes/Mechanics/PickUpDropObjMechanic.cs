@@ -19,7 +19,7 @@ public class PickUpDropObjMechanic : MonoBehaviour
 
     public void PickUpOrDrop()
     {
-        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _pickUpDistance, _layer) && !_isThereObj)
+        if (!_isThereObj &&  Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _pickUpDistance, _layer))
         {
             _grabbedObj = hit.collider.gameObject;
             GrabObject();
@@ -45,7 +45,10 @@ public class PickUpDropObjMechanic : MonoBehaviour
     {
         if(_isThereObj)
         {
-            _grabbedObj.transform.position = _grabPoint.transform.position;  // other methods cause jittering
+            //_grabbedObjRb.MovePosition(_grabPoint.position);
+            _grabbedObj.transform.position = _grabPoint.transform.position;  // other method (rigidbody) cause jittering
+            _grabbedObj.transform.rotation = _grabPoint.transform.rotation;
+            //_grabbedObj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         }
     }
     private void GrabObject()
@@ -58,5 +61,6 @@ public class PickUpDropObjMechanic : MonoBehaviour
     {
         _isThereObj = false;
         _grabbedObjRb.isKinematic = false;
+        //_grabbedObj.transform.localScale = new Vector3(0.6f, 0.8f, 0.6f);
     }
 }

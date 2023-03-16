@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     FlashlightController _flashLightController;
     PickUpDropObjMechanic _pickUpMechanic;
     Transform _transform;
+
+  
     private void Awake()
     {
         _transform = GetComponent<Transform>();
@@ -48,23 +50,27 @@ public class PlayerController : MonoBehaviour
     void HandleInput()
     {
         Vector3 direction = _transform.right * _input.HorizontalAxis + _transform.forward * _input.VerticalAxis;
+        Debug.Log(direction.magnitude);
         if(direction == Vector3.zero)
         {
             _headbob.ResetPosition();
+        
         }
         else if (_input.Sprint)
         {
             _character.GroundMovement(direction, _sprintSpeed);
             _headbob.RunningHeadBob();
-            if(_groundCheck.IsGrounded)
+            if(_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                 _soundController.PlayRunFootStep();
+           
         }
         else
         {
             _character.GroundMovement(direction, _walkSpeed);
             _headbob.WalkingHeadBob();
-            if (_groundCheck.IsGrounded)
+            if (_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                 _soundController.PlayWalkFootStep();
+           
         }
         if (_input.Jump)
         {
@@ -85,7 +91,6 @@ public class PlayerController : MonoBehaviour
             _pickUpMechanic.ThrowObject(_throwingForce, direction);
         }
     }
-
     private void HandleOnLanded()
     {
         _soundController.PlayWalkFootStep();

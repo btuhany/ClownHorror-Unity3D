@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &431779070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431779071}
+  m_Layer: 8
+  m_Name: GrabPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &431779071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431779070}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2.636}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5924030371538469720}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5924030370436484026
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5924030370436484027}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Groundcheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5924030370548253945}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlaslightHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +105,7 @@ GameObject:
   - component: {fileID: 5924030370740543824}
   - component: {fileID: 5924030370740543826}
   - component: {fileID: 5924030370740543827}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,9 +220,10 @@ GameObject:
   - component: {fileID: 5924030371016334558}
   - component: {fileID: 5924030371016334529}
   - component: {fileID: 5924030371016334559}
-  m_Layer: 0
+  - component: {fileID: 2144465931}
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -229,6 +261,7 @@ MonoBehaviour:
   _walkSpeed: 6.51
   _sprintSpeed: 14.92
   _jumpHeight: 5.18
+  _throwingForce: 355
 --- !u!114 &5924030371016334556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d46c8f3ddab3134aa41e62668a415dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layer:
+    serializedVersion: 2
+    m_Bits: 128
+  _walkingSoundLevel: 10
+  _runningSoundLevel: 20
   _walkTime: 0.851
   _runTime: 0.263
   _walkFootSteps:
@@ -353,8 +391,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 2.0435658
+  MaxDistance: 19.432888
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -429,6 +467,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2144465931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924030371016334528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa8e8c96f9162646a43dce4d42ad2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 5924030371538469720}
+  _grabPoint: {fileID: 431779071}
+  _layer:
+    serializedVersion: 2
+    m_Bits: 512
+  _pickUpDistance: 7.53
 --- !u!1 &5924030371538469725
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +498,7 @@ GameObject:
   - component: {fileID: 5924030371538469727}
   - component: {fileID: 5924030371538469726}
   - component: {fileID: 5924030371538469722}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -462,6 +518,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5924030370548253945}
+  - {fileID: 431779071}
   m_Father: {fileID: 5924030371611525867}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -478,8 +535,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 5924030371016334530}
-  _mouseXSensitivity: 264
-  _mouseYSensitivity: 222
+  _mouseXSensitivity: 130
+  _mouseYSensitivity: 120
   MinVerticalAngle: -60
   MaxVerticalAngle: 50
 --- !u!20 &5924030371538469727
@@ -602,7 +659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5924030371611525867}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -636,7 +693,7 @@ GameObject:
   - component: {fileID: 5924030371830812311}
   - component: {fileID: 5924030371830812310}
   - component: {fileID: 5924030371830812309}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +731,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5924030371830812315}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
