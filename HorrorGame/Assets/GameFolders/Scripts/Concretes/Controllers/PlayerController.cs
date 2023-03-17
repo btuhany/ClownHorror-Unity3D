@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     void HandleInput()
     {
         Vector3 direction = _transform.right * _input.HorizontalAxis + _transform.forward * _input.VerticalAxis;
-        Debug.Log(direction.magnitude);
         if(direction == Vector3.zero)
         {
             _headbob.ResetPosition();
@@ -86,7 +85,7 @@ public class PlayerController : MonoBehaviour
         {
             _pickUpMechanic.PickUpOrDrop();
         }
-        if(_input.ThrowObj && _pickUpMechanic.IsHoldingObj)
+        if (_input.ThrowObj && _pickUpMechanic.IsHoldingObj)
         {
             _pickUpMechanic.ThrowObject(_throwingForce, direction);
         }

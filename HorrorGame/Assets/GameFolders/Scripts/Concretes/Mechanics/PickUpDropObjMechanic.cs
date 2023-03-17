@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PickUpDropObjMechanic : MonoBehaviour
 {
+    [SerializeField] float _objectMovingSpeed;
     [SerializeField] Transform _playerCamera;
     [SerializeField] Transform _grabPoint;
     [SerializeField] LayerMask _layer;
     [SerializeField] float _pickUpDistance;
 
-    GameObject _grabbedObj;
-   
+    GameObject _grabbedObj;  
     Rigidbody _grabbedObjRb;
     bool _isThereObj;
 
@@ -21,8 +21,7 @@ public class PickUpDropObjMechanic : MonoBehaviour
     {
         if (!_isThereObj &&  Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _pickUpDistance, _layer))
         {
-            _grabbedObj = hit.collider.gameObject;
-            GrabObject();
+            GrabObject(hit.collider.gameObject);
         }
         else if(_isThereObj)
         {
@@ -33,34 +32,38 @@ public class PickUpDropObjMechanic : MonoBehaviour
     {
         if (!_isThereObj) return;
         ReleaseObject();
-        _grabbedObjRb.AddForce((_grabPoint.forward + dir/3)* force);
+        _grabbedObjRb.AddForce((_grabPoint.forward + dir / 3) * force);  //groundMovement vector affects throwing
     }
 
     //private void Update()
     //{
-    //     // Debug.DrawRay(_playerCamera.position, _playerCamera.forward * _pickUpDistance, Color.red);
+    //    Debug.DrawRay(_playerCamera.position, _playerCamera.forward * _pickUpDistance, Color.red);
     //}
 
     private void LateUpdate()
     {
-        if(_isThereObj)
+        if (_isThereObj)
         {
-            //_grabbedObjRb.MovePosition(_grabPoint.position);
-            _grabbedObj.transform.position = _grabPoint.transform.position;  // other method (rigidbody) cause jittering
-            _grabbedObj.transform.rotation = _grabPoint.transform.rotation;
-            //_grabbedObj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            Vector3 pos = _grabPoint.position - _grabbedObj.transform.position;
+            _grabbedObjRb.MoveRotation(transform.rotation);
+            _grabbedObjRb.velocity = pos * _objectMovingSpeed * pos.magnitude;
         }
     }
-    private void GrabObject()
-    {       
+    private void GrabObject(GameObject gameObj)
+    {
+        
+        _grabbedObj = gameObj;
         _grabbedObjRb = _grabbedObj.GetComponent<Rigidbody>();
-        _grabbedObjRb.isKinematic = true;
+        _grabbedObjRb.velocity = Vector3.zero;
+        _grabbedObjRb.freezeRotation= true;
+        _grabbedObjRb.useGravity = false;
         _isThereObj = true;
     }
     private void ReleaseObject()
     {
         _isThereObj = false;
-        _grabbedObjRb.isKinematic = false;
-        //_grabbedObj.transform.localScale = new Vector3(0.6f, 0.8f, 0.6f);
+        _grabbedObjRb.velocity = Vector3.zero;
+        _grabbedObjRb.freezeRotation = false;
+        _grabbedObjRb.useGravity = true;
     }
 }

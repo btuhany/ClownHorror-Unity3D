@@ -218,9 +218,9 @@ GameObject:
   - component: {fileID: 5924030371016334557}
   - component: {fileID: 8425826410570003296}
   - component: {fileID: 5924030371016334558}
+  - component: {fileID: 2144465931}
   - component: {fileID: 5924030371016334529}
   - component: {fileID: 5924030371016334559}
-  - component: {fileID: 2144465931}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -353,6 +353,24 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2c37f11b2d56b374ebf354853c6ad643, type: 3}
   - {fileID: 8300000, guid: 75d4e54cf94712d4e8de7ce385abceb2, type: 3}
   _toggleLight: {fileID: 8300000, guid: fb62532e01ce4024ab1d8541cada6369, type: 3}
+--- !u!114 &2144465931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924030371016334528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa8e8c96f9162646a43dce4d42ad2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 5924030371538469720}
+  _grabPoint: {fileID: 431779071}
+  _layer:
+    serializedVersion: 2
+    m_Bits: 512
+  _pickUpDistance: 7.53
 --- !u!143 &5924030371016334529
 CharacterController:
   m_ObjectHideFlags: 0
@@ -467,24 +485,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2144465931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5924030371016334528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa8e8c96f9162646a43dce4d42ad2cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerCamera: {fileID: 5924030371538469720}
-  _grabPoint: {fileID: 431779071}
-  _layer:
-    serializedVersion: 2
-    m_Bits: 512
-  _pickUpDistance: 7.53
 --- !u!1 &5924030371538469725
 GameObject:
   m_ObjectHideFlags: 0
