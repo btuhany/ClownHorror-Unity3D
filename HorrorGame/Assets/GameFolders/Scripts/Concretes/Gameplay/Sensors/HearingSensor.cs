@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class HearingSensor : MonoBehaviour
 {
-    public bool dontListen;
-    private void Update()
+    AiEnemy _ai;
+
+    private void Awake()
     {
-        if (!dontListen)
-            Sounds.DontListen = false;
-        else
-            Sounds.DontListen = true;
+        _ai = GetComponent<AiEnemy>();
     }
     public void Hear(Sound sound)
     {
+        _ai.LastHeardSound= sound;
         Debug.Log(gameObject.name + sound.Type + sound.Pos);
-
     }
 }

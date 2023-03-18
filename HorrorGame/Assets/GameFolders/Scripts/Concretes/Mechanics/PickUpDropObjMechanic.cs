@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PickUpDropObjMechanic : MonoBehaviour
 {
-    [SerializeField] float _objectMovingSpeed;
+    [SerializeField] float _objectGrabbedMovingSpeed;
     [SerializeField] Transform _playerCamera;
     [SerializeField] Transform _grabPoint;
     [SerializeField] LayerMask _layer;
     [SerializeField] float _pickUpDistance;
 
-    GameObject _grabbedObj;  
-    Rigidbody _grabbedObjRb;
+    BreakableObjectController _breakableObj;  
+    Rigidbody _breakableObjRb;
     bool _isThereObj;
 
     public bool IsHoldingObj { get => _isThereObj;}
@@ -21,7 +21,9 @@ public class PickUpDropObjMechanic : MonoBehaviour
     {
         if (!_isThereObj &&  Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _pickUpDistance, _layer))
         {
-            GrabObject(hit.collider.gameObject);
+            _breakableObj = hit.collider.GetComponent<BreakableObjectController>();
+            _breakableObjRb = _breakableObj.Rb;
+            GrabObject(_breakableObj);
         }
         else if(_isThereObj)
         {
@@ -31,8 +33,9 @@ public class PickUpDropObjMechanic : MonoBehaviour
     public void ThrowObject(float force, Vector3 dir)
     {
         if (!_isThereObj) return;
-        ReleaseObject();
-        _grabbedObjRb.AddForce((_grabPoint.forward + dir / 3) * force);  //groundMovement vector affects throwing
+        
+        _breakableObj.Throwed((_grabPoint.forward + dir / 3), force); //groundMovement vector affects throwing
+        _isThereObj = false;
     }
 
     //private void Update()
@@ -44,26 +47,22 @@ public class PickUpDropObjMechanic : MonoBehaviour
     {
         if (_isThereObj)
         {
-            Vector3 pos = _grabPoint.position - _grabbedObj.transform.position;
-            _grabbedObjRb.MoveRotation(transform.rotation);
-            _grabbedObjRb.velocity = pos * _objectMovingSpeed * pos.magnitude;
+            Vector3 pos = _grabPoint.position - _breakableObj.transform.position;
+            Vector3 newVelocity = pos * _objectGrabbedMovingSpeed * pos.magnitude;
+
+            _breakableObjRb.MoveRotation(transform.rotation);
+            _breakableObjRb.velocity = newVelocity;
         }
     }
-    private void GrabObject(GameObject gameObj)
+    private void GrabObject(BreakableObjectController breakableObj)
     {
-        
-        _grabbedObj = gameObj;
-        _grabbedObjRb = _grabbedObj.GetComponent<Rigidbody>();
-        _grabbedObjRb.velocity = Vector3.zero;
-        _grabbedObjRb.freezeRotation= true;
-        _grabbedObjRb.useGravity = false;
+        breakableObj.Grabbed();
         _isThereObj = true;
     }
     private void ReleaseObject()
     {
+        _breakableObj.Released();
         _isThereObj = false;
-        _grabbedObjRb.velocity = Vector3.zero;
-        _grabbedObjRb.freezeRotation = false;
-        _grabbedObjRb.useGravity = true;
+
     }
 }

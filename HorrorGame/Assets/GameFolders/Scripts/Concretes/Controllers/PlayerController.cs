@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UI;
+
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range(2f,15)] float _jumpHeight;
 
     [Header("Interact")]
-    [SerializeField][Range(100f, 500f)] float _throwingForce;
+    [SerializeField][Range(100f, 2000f)] float _throwingForce;
 
     HeadBob _headbob;
     GroundCheck _groundCheck;
@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     PickUpDropObjMechanic _pickUpMechanic;
     Transform _transform;
 
-  
     private void Awake()
     {
         _transform = GetComponent<Transform>();
@@ -90,9 +89,11 @@ public class PlayerController : MonoBehaviour
             _pickUpMechanic.ThrowObject(_throwingForce, direction);
         }
     }
+  
     private void HandleOnLanded()
     {
         _soundController.PlayWalkFootStep();
     }
+
 
 }

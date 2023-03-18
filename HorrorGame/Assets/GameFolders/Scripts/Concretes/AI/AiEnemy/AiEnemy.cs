@@ -5,11 +5,12 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AiStateMachine))]
 public class AiEnemy : MonoBehaviour
 {
-    public bool isHeard;
+
     [SerializeField] private Transform _playerTransform;
     [SerializeField] AiStateId _initialState;
     [SerializeField] AiEnemyConfig _config;
     public SightSensor SightSensor;
+    public Sound LastHeardSound;
     AiStateMachine _stateMachine;
     NavMeshAgent _navMeshAgent;
 

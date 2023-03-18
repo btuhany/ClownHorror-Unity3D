@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,8 +24,19 @@ public class AiIdleState : IAiState
 
     public void Update()
     {
-        CheckPlayerInSight();
+        // CheckPlayerInSight();
+        CheckEars();
     }
+
+    private void CheckEars()
+    {
+        if(_ai.LastHeardSound!= null)
+        {
+            _ai.NavMeshAgent.SetDestination(_ai.LastHeardSound.Pos);
+            _ai.LastHeardSound=null;
+        }
+    }
+
     private bool IsPlayerInSight()
     {
         foreach (var gameObj in _ai.SightSensor.ObjectsInSightList)
