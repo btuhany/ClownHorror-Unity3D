@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField][Range (2,10)] float _walkSpeed;
+    [SerializeField][Range(0.5f, 5)] float _crouchSpeed;
     [SerializeField][Range(10, 20)] float _sprintSpeed;
     [SerializeField][Range(2f,15)] float _jumpHeight;
 
@@ -60,13 +61,18 @@ public class PlayerController : MonoBehaviour
             _headbob.ResetPosition();
         
         }
-        else if (_input.Sprint)
+        else if (_input.Sprint)   //allows sprinting while crouching
         {
+            if(_characterMovement.IsCrouched) { _characterMovement.StandUp(); }
             _characterMovement.GroundMovement(direction, _sprintSpeed);
             _headbob.RunningHeadBob();
             if(_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                 _soundController.PlayRunFootStep();
            
+        }
+        else if(_characterMovement.IsCrouched)
+        {
+            _characterMovement.GroundMovement(direction, _crouchSpeed);
         }
         else
         {
@@ -76,8 +82,10 @@ public class PlayerController : MonoBehaviour
                 _soundController.PlayWalkFootStep();
            
         }
+
         if (_input.Jump && _groundCheck.IsGrounded)
         {
+            if (_characterMovement.IsCrouched) { _characterMovement.StandUp(); }
             _characterMovement.Jump(_jumpHeight);
             _soundController.PlayRunFootStep();
         }
@@ -94,17 +102,15 @@ public class PlayerController : MonoBehaviour
         {
             _pickUpMechanic.ThrowObject(_throwingForce, direction);
         }
-        if(_input.Crouch)
+        if(_input.Crouch && !_input.Sprint)
         {
             if(_characterMovement.IsCrouched)
             {
-                _characterMovement.StandUp();
-                
+                _characterMovement.StandUp();              
             }
             else
             {
-                _characterMovement.Crouch();
-              
+                _characterMovement.Crouch();     
             }
         }
     }

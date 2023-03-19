@@ -119,7 +119,7 @@ public class CharacterControllerMovement : MonoBehaviour
             yield return null;
         }
         _cameraHolderTransform.localPosition = _groundCheck.GroundCheckLocalPos + _colliderHeightAtCrouch;
-        Debug.Log("finito");
+       // Debug.Log("finito");
     }
     IEnumerator StandUpCamera()
     {
@@ -130,6 +130,6 @@ public class CharacterControllerMovement : MonoBehaviour
             yield return null;
         }
         _cameraHolderTransform.localPosition = _cameraHolderLocalPosAtStart;
-        Debug.Log("finito");
+      //  Debug.Log("finito");
     }
 }
