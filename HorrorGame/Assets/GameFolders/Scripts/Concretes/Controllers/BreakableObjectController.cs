@@ -39,10 +39,10 @@ public class BreakableObjectController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("collisionEnter");
+       
         if(_isThrowed)
         {
-            Debug.Log("collisionEnter + isThrowed");
+           
             CreateSoundWaves(_soundRange, SoundType.Serious, _soundWaveLayer);  //_layer=7 enemy
             _isThrowed = false;
         }

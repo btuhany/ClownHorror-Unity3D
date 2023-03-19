@@ -54,8 +54,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5924030370436484026}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.63, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.6299999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -274,7 +274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92b43a64e9ea1b4ab55305449d47efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _crouchHeight: 0
   _gravityScale: 2.85
+  _forceToMoveObjects: 0
 --- !u!114 &5924030371016334557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,11 +308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 692f10ee977fb594b9978cac4971ea39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheck: {fileID: 5924030370436484027}
-  groundDistance: 0.3
-  groundMask:
+  _groundCheckTransform: {fileID: 0}
+  _groundDistance: 0
+  _groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!114 &5924030371016334558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,6 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa8e8c96f9162646a43dce4d42ad2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _objectGrabbedMovingSpeed: 0
   _playerCamera: {fileID: 5924030371538469720}
   _grabPoint: {fileID: 431779071}
   _layer:

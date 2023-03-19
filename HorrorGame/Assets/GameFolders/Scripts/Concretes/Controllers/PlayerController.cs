@@ -10,12 +10,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range(10, 20)] float _sprintSpeed;
     [SerializeField][Range(2f,15)] float _jumpHeight;
 
+
     [Header("Interact")]
     [SerializeField][Range(100f, 2000f)] float _throwingForce;
 
+
+
+    
+
     HeadBob _headbob;
     GroundCheck _groundCheck;
-    CharacterControllerMovement _character;
+    CharacterControllerMovement _characterMovement;
     PcInput _input;
     PlayerSoundController _soundController;
     FlashlightController _flashLightController;
@@ -24,8 +29,9 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        
         _transform = GetComponent<Transform>();
-        _character= GetComponent<CharacterControllerMovement>();
+        _characterMovement= GetComponent<CharacterControllerMovement>();
         _soundController= GetComponent<PlayerSoundController>();
         _headbob= GetComponent<HeadBob>();
         _groundCheck = GetComponent<GroundCheck>();
@@ -56,7 +62,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (_input.Sprint)
         {
-            _character.GroundMovement(direction, _sprintSpeed);
+            _characterMovement.GroundMovement(direction, _sprintSpeed);
             _headbob.RunningHeadBob();
             if(_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                 _soundController.PlayRunFootStep();
@@ -64,15 +70,15 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _character.GroundMovement(direction, _walkSpeed);
+            _characterMovement.GroundMovement(direction, _walkSpeed);
             _headbob.WalkingHeadBob();
             if (_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                 _soundController.PlayWalkFootStep();
            
         }
-        if (_input.Jump)
+        if (_input.Jump && _groundCheck.IsGrounded)
         {
-            _character.Jump(_jumpHeight);
+            _characterMovement.Jump(_jumpHeight);
             _soundController.PlayRunFootStep();
         }
         if(_input.Flashlight)
@@ -87,6 +93,19 @@ public class PlayerController : MonoBehaviour
         if (_input.ThrowObj && _pickUpMechanic.IsHoldingObj)
         {
             _pickUpMechanic.ThrowObject(_throwingForce, direction);
+        }
+        if(_input.Crouch)
+        {
+            if(_characterMovement.IsCrouched)
+            {
+                _characterMovement.StandUp();
+                
+            }
+            else
+            {
+                _characterMovement.Crouch();
+              
+            }
         }
     }
   
