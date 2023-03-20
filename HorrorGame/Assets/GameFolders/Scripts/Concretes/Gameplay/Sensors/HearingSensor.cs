@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
+using UnityEngine;
+using Mechanics;
+using AI;
 public class HearingSensor : MonoBehaviour
 {
     AiEnemy _ai;

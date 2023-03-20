@@ -1,40 +1,46 @@
 using UnityEngine;
 using UnityEngine.AI;
+using Mechanics;
+using AI.States;
 
-[RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(AiStateMachine))]
-public class AiEnemy : MonoBehaviour
+namespace AI
 {
-
-    [SerializeField] private Transform _playerTransform;
-    [SerializeField] AiStateId _initialState;
-    [SerializeField] AiEnemyConfig _config;
-    public SightSensor SightSensor;
-    public Sound LastHeardSound;
-    AiStateMachine _stateMachine;
-    NavMeshAgent _navMeshAgent;
-
-    public AiEnemyConfig Config { get => _config; }
-    public Transform PlayerTransform { get => _playerTransform; }
-    public NavMeshAgent NavMeshAgent { get => _navMeshAgent; }
-    public AiStateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
-
-    private void Awake()
+    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(AiStateMachine))]
+    public class AiEnemy : MonoBehaviour
     {
-        SightSensor = GetComponent<SightSensor>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        _stateMachine = new AiStateMachine(this);
-        _stateMachine.RegisterState(new AiChasePlayerState(this));
-        _stateMachine.RegisterState(new AiIdleState(this));
+        [SerializeField] private Transform _playerTransform;
+        [SerializeField] AiStateId _initialState;
+        [SerializeField] AiEnemyConfig _config;
+        public SightSensor SightSensor;
+        public Sound LastHeardSound;
+        AiStateMachine _stateMachine;
+        NavMeshAgent _navMeshAgent;
+
+        public AiEnemyConfig Config { get => _config; }
+        public Transform PlayerTransform { get => _playerTransform; }
+        public NavMeshAgent NavMeshAgent { get => _navMeshAgent; }
+        public AiStateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
+
+        private void Awake()
+        {
+            SightSensor = GetComponent<SightSensor>();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+
+            _stateMachine = new AiStateMachine(this);
+            _stateMachine.RegisterState(new AiChasePlayerState(this));
+            _stateMachine.RegisterState(new AiIdleState(this));
+        }
+        private void OnEnable()
+        {
+            _stateMachine.ChangeState(_initialState);
+        }
+        private void Update()
+        {
+            _stateMachine.Update();
+        }
+
     }
-    private void OnEnable()
-    {
-        _stateMachine.ChangeState(_initialState);
-    }
-    private void Update()
-    {
-        _stateMachine.Update();
-    }
-    
+
 }

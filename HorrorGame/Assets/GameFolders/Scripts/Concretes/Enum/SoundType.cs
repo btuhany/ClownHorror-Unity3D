@@ -1,8 +1,10 @@
-
-
-public enum SoundType 
+namespace Enums
 {
-    Minor,
-    Moderate, 
-    Serious 
+    public enum SoundType
+    {
+        Minor,
+        Moderate,
+        Serious
+    }
+
 }
