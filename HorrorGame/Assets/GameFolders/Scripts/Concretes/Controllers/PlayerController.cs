@@ -1,3 +1,4 @@
+using Controllers;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,15 +18,15 @@ public class PlayerController : MonoBehaviour
 
 
 
-    
 
+    RaycasterController _raycaster;
     HeadBob _headbob;
     GroundCheck _groundCheck;
     CharacterControllerMovement _characterMovement;
     PcInput _input;
     PlayerSoundController _soundController;
     FlashlightController _flashLightController;
-    PickUpDropObjMechanic _pickUpMechanic;
+    GrabbedObjController _grabbedObj;
     Transform _transform;
 
     private void Awake()
@@ -37,7 +38,8 @@ public class PlayerController : MonoBehaviour
         _headbob= GetComponent<HeadBob>();
         _groundCheck = GetComponent<GroundCheck>();
         _flashLightController= GetComponentInChildren<FlashlightController>();
-        _pickUpMechanic = GetComponent<PickUpDropObjMechanic>();
+        _raycaster= GetComponent<RaycasterController>();
+        _grabbedObj = GetComponent<GrabbedObjController>();
         _input = new PcInput();
     }
     private void OnEnable()
@@ -94,13 +96,17 @@ public class PlayerController : MonoBehaviour
             _flashLightController.Toggle();
             _soundController.PlayToggleLight();
         }
+        //if(_input.PickUpObj)
+        //{
+        //    _pickUpMechanic.PickUpOrDrop();
+        //}
+        //if (_input.ThrowObj && _pickUpMechanic.IsHoldingObj)
+        //{
+        //    _pickUpMechanic.ThrowObject(_throwingForce, direction);
+        //}
         if(_input.PickUpObj)
         {
-            _pickUpMechanic.PickUpOrDrop();
-        }
-        if (_input.ThrowObj && _pickUpMechanic.IsHoldingObj)
-        {
-            _pickUpMechanic.ThrowObject(_throwingForce, direction);
+            _raycaster.Interact();
         }
         if(_input.Crouch && !_input.Sprint)
         {
