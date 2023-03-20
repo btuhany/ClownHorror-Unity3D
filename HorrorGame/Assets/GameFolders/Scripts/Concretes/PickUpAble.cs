@@ -4,19 +4,16 @@ using UnityEngine;
 
 namespace Abstracts
 {
-    public abstract class MovableThrowable : Interactable
+    public abstract class PickUpAble : Targetable
     {
 
         [SerializeField] float _soundRange;
         [SerializeField] LayerMask _soundWaveLayer; //who/which layer can hear
-        private bool _isThrowed;
+        protected bool _isThrowed;
 
         Rigidbody _rb;
         public Rigidbody Rb { get => _rb; }
-        public override void Interact()
-        {
-            Grabbed();
-        }
+        
 
         private void Awake()
         {
@@ -41,13 +38,9 @@ namespace Abstracts
             Released();
             _rb.AddForce(dir * force);
         }
-        protected virtual void OnCollisionEnter(Collision collision)
+        protected void CreateTheSoundWave()
         {
-            if (_isThrowed)
-            {
-                CreateSoundWaves(_soundRange, SoundType.Serious, _soundWaveLayer);  //_layer=7 enemy
-                _isThrowed = false;
-            }
+            CreateSoundWaves(_soundRange, SoundType.Serious, _soundWaveLayer);  //_layer=7 enemy
         }
 
         private void CreateSoundWaves(float range, SoundType soundType, LayerMask layer)

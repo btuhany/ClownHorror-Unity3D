@@ -9,7 +9,7 @@ namespace Controllers
         public override void Interact()
         {
             base.Interact();
-            Debug.Log("Anahtar Toplandi");
+
         }
 
     }

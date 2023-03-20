@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     PcInput _input;
     PlayerSoundController _soundController;
     FlashlightController _flashLightController;
-    GrabbedObjController _grabbedObj;
+    PickedUpObjectController _pickedUpController;
     Transform _transform;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         _groundCheck = GetComponent<GroundCheck>();
         _flashLightController= GetComponentInChildren<FlashlightController>();
         _raycaster= GetComponent<RaycasterController>();
-        _grabbedObj = GetComponent<GrabbedObjController>();
+        _pickedUpController = GetComponent<PickedUpObjectController>();
         _input = new PcInput();
     }
     private void OnEnable()
@@ -96,17 +96,13 @@ public class PlayerController : MonoBehaviour
             _flashLightController.Toggle();
             _soundController.PlayToggleLight();
         }
-        //if(_input.PickUpObj)
-        //{
-        //    _pickUpMechanic.PickUpOrDrop();
-        //}
-        //if (_input.ThrowObj && _pickUpMechanic.IsHoldingObj)
-        //{
-        //    _pickUpMechanic.ThrowObject(_throwingForce, direction);
-        //}
-        if(_input.PickUpObj)
+        if (_input.ThrowObj && _pickedUpController.IsThereObj)
         {
-            _raycaster.Interact();
+            _pickedUpController.ThrowObject(_throwingForce, direction);
+        }
+        if(_input.Interact)
+        {
+            _raycaster.InteractOrPickUp();
         }
         if(_input.Crouch && !_input.Sprint)
         {

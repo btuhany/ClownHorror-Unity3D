@@ -10,6 +10,6 @@ public class PcInput //: IInput
     public bool Crouch => Input.GetKeyDown(KeyCode.C);
     public bool Sprint => Input.GetKey(KeyCode.LeftShift);
     public bool Flashlight => Input.GetKeyDown(KeyCode.F);
-    public bool PickUpObj => Input.GetKeyDown(KeyCode.E);
+    public bool Interact => Input.GetKeyDown(KeyCode.E);
     public bool ThrowObj => Input.GetMouseButtonDown(0);
 }

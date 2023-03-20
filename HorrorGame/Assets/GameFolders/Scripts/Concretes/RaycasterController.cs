@@ -1,6 +1,8 @@
 
 using UnityEngine;
 using Abstracts;
+using UnityEngine.Assertions.Must;
+
 namespace Controllers
 {
     public class RaycasterController : MonoBehaviour
@@ -10,17 +12,20 @@ namespace Controllers
         [SerializeField] float _interactDistance;
         
 
-        public bool IsInactive;
+        bool _deactivateRaycasting;
         Targetable _currentTargetable;
-        GrabbedObjController _grabbedObj;
+        PickedUpObjectController _pickedUpObjController;
+        private void Awake()
+        {
+            _pickedUpObjController = GetComponent<PickedUpObjectController>();
+        }
         private void Update()
         {
-            if(IsInactive) { return; }
+            if(_deactivateRaycasting) { return; }
             HandleRaycastActions();
         }
         private void HandleRaycastActions()
         {
-
             if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _interactDistance, _layer))  // ?Can check it with from layer
             {
                 _currentTargetable = hit.collider.GetComponent<Targetable>();
@@ -33,15 +38,23 @@ namespace Controllers
                 _currentTargetable = null;
             }
         }
-        public void Interact()
+        public void InteractOrPickUp()
         {
             if (_currentTargetable == null) return;
             if (_currentTargetable.TryGetComponent(out Interactable interactableObj))
             {
-                interactableObj.Interact();
+                interactableObj.Interact();         
             }
-
+            else if(_currentTargetable.TryGetComponent(out PickUpAble pickUpAbleObj))
+            {
+                if (_pickedUpObjController.PickUpOrDrop(pickUpAbleObj))
+                    _deactivateRaycasting = true;
+                else
+                    _deactivateRaycasting = false;
+            }
         }
+
+
     }
 }
 
