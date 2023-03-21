@@ -99,7 +99,7 @@ namespace Movements
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
 
-            if (hit.gameObject.layer != 9)  //if gameobject's layer is PickUpDrop
+            if (!hit.gameObject.CompareTag("PickUpAble"))  //if gameobject is not PickUpDrop return
                 return;
 
             GameObject gameObj = hit.gameObject;

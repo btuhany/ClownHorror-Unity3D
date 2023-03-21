@@ -1,5 +1,6 @@
 
 using Abstracts;
+using System.Diagnostics;
 
 public abstract class Collectable : Interactable
 {
@@ -9,8 +10,8 @@ public abstract class Collectable : Interactable
     }
     protected virtual void Collect()
     {
-        Destroy(gameObject);
 
+        Destroy(this.gameObject);
     }
 
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity;
 
-namespace AI.Debug
+namespace AI.DebugGizmos
 {
     [ExecuteInEditMode]
     [RequireComponent(typeof(SightSensor))]

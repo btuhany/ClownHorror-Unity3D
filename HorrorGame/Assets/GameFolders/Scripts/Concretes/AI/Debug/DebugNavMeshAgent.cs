@@ -1,7 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.AI;
-namespace AI.Debug
+namespace AI.DebugGizmos
 {
     public class DebugNavMeshAgent : MonoBehaviour
     {

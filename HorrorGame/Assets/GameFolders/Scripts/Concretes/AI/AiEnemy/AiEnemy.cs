@@ -17,17 +17,19 @@ namespace AI
         public Sound LastHeardSound;
         AiStateMachine _stateMachine;
         NavMeshAgent _navMeshAgent;
+        Animator _anim;
 
         public AiEnemyConfig Config { get => _config; }
         public Transform PlayerTransform { get => _playerTransform; }
         public NavMeshAgent NavMeshAgent { get => _navMeshAgent; }
         public AiStateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
+        public Animator Anim { get => _anim; set => _anim = value; }
 
         private void Awake()
         {
+            _anim = GetComponent<Animator>();
             SightSensor = GetComponent<SightSensor>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-
             _stateMachine = new AiStateMachine(this);
             _stateMachine.RegisterState(new AiChasePlayerState(this));
             _stateMachine.RegisterState(new AiIdleState(this));

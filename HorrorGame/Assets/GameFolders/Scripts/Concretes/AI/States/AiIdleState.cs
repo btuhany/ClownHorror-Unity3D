@@ -1,15 +1,25 @@
 using AI;
+using DG.Tweening;
+using System.Collections;
+using System.Net.Sockets;
+using Unity;
+using UnityEngine;
+
 namespace AI.States
 {
     public class AiIdleState : IAiState
     {
         AiEnemy _ai;
+        Animator _anim;
+   
         public AiStateId StateId => AiStateId.Idle;
         public AiIdleState(AiEnemy enemy)
         {
             _ai = enemy;
+            _anim = _ai.Anim;
         }
-
+        float _timer = 0;
+        int _counter= 0;
         public void Enter()
         {
 
@@ -22,8 +32,32 @@ namespace AI.States
 
         public void Update()
         {
-            // CheckPlayerInSight();
+            
+            CheckPlayerInSight();
             CheckEars();
+            _timer += Time.deltaTime;
+            if(_timer>3)
+            {
+                if(_counter==0 )
+                {
+                    _ai.transform.DORotate(new Vector3(0,90,0), 2.3f);
+
+                    _counter=2;
+                    
+                }
+                
+                else if (_counter == 2)
+                {
+                    _ai.transform.DORotate(new Vector3(0, 270, 0), 2.3f);
+                    _counter = 0;
+
+                }
+
+                _anim.SetTrigger("rotateRight");
+                _timer = 0;
+            }
+            
+            
         }
 
         private void CheckEars()
@@ -54,6 +88,7 @@ namespace AI.States
                 }
             }
         }
+        
     }
 
 }

@@ -10,9 +10,11 @@ public class HearingSensor : MonoBehaviour
     {
         _ai = GetComponent<AiEnemy>();
     }
+
     public void Hear(Sound sound)
     {
         _ai.LastHeardSound= sound;
         Debug.Log(gameObject.name + sound.Type + sound.Pos);
     }
+
 }
