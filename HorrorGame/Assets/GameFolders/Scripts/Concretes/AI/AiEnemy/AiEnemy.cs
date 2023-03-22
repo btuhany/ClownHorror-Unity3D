@@ -38,6 +38,7 @@ namespace AI
             _stateMachine = new AiStateMachine(this);
             _stateMachine.RegisterState(new AiChasePlayerState(this));
             _stateMachine.RegisterState(new AiIdleState(this));
+            _stateMachine.RegisterState(new AiWanderState(this));
         }
         private void OnEnable()
         {

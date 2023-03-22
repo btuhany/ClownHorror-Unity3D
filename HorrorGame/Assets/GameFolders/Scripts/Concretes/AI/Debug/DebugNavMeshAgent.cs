@@ -8,14 +8,15 @@ namespace AI.DebugGizmos
         public bool Velocity;
         public bool DesiredVelocity;
         public bool Path;
+        public bool WanderRadius;
 
-        [SerializeField] EnemyAI _ai;
+        [SerializeField] AiEnemy _ai;
         [SerializeField] NavMeshAgent _agent;
         [SerializeField] Transform _transform;
 
         private void OnDrawGizmos()
         {
-            //Gizmos.DrawWireSphere(transform.position, _ai.Radius);
+           
 
             if (Velocity)
             {
@@ -39,6 +40,10 @@ namespace AI.DebugGizmos
                     prevCorner = corner;
                 }
 
+            }
+            if (WanderRadius)
+            {
+                Gizmos.DrawWireSphere(transform.position, _ai.Config.RandomPointRadius);
             }
         }
 

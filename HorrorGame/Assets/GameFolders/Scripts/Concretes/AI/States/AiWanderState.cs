@@ -1,46 +1,54 @@
-using AI;
-using DG.Tweening;
 using System.Collections;
-using System.Net.Sockets;
-using Unity;
+using System.Collections.Generic;
 using UnityEngine;
+using AI;
+using UnityEngine.AI;
 
 namespace AI.States
 {
-    public class AiIdleState : IAiState
+    public class AiWanderState : IAiState
     {
         AiEnemy _ai;
-        private float _idleWaitTime;
-   
-        public AiStateId StateId => AiStateId.Idle;
-        public AiIdleState(AiEnemy enemy)
+        NavMeshAgent _navmesh;
+        public AiStateId StateId => AiStateId.Wander;
+
+        public AiWanderState(AiEnemy aiEnemy)
         {
-            _ai = enemy;
-           
+            _ai = aiEnemy;
+            
+        }
+        public void Update()
+        {
+           if(!_ai.NavMeshAgent.hasPath)
+           {
+                _ai.NavMeshAgent.SetDestination(RandomPoint(_ai.transform.position, _ai.Config.RandomPointRadius));
+           }
+            CheckPlayerInSight();
+            CheckEars();
         }
 
         public void Enter()
         {
-            _idleWaitTime = _ai.Config.IdleWaitTime;
+            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[4];
         }
 
         public void Exit()
         {
-
+            
         }
-
-        public void Update()
+        private Vector3 RandomPoint(Vector3 center, float range)
         {
-            _idleWaitTime -= Time.deltaTime;  
-            if (_idleWaitTime < 0)
-            {
-                _ai.StateMachine.ChangeState(AiStateId.Wander);
-            }
-            CheckPlayerInSight();
-            CheckEars();
-     
-        }
+            Vector3 randomVector = Random.insideUnitSphere;
+            //randomVector.y = 0f;
+            Vector3 randomPoint = center + randomVector * range;
+            NavMeshHit hit;
 
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+            return center;  
+        }
         private void CheckEars()
         {
             if (_ai.LastHeardSound != null)
@@ -70,7 +78,6 @@ namespace AI.States
             }
             return false;
         }
-
     }
-
 }
+

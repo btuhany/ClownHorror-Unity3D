@@ -7,5 +7,6 @@ public enum AiStateId
 {
     ChasePlayer,
     Idle,
+    Wander
 }
 

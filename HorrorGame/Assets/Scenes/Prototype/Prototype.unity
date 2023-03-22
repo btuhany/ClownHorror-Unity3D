@@ -3286,7 +3286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &985091805
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4930,7 +4930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148694170317}
   m_LocalRotation: {x: 0, y: 0.10609049, z: 0, w: 0.9943566}
-  m_LocalPosition: {x: 26.95, y: -0.021, z: -45.16}
+  m_LocalPosition: {x: -17.99, y: 8.48, z: -15.1}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5055,8 +5055,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 407499502}
-  _initialState: 1
+  _initialState: 2
   _config: {fileID: 11400000, guid: a9313718d9107034babfc04fff2abc4a, type: 2}
+  CurrentMovementSpeeds: []
   SightSensor: {fileID: 0}
 --- !u!114 &919132148694170319
 MonoBehaviour:
@@ -5073,7 +5074,8 @@ MonoBehaviour:
   Velocity: 1
   DesiredVelocity: 1
   Path: 1
-  _ai: {fileID: 0}
+  WanderRadius: 1
+  _ai: {fileID: 919132148694170318}
   _agent: {fileID: 746817444}
   _transform: {fileID: 543450652953469047}
 --- !u!114 &919132148694170320
