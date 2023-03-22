@@ -5055,10 +5055,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 407499502}
-  _initialState: 2
+  _initialState: 3
   _config: {fileID: 11400000, guid: a9313718d9107034babfc04fff2abc4a, type: 2}
   CurrentMovementSpeeds: []
-  SightSensor: {fileID: 0}
 --- !u!114 &919132148694170319
 MonoBehaviour:
   m_ObjectHideFlags: 0

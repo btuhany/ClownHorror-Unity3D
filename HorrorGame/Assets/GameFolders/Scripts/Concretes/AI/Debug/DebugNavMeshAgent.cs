@@ -43,7 +43,7 @@ namespace AI.DebugGizmos
             }
             if (WanderRadius)
             {
-                Gizmos.DrawWireSphere(transform.position, _ai.Config.RandomPointRadius);
+                Gizmos.DrawWireSphere(transform.position, _ai.Config.SeekRandomPointRadius);
             }
         }
 

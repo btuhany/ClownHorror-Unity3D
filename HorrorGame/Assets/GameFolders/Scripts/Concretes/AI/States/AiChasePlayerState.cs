@@ -20,7 +20,7 @@ namespace AI.States
         public AiStateId StateId => AiStateId.ChasePlayer;
         public void Update()   //use functions from AiEnemy?
         {
-            if(IsPlayerInSight())
+            if(_ai.IsPlayerInSight())
             {
                 if (_isPlayerLost) //PlayerFound
                 {
@@ -34,7 +34,7 @@ namespace AI.States
                     _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
                 }
             }
-            else if(IsPlayerHeard())
+            else if(_ai.IsPlayerHeard())
             {
                 if (_isPlayerLost) //PlayerFound
                 {
@@ -70,24 +70,7 @@ namespace AI.States
 
         }
 
-        private bool IsPlayerInSight()
-        {
-            foreach (var gameObj in _ai.SightSensor.ObjectsInSightList)
-            {
-                if (gameObj.CompareTag("Player"))
-                    return true;
-            }
-            return false;
-        }
-        private bool IsPlayerHeard()
-        {
-            if (_ai.LastHeardSound == null) return false;
-            if (_ai.LastHeardSound.GameObject.CompareTag("Player"))
-            {        
-                return true;
-            }
-            return false;
-        }
+
 
         void OnPlayerLost()
         {

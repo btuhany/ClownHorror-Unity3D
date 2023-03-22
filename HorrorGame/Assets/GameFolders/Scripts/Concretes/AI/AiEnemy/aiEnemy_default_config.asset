@@ -22,5 +22,9 @@ MonoBehaviour:
   HardMovementSpeeds: []
   MaxSetDestTime: 0.54
   MaxChangeStateTime: 2.23
-  RandomPointRadius: 5.59
+  WanderRandomPointRadius: 5.27
+  WanderRandomSamplePointRange: 1.073
   IdleWaitTime: 3
+  MaxRotationTime: 0.79
+  SeekRandomPointRadius: 3.5
+  SeekRandomSamplePointRange: 3

@@ -36,39 +36,9 @@ namespace AI.States
             {
                 _ai.StateMachine.ChangeState(AiStateId.Wander);
             }
-            CheckPlayerInSight();
-            CheckEars();
-     
-        }
+            if (_ai.IsPlayerInSight() || _ai.IsPlayerHeard())
+                _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
 
-        private void CheckEars()
-        {
-            if (_ai.LastHeardSound != null)
-            {
-                _ai.NavMeshAgent.SetDestination(_ai.LastHeardSound.Pos);
-                _ai.LastHeardSound = null;
-            }
-        }
-
-
-        private void CheckPlayerInSight()
-        {
-            if (_ai.SightSensor.ObjectsInSightList.Count > 0)
-            {
-                if (IsPlayerInSight())
-                {
-                    _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
-                }
-            }
-        }
-        private bool IsPlayerInSight()
-        {
-            foreach (var gameObj in _ai.SightSensor.ObjectsInSightList)
-            {
-                if (gameObj.CompareTag("Player"))
-                    return true;
-            }
-            return false;
         }
 
     }

@@ -14,9 +14,14 @@ namespace AI
         [Range(0, 5f)] public float MaxSetDestTime;
         [Range(0, 5f)] public float MaxChangeStateTime;
         [Header("Wander/Roam State")]
-        public float RandomPointRadius;
+        [Range(2f, 15f)] public float WanderRandomPointRadius;
+        [Range(0.5f, 3f)] public float WanderRandomSamplePointRange;
         [Header("Idle State")]
-        public float IdleWaitTime;
+        [Range(0.1f, 7f)] public float IdleWaitTime;
+        [Header("Seek Player State")]
+        [Range(0.1f,7f)] public float MaxRotationTime;
+        [Range(2f, 15f)] public float SeekRandomPointRadius;
+        [Range(0.5f, 3f)] public float SeekRandomSamplePointRange;
     }
 
 }
