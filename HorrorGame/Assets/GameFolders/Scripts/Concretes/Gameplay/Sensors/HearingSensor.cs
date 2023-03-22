@@ -14,7 +14,7 @@ public class HearingSensor : MonoBehaviour
     public void Hear(Sound sound)
     {
         _ai.LastHeardSound= sound;
-        Debug.Log(gameObject.name + sound.Type + sound.Pos);
+        // Debug.Log(sound.GameObject.name + sound.Type + sound.Pos);
     }
 
 }

@@ -12,6 +12,7 @@ namespace Mechanics
                 if (colliders[i].TryGetComponent(out HearingSensor listener))
                 {
                     listener.Hear(sound);
+                    
                 }
             }
         }

@@ -2,10 +2,11 @@ using Enums;
 
 using UnityEngine;
 using Mechanics;
+using Unity.VisualScripting;
 
 namespace Abstracts
 {
-    public abstract class PickUpAble : Targetable
+    public abstract class PickUpAble : Targetable , ICreateSound
     {
 
         [SerializeField] float _soundRange;
@@ -41,12 +42,12 @@ namespace Abstracts
         }
         protected void CreateTheSoundWave()
         {
-            CreateSoundWaves(_soundRange, SoundType.Serious, _soundWaveLayer);  //_layer=7 enemy
+            CreateSoundWaves(_soundRange, SoundType.Serious, _soundWaveLayer, this.gameObject);  //_layer=7 enemy
         }
 
-        private void CreateSoundWaves(float range, SoundType soundType, LayerMask layer)
+        public void CreateSoundWaves(float range, SoundType soundType, LayerMask layer, GameObject gameObj)
         {
-            var sound = new Sound(transform.position, range, soundType, layer);
+            var sound = new Sound(transform.position, range, soundType, layer, gameObj);
             Sounds.CreateWaves(sound);
         }
 

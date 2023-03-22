@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Mechanics;
 using AI.States;
+using TMPro;
 
 namespace AI
 {
@@ -9,15 +10,17 @@ namespace AI
     [RequireComponent(typeof(AiStateMachine))]
     public class AiEnemy : MonoBehaviour
     {
-
-        [SerializeField] private Transform _playerTransform;
+        [SerializeField] Transform _playerTransform;
         [SerializeField] AiStateId _initialState;
         [SerializeField] AiEnemyConfig _config;
-        public SightSensor SightSensor;
-        public Sound LastHeardSound;
+        AiEnemyDifficulties _currentDifficulty;
         AiStateMachine _stateMachine;
         NavMeshAgent _navMeshAgent;
         Animator _anim;
+        public float[] CurrentMovementSpeeds;
+        public SightSensor SightSensor;
+        public Sound LastHeardSound;
+
 
         public AiEnemyConfig Config { get => _config; }
         public Transform PlayerTransform { get => _playerTransform; }
@@ -27,8 +30,10 @@ namespace AI
 
         private void Awake()
         {
-            _anim = GetComponent<Animator>();
+            _currentDifficulty = AiEnemyDifficulties.Easy;
+            CurrentMovementSpeeds = _config.EasyMovementSpeeds;
             SightSensor = GetComponent<SightSensor>();
+            _anim = GetComponent<Animator>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _stateMachine = new AiStateMachine(this);
             _stateMachine.RegisterState(new AiChasePlayerState(this));
@@ -41,6 +46,26 @@ namespace AI
         private void Update()
         {
             _stateMachine.Update();
+            if(LastHeardSound!= null)  //LastHeardProcesses in stateMachine Updates
+            {
+                LastHeardSound = null;
+            }
+        }
+        public void ChangeDifficulty(AiEnemyDifficulties newDifficulty)
+        {
+            _currentDifficulty = newDifficulty;
+            if(_currentDifficulty == AiEnemyDifficulties.Easy)
+            {
+                CurrentMovementSpeeds = _config.EasyMovementSpeeds;
+            }
+            else if(_currentDifficulty == AiEnemyDifficulties.Normal)
+            {
+                CurrentMovementSpeeds = _config.NormalMovementSpeeds;
+            }
+            else if(_currentDifficulty == AiEnemyDifficulties.Hard)
+            {
+                CurrentMovementSpeeds = _config.HardMovementSpeeds;
+            }   
         }
 
     }
