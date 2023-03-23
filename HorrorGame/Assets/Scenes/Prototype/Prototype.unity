@@ -1698,7 +1698,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422841039}
   m_LocalRotation: {x: 0.028183352, y: -0, z: 9.313226e-10, w: 0.9996028}
-  m_LocalPosition: {x: -0.9139998, y: 0.13899994, z: -0.5839997}
+  m_LocalPosition: {x: -0.91399884, y: 0.13899994, z: -0.58399916}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2196,7 +2196,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 633597127}
-  - component: {fileID: 633597128}
   m_Layer: 8
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -2220,26 +2219,6 @@ Transform:
   m_Father: {fileID: 1367222933}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &633597128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633597126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537453a520e88e24a9864b085ee0bbc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minRecoilX: -2
-  _maxRecoilX: -5
-  _minRecoilY: -3
-  _maxRecoilY: 4
-  _minRecoilZ: 0.1
-  _maxRecoilZ: 0.34
-  _snapiness: 6
-  _returnSpeed: 2
 --- !u!1 &635220737
 GameObject:
   m_ObjectHideFlags: 0
@@ -3202,7 +3181,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.25
   far clip plane: 1000
   field of view: 70
   orthographic: 0
@@ -3937,6 +3916,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367222933}
+  - component: {fileID: 1367222934}
   m_Layer: 8
   m_Name: CameraSway
   m_TagString: Untagged
@@ -3960,6 +3940,26 @@ Transform:
   m_Father: {fileID: 407499502}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1367222934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367222932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537453a520e88e24a9864b085ee0bbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minRecoilX: -2
+  _maxRecoilX: -5
+  _minRecoilY: -3
+  _maxRecoilY: 4
+  _minRecoilZ: 0.1
+  _maxRecoilZ: 0.34
+  _snapiness: 6
+  _returnSpeed: 2
 --- !u!1 &1451892687
 GameObject:
   m_ObjectHideFlags: 0
@@ -4743,6 +4743,54 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1781532960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1781532962}
+  - component: {fileID: 1781532961}
+  m_Layer: 0
+  m_Name: ObjectPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1781532961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781532960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c907412cf95f2fd4e8e891aa8b59474c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectPools:
+  - Prefab: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+    PoolSize: 4
+    ObjectId: 0
+--- !u!4 &1781532962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781532960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1860420272
 GameObject:
   m_ObjectHideFlags: 0
@@ -5548,12 +5596,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 921090568446420179}
+  - component: {fileID: 7931135121277141123}
+  - component: {fileID: 7931135121277141124}
   - component: {fileID: 921090568443028723}
   - component: {fileID: 921090568444126771}
   - component: {fileID: 7931135121277141122}
-  - component: {fileID: 7931135121277141123}
   m_Layer: 0
-  m_Name: M1911 Handgun_Model
+  m_Name: HandGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8145,22 +8194,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ba06821fd98554a90c80346a5ae81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _barrelTransform: {fileID: 8574493023208317082}
   _range: 50
   _fpsCam: {fileID: 963194227}
   _layerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  _cameraHolder: {fileID: 1367222933}
-  _recoil: {fileID: 633597128}
   _defaultGunPos: {fileID: 8565972283658809184}
   _aimingGunPos: {fileID: 422841040}
-  _swayA: 9.71
-  _swayB: 12
-  _swayScale: 1
-  _swayLerpSpeed: 14
-  _swayTime: 0
-  _swayPos: {x: 0, y: 0, z: 0}
-  _aimFov: 30.77
+  _camFovAtAim: 35.31
+  _gunAimPosLerpSpeed: 20
+  _gunDefaultPosLerpSpeed: 19
+  _aimCamFOVLerpSpeed: 8
+  _defaultFOVCamLerpSpeed: 15
+  _recoil: {fileID: 1367222934}
+--- !u!114 &7931135121277141124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921090568446130419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b5e0b7716be144c83d9f745ebd5dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraSwayTransform: {fileID: 1367222933}
+  _weaponSwayA: 6
+  _weaponSwayB: 2
+  _weaponSwayScale: 300
+  _weaponSwayLerpSpeed: 14
+  _weaponSwayTime: 0
+  _weaponSwayPos: {x: 0, y: 0, z: 0}
+  _aimSwayA: 1.3
+  _aimSwayB: 9
+  _aimSwayScale: 10.6
+  _aimSwayLerpSpeed: 14
+  _aimSwayTime: 0
+  _aimSwayPos: {x: 0, y: 0, z: 0}
 --- !u!4 &7934756007448475810
 Transform:
   m_ObjectHideFlags: 0
@@ -8382,8 +8454,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8572362473717811478}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.914, y: -0.485, z: 0.993}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.91399896, y: -0.48500013, z: 0.9929997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

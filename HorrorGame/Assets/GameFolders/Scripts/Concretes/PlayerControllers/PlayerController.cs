@@ -19,7 +19,7 @@ namespace Controllers
 
 
 
-
+        GunController _gunController;
         RaycasterController _raycaster;
         HeadBobController _headbob;
         GroundCheck _groundCheck;
@@ -34,6 +34,7 @@ namespace Controllers
         {
 
             _transform = GetComponent<Transform>();
+            _gunController = GetComponentInChildren<GunController>();
             _characterMovement = GetComponent<CharacterControllerMovement>();
             _soundController = GetComponent<PlayerSoundController>();
             _headbob = GetComponent<HeadBobController>();
@@ -103,6 +104,7 @@ namespace Controllers
             }
             if (_input.Interact)
             {
+
                 _raycaster.InteractOrPickUp();
             }
             if (_input.Crouch && !_input.Sprint)
@@ -116,6 +118,20 @@ namespace Controllers
                     _characterMovement.Crouch();
                 }
             }
+            if (_pickedUpController.IsThereObj) return;
+            if(_input.Fire)
+            {
+                _gunController.Shoot();
+            }
+            if(_input.Aim)
+            {
+                _gunController.AimCam();
+            }
+            else 
+            {
+                _gunController.DefaultCam();
+            }
+            
         }
 
         private void HandleOnLanded()

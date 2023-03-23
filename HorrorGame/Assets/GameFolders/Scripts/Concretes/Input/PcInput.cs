@@ -12,6 +12,8 @@ namespace Inputs
         public bool Flashlight => Input.GetKeyDown(KeyCode.F);
         public bool Interact => Input.GetKeyDown(KeyCode.E);
         public bool ThrowObj => Input.GetMouseButtonDown(0);
+        public bool Fire => Input.GetButtonDown("Fire1");
+        public bool Aim => Input.GetButton("Fire2");
     }
 
 }

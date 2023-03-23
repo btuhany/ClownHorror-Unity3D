@@ -1,102 +1,106 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GunController : MonoBehaviour
 {
+    [Header("FX Transforms")]
+    [SerializeField] Transform _barrelTransform;
+    [Header("Shooting")]
     [SerializeField] private float _range = 50f;
     [SerializeField] private Camera _fpsCam;
     [SerializeField] LayerMask _layerMask;
 
-    [SerializeField] Transform _cameraHolder;
-
-    [SerializeField]  RecoilEffectHandler _recoil;
+    [Header("Camera Movement At Aim")]
     [SerializeField] Transform _defaultGunPos;
     [SerializeField] Transform _aimingGunPos;
+    [SerializeField] float _camFovAtAim;
+    [SerializeField] float _gunAimPosLerpSpeed;
+    [SerializeField] float _gunDefaultPosLerpSpeed;
+    [SerializeField] float _aimCamFOVLerpSpeed;
+    [SerializeField] float _defaultFOVCamLerpSpeed;
 
 
-    [SerializeField] private float _swayA = 1;
-    [SerializeField] float _swayB = 2;
-    [SerializeField] float _swayScale = 600;
-    [SerializeField] float _swayLerpSpeed = 14;
-    [SerializeField] float _swayTime;
-    [SerializeField] Vector3 _swayPos;
+    private bool _onTransitionToAimCam;
+    private bool _isOnDefaultCam;
 
-     float _defaultFov;
-    [SerializeField] float _aimFov;
+    [SerializeField]  RecoilEffectHandler _recoil;
+
     Animator _anim;
+    SwayHandler _swayHandler;
+    private bool _cancelSway;
+    float _defaultFov;
+
+   
+
     private void Awake()
     {
-        _anim= GetComponentInChildren<Animator>();
+        _anim= GetComponent<Animator>();
+        _swayHandler = GetComponent<SwayHandler>();
         _defaultFov = _fpsCam.fieldOfView;
-      
+        transform.position = _defaultGunPos.position;
     }
     private void Update()
     {
         
-        if (Input.GetButtonDown("Fire1"))
-        {
-            _anim.SetTrigger("Fire");
-            _recoil.RecoilEffect();
-           
-
             
-            Shoot();
-        }
-        if(Input.GetButton("Fire2"))
+        if(_onTransitionToAimCam)
         {
-            Aim();
+            _swayHandler.AimSway();
         }
-        else
+        else if(_isOnDefaultCam)  //dont check onTransitionToDefaultCam because _swayHandler.WeaponSway also manipulates postion therefore prevents the transition.
         {
-            transform.position = Vector3.Lerp(transform.position, _defaultGunPos.position, Time.deltaTime * 5f);
-            _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _defaultFov, Time.deltaTime * 5f);
-            WeaponSway();
+            _swayHandler.WeaponSway();
         }
-                
+            
+    
 
-    }
-    private void Shoot()
-    {
+           
         
+    }
+    public void Shoot()
+    {
+
+        _recoil.RecoilEffect();
         if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward, out RaycastHit hit, _range, _layerMask))
         {
-            
-            
+            GameObject newObj = ObjectPoolManager.Instance.GetObjectFromPool(PoolObjectId.MuzzleFlashFx);
+            newObj.transform.position = _barrelTransform.position;
+            newObj.transform.rotation = _barrelTransform.rotation;
+            newObj.SetActive(true);
         }
     }
-    private void Aim()
+    public void AimCam()
     {
-        transform.position = Vector3.Lerp(transform.position, _aimingGunPos.position, Time.deltaTime * 5f);
+        _isOnDefaultCam = false;
+        if (Vector3.Distance(transform.position, _aimingGunPos.position) < 0.2f && Mathf.Abs(_camFovAtAim - _fpsCam.fieldOfView) < 0.02f) return;
+        _onTransitionToAimCam = true;
+        transform.position = Vector3.Lerp(transform.position, _aimingGunPos.position, Time.deltaTime * _gunAimPosLerpSpeed);
+        _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _camFovAtAim, Time.deltaTime * _aimCamFOVLerpSpeed);
+       
         
-        
-            Vector3 targetPos = LissajousCurve(_swayTime, _swayA, _swayB) / _swayScale;
-            _swayPos = Vector3.Lerp(_swayPos, targetPos, Time.smoothDeltaTime * _swayLerpSpeed);
-            _swayTime += Time.deltaTime;
-            if (_swayTime > 6.3f)
-            {
-                _swayTime = 0;
-            }
-            _cameraHolder.localPosition = _swayPos;
-        
-        _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _aimFov, Time.deltaTime * 5f);
     }
-    private void WeaponSway()
+    public void DefaultCam()
     {
-        Vector3 targetPos = LissajousCurve(_swayTime,_swayA,_swayB) / _swayScale;
-        _swayPos = Vector3.Lerp(_swayPos, targetPos, Time.smoothDeltaTime * _swayLerpSpeed);
-        _swayTime += Time.deltaTime;
-        if(_swayTime>6.3f)
+        if (Vector3.Distance(transform.position, _defaultGunPos.position) < 0.03f && Mathf.Abs(_defaultFov - _fpsCam.fieldOfView) < 0.02f)
         {
-            _swayTime = 0;
+            _isOnDefaultCam = true;
+           
+            return;
         }
-        transform.localPosition = _swayPos;
+        
+        _onTransitionToAimCam = false;
+        _swayHandler.WeaponSwayTime = 5.5f;
+        
+        transform.position = Vector3.Lerp(transform.position, _defaultGunPos.position, Time.deltaTime * _gunDefaultPosLerpSpeed);
+        _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _defaultFov, Time.deltaTime * _defaultFOVCamLerpSpeed);
+        
     }
-    private Vector3 LissajousCurve(float Time, float A, float B)
-    {
-        return new Vector3(Mathf.Sin(Time), A * Mathf.Sin(B * Time + Mathf.PI));
-    }
+
+
+
 
     void CasingRelease()
     {
