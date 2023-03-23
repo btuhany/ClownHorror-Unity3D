@@ -20,6 +20,7 @@ namespace AI
         [Range(0.1f, 7f)] public float IdleWaitTime;
         [Header("Seek Player State")]
         [Range(0.1f,7f)] public float MaxRotationTime;
+        [Range(0.1f, 5f)] public float DelayAfterRotate;
         [Range(2f, 15f)] public float SeekRandomPointRadius;
         [Range(0.5f, 3f)] public float SeekRandomSamplePointRange;
     }
