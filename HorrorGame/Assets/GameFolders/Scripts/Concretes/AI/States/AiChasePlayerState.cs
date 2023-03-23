@@ -8,7 +8,7 @@ namespace AI.States
     public class AiChasePlayerState : IAiState
     {
         float _setDestinationTimer;  // Set destination sample tiner
-        float _changeStateTimer;
+        float _chasePlayerTimeout;
         bool _isPlayerLost;
         
         AiEnemy _ai;
@@ -52,10 +52,10 @@ namespace AI.States
 
             if (_isPlayerLost)
             {
-                _changeStateTimer -= Time.deltaTime;
-                if (_changeStateTimer < 0f)
+                _chasePlayerTimeout -= Time.deltaTime;
+                if (_chasePlayerTimeout < 0f)
                 {
-                    _ai.StateMachine.ChangeState(AiStateId.Idle);
+                    _ai.StateMachine.ChangeState(AiStateId.SeekPlayer);
                 }
             }
 
@@ -80,7 +80,7 @@ namespace AI.States
         }
         void OnPlayerFound()
         {
-            _changeStateTimer = _ai.Config.MaxChangeStateTime;
+            _chasePlayerTimeout = _ai.Config.ChasePlayerTimeout;
             _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[0];
             //Debug.Log("PlayerFound");
             _isPlayerLost = false;

@@ -2617,7 +2617,7 @@ GameObject:
   - component: {fileID: 790329648}
   - component: {fileID: 790329647}
   m_Layer: 0
-  m_Name: GetPoint
+  m_Name: '[GoToPointsManager]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2636,8 +2636,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _range: 13.5
-  anotherArea: 0
-  exp: 0
   newAI: {fileID: 746817444}
   _sampleRange: 2
 --- !u!4 &790329648
@@ -2648,7 +2646,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790329646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 53.83, y: 1.55, z: -15.6}
+  m_LocalPosition: {x: 53.83, y: 0.01, z: -15.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4930,7 +4928,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148694170317}
   m_LocalRotation: {x: 0, y: 0.10609049, z: 0, w: 0.9943566}
-  m_LocalPosition: {x: -17.99, y: 8.48, z: -15.1}
+  m_LocalPosition: {x: -17.99, y: 6.87, z: -15.1}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5055,7 +5053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 407499502}
-  _initialState: 3
+  _initialState: 4
   _config: {fileID: 11400000, guid: a9313718d9107034babfc04fff2abc4a, type: 2}
   CurrentMovementSpeeds: []
 --- !u!114 &919132148694170319
@@ -5073,6 +5071,7 @@ MonoBehaviour:
   Velocity: 1
   DesiredVelocity: 1
   Path: 1
+  SeekForwDist: 0
   WanderRadius: 1
   _ai: {fileID: 919132148694170318}
   _agent: {fileID: 746817444}
@@ -5127,7 +5126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab126bc036ed4147bdb2c7ff01ab93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshColor: {r: 1, g: 0, b: 0, a: 0.6745098}
+  _meshColor: {r: 1, g: 0, b: 0, a: 0}
   _sensor: {fileID: 919132148694170321}
   _transform: {fileID: 543450652953469047}
 --- !u!114 &919132148694170323

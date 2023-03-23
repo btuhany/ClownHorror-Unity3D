@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 namespace AI.DebugGizmos
@@ -8,7 +9,9 @@ namespace AI.DebugGizmos
         public bool Velocity;
         public bool DesiredVelocity;
         public bool Path;
+        public bool SeekForwDist;
         public bool WanderRadius;
+        
 
         [SerializeField] AiEnemy _ai;
         [SerializeField] NavMeshAgent _agent;
@@ -41,10 +44,17 @@ namespace AI.DebugGizmos
                 }
 
             }
-            if (WanderRadius)
+            if (SeekForwDist)
             {
-                Gizmos.DrawWireSphere(transform.position, _ai.Config.SeekRandomPointRadius);
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawLine(transform.position, _ai.transform.position + _ai.transform.forward*+ _ai.Config.SeekForwardDistance);
             }
+            if(WanderRadius)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(transform.position, _ai.Config.WanderRandomPointRadius);
+            }
+
         }
 
     }

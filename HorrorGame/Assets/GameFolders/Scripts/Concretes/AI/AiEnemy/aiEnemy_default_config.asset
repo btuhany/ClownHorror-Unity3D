@@ -14,17 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EasyMovementSpeeds:
   - 2
-  - 5
+  - 4.7
   - 8
-  - 4.32
-  - 12
+  - 11.4
+  - 27.4
   NormalMovementSpeeds: []
   HardMovementSpeeds: []
   MaxSetDestTime: 0.54
-  MaxChangeStateTime: 2.23
-  WanderRandomPointRadius: 5.27
-  WanderRandomSamplePointRange: 1.073
+  ChasePlayerTimeout: 0
+  WanderRandomPointRadius: 15
+  WanderRandomSamplePointRange: 2.074
+  WanderForwardDistance: 10.75
   IdleWaitTime: 3
-  MaxRotationTime: 0.79
-  SeekRandomPointRadius: 3.5
-  SeekRandomSamplePointRange: 3
+  MaxRotationTime: 1.11
+  DelayAfterRotate: 2.07
+  SeekForwardDistance: 4.47
+  SeekRandomSamplePointRange: 1.98
+  SeekTimeOut: 9.6

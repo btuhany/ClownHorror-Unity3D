@@ -40,6 +40,7 @@ namespace AI
             _stateMachine.RegisterState(new AiIdleState(this));
             _stateMachine.RegisterState(new AiWanderState(this));
             _stateMachine.RegisterState(new AiSeekPlayerState(this));
+            _stateMachine.RegisterState(new AiGoToPointState(this));
         }
         private void OnEnable()
         {
