@@ -4776,6 +4776,12 @@ MonoBehaviour:
   - Prefab: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
     PoolSize: 4
     ObjectId: 0
+  - Prefab: {fileID: 6804990658058999119, guid: 65c9f6563c561ee4e8905d1e6a32548b, type: 3}
+    PoolSize: 4
+    ObjectId: 1
+  - Prefab: {fileID: 4362657251999731927, guid: 4cb20e8abae957146a8b78e670d3fe74, type: 3}
+    PoolSize: 4
+    ObjectId: 2
 --- !u!4 &1781532962
 Transform:
   m_ObjectHideFlags: 0
@@ -8194,7 +8200,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ba06821fd98554a90c80346a5ae81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _recoil: {fileID: 1367222934}
   _barrelTransform: {fileID: 8574493023208317082}
+  _casinExitTransform: {fileID: 2500524580220855097}
+  _shotPower: 1000
+  ejectPower: 150
   _range: 50
   _fpsCam: {fileID: 963194227}
   _layerMask:
@@ -8207,7 +8217,6 @@ MonoBehaviour:
   _gunDefaultPosLerpSpeed: 19
   _aimCamFOVLerpSpeed: 8
   _defaultFOVCamLerpSpeed: 15
-  _recoil: {fileID: 1367222934}
 --- !u!114 &7931135121277141124
 MonoBehaviour:
   m_ObjectHideFlags: 0
