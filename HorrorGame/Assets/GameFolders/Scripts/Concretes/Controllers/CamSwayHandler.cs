@@ -25,7 +25,7 @@ public class CamSwayHandler : MonoBehaviour
 
     public float WeaponSwayTime { get => _armsSwayTime; set => _armsSwayTime = value; }
 
-    public void WeaponSway()
+    public void ArmsSway()
     {
      
         Vector3 targetPos = LissajousCurve(_armsSwayTime, _armSwayA, _armsSwayB) / _armsSwayScale;

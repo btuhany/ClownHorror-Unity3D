@@ -21,6 +21,7 @@ namespace Controllers
             _startPos = _camera.localPosition;
 
         }
+ 
 
         public void WalkingHeadBob()
         {
@@ -37,10 +38,12 @@ namespace Controllers
         }
         public void ResetPosition()
         {
-
+            
             if (_camera.localPosition == _startPos) return;
-            _camera.localPosition = Vector3.Lerp(_camera.localPosition, _startPos, Time.deltaTime);
-            if (Vector3.Distance(_startPos, _camera.localPosition) < 0.3f)
+            _camera.localPosition = Vector3.Lerp(_camera.localPosition, _startPos, Time.smoothDeltaTime*5f);
+            
+            
+            if (Mathf.Abs(Vector3.Distance(_startPos, _camera.localPosition)) < 0.01f)
                 _camera.localPosition = _startPos;
             _timeCounter = 0;
         }

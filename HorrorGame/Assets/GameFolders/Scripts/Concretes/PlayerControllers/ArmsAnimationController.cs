@@ -6,30 +6,42 @@ public class ArmsAnimationController : MonoBehaviour
 {
     Animator _anim;
 
-    private bool _isAiming;
+    private bool _isAimed;
+    private bool _isRunning;
 
 
 
-    private int _isAimed;
-    private int _isShooted;
+    private int _isAimedHash;
+    private int _isShootedHash;
+    private int _isRunningHash;
     private void Awake()
     {
         _anim = GetComponentInChildren<Animator>();
-        _isAimed = Animator.StringToHash("IsAimed");
-        _isShooted = Animator.StringToHash("IsShooted");
+        _isAimedHash = Animator.StringToHash("IsAimed");
+        _isShootedHash = Animator.StringToHash("IsShooted");
+        _isRunningHash = Animator.StringToHash("IsRunning");
     }
     public void Aimed(bool isAimed)
     {
-        if(_isAiming == isAimed)
+        if(_isAimed == isAimed)
         {
             return;
         }
-        _isAiming = isAimed;
-        Debug.Log(_isAiming);
-        _anim.SetBool(_isAimed, isAimed);
+        _isAimed = isAimed;
+        
+        _anim.SetBool(_isAimedHash, isAimed);
     }
     public void Shooted()
     {
-        _anim.SetTrigger(_isShooted);
+        _anim.SetTrigger(_isShootedHash);
+    }
+    public void Running(bool isRunning)
+    {
+        if(_isRunning == isRunning)
+        {
+            return;
+        }
+        _isRunning = isRunning;
+        _anim.SetBool(_isRunningHash, isRunning);
     }
 }

@@ -62,14 +62,15 @@ namespace Controllers
             Vector3 direction = _transform.right * _input.HorizontalAxis + _transform.forward * _input.VerticalAxis;
             if (direction == Vector3.zero)
             {
-                _headbob.ResetPosition();
-
+               _headbob.ResetPosition();
+                _anim.Running(false);
             }
             else if (_input.Sprint && !_input.Aim)   //allows sprinting while crouching
             {
                 if (_characterMovement.IsCrouched) { _characterMovement.StandUp(); }
                 _characterMovement.GroundMovement(direction, _sprintSpeed);
                 _headbob.RunningHeadBob();
+                _anim.Running(true);
                 if (_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                     _soundController.PlayRunFootStep();
 
@@ -77,9 +78,11 @@ namespace Controllers
             else if (_characterMovement.IsCrouched)
             {
                 _characterMovement.GroundMovement(direction, _crouchSpeed);
+                _anim.Running(false);
             }
             else
             {
+                _anim.Running(false);
                 _characterMovement.GroundMovement(direction, _walkSpeed);
                 _headbob.WalkingHeadBob();
                 if (_groundCheck.IsGrounded && direction.magnitude > 0.9f)
@@ -111,11 +114,11 @@ namespace Controllers
             } 
             if (_input.Fire && !_pickedUpController.IsThereObj )
             {
+                if (_gunController.IsShootable)
+                    _anim.Shooted();
                 _gunController.Shoot();
-                _anim.Shooted();
 
             }
-            
             if (_input.Aim)
             {
                 _gunController.AimCam();

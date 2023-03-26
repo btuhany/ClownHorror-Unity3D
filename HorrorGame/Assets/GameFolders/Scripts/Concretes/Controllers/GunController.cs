@@ -7,6 +7,7 @@ namespace Controllers
     public class GunController : MonoBehaviour
     {
         [Header("Shooting")]
+        [SerializeField] float _aimlessShotRadius = 0.2f;
         [SerializeField] private float _range = 50f;
         [SerializeField] private Camera _fpsCam;
         [SerializeField] LayerMask _layerMask;
@@ -31,22 +32,26 @@ namespace Controllers
         [SerializeField] float _aimCamFOVLerpSpeed;
         [SerializeField] float _defaultFOVCamLerpSpeed;
 
+        [SerializeField] CamSwayHandler swayHandler;
         private float _shootCoolDownTimer;
         private bool _isShooted;
         private bool _onTransitionToAimCam;
         private bool _isOnDefaultCam;
         float _defaultFov;
-        Animator _anim;
-        [SerializeField] CamSwayHandler swayHandler;
-        
 
+
+        public bool IsAimed => _onTransitionToAimCam && !_isOnDefaultCam;
+
+
+        public bool IsShootable => !_isShooted;
+        Animator _anim;
+        
         public bool OnTransitionToAimCam { get => _onTransitionToAimCam; }
 
         private void Awake()
         {
-            
             _anim = GetComponent<Animator>();
-            
+
             _defaultFov = _fpsCam.fieldOfView;
             transform.position = _defaultGunPos.position;
             _shootCoolDownTimer = _shootCoolDown;
@@ -61,7 +66,7 @@ namespace Controllers
             else if (_isOnDefaultCam)  //dont check onTransitionToDefaultCam because _swayHandler.WeaponSway also manipulates postion therefore prevents the transition.
             {
                 
-                swayHandler.WeaponSway();
+                swayHandler.ArmsSway();
             }
             if(_isShooted)
             {
@@ -112,14 +117,35 @@ namespace Controllers
             _recoil.RecoilEffect();
             InstantiateMuzzleFX();
             InstantiateBullet();
+            if(IsAimed)
+            {
+                AimedShoot();
+            }
+            else
+            {
+                AimlessShoot();
+            }
+           
+        }
+        void AimlessShoot()
+        {
+            float randomX = Random.Range(-_aimlessShotRadius, _aimlessShotRadius);
+            float randomY = Random.Range(-_aimlessShotRadius, _aimlessShotRadius);
+            Vector3 randomVector = new Vector3(randomX, randomY, 0);
+            if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward + randomVector, out RaycastHit hit, _range, _layerMask))
+            {
+                InstantiateBulletHoleFX(hit).transform.SetParent(hit.transform);
+            }
+        }
+        void AimedShoot()
+        {
             if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward, out RaycastHit hit, _range, _layerMask))
             {
                 InstantiateBulletHoleFX(hit).transform.SetParent(hit.transform);
-                
             }
         }
 
-        public void BulletCasingFx() //trigger on the animation event
+        private void BulletCasingFx() //trigger on the animation event
         {
             
             GameObject tempCasing = ObjectPoolManager.Instance.GetObjectFromPool(_casinExitTransform, PoolObjectId.BulletCasin);
