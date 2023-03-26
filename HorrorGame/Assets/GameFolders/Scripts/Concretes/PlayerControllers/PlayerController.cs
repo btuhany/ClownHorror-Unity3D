@@ -18,7 +18,7 @@ namespace Controllers
         [SerializeField][Range(100f, 2000f)] float _throwingForce;
 
 
-
+        ArmsAnimationController _anim;
         GunController _gunController;
         RaycasterController _raycaster;
         HeadBobController _headbob;
@@ -32,7 +32,7 @@ namespace Controllers
 
         private void Awake()
         {
-
+            _anim = GetComponentInChildren<ArmsAnimationController>();
             _transform = GetComponent<Transform>();
             _gunController = GetComponentInChildren<GunController>();
             _characterMovement = GetComponent<CharacterControllerMovement>();
@@ -65,7 +65,7 @@ namespace Controllers
                 _headbob.ResetPosition();
 
             }
-            else if (_input.Sprint)   //allows sprinting while crouching
+            else if (_input.Sprint && !_input.Aim)   //allows sprinting while crouching
             {
                 if (_characterMovement.IsCrouched) { _characterMovement.StandUp(); }
                 _characterMovement.GroundMovement(direction, _sprintSpeed);
@@ -98,15 +98,6 @@ namespace Controllers
                 _flashLightController.Toggle();
                 _soundController.PlayToggleLight();
             }
-            if (_input.ThrowObj && _pickedUpController.IsThereObj)
-            {
-                _pickedUpController.ThrowObject(_throwingForce, direction);
-            }
-            if (_input.Interact)
-            {
-
-                _raycaster.InteractOrPickUp();
-            }
             if (_input.Crouch && !_input.Sprint)
             {
                 if (_characterMovement.IsCrouched)
@@ -117,21 +108,34 @@ namespace Controllers
                 {
                     _characterMovement.Crouch();
                 }
-            }
-            if (_pickedUpController.IsThereObj) return;
-            if(_input.Fire)
+            } 
+            if (_input.Fire && !_pickedUpController.IsThereObj )
             {
                 _gunController.Shoot();
+                _anim.Shooted();
+
             }
-            if(_input.Aim)
+            
+            if (_input.Aim)
             {
                 _gunController.AimCam();
+                _anim.Aimed(true);
             }
             else 
             {
                 _gunController.DefaultCam();
+                _anim.Aimed(false);
             }
-            
+            if (_input.ThrowObj && _pickedUpController.IsThereObj)
+            {
+                _pickedUpController.ThrowObject(_throwingForce, direction);
+            }
+            if (_input.Interact && !_gunController.OnTransitionToAimCam)
+            {
+
+                _raycaster.InteractOrPickUp();
+            }
+
         }
 
         private void HandleOnLanded()

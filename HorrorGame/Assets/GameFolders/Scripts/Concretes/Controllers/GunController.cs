@@ -6,17 +6,22 @@ namespace Controllers
 {
     public class GunController : MonoBehaviour
     {
-        [SerializeField] RecoilEffectHandler _recoil;
+        [Header("Shooting")]
+        [SerializeField] private float _range = 50f;
+        [SerializeField] private Camera _fpsCam;
+        [SerializeField] LayerMask _layerMask;
+        [SerializeField] private float _shootCoolDown;
+        [Header("RecoilFX")]
+        [SerializeField] CamRecoilEffectHandler _recoil;
         [Header("FX")]
         [SerializeField] Transform _barrelTransform;
         [SerializeField] Transform _casinExitTransform;
         [SerializeField] float _shotPower;
         [SerializeField] private float ejectPower = 150f;
-        [Header("Shooting")]
-        [SerializeField] private float _range = 50f;
-        [SerializeField] private Camera _fpsCam;
-        [SerializeField] LayerMask _layerMask;
-
+        [SerializeField][Range(0.1f, 5f)] float _bulletHeadSetPoolDelay = 0.7f;
+        [SerializeField][Range(0.1f, 5f)] float _muzzleFxSetPoolDelay = 0.5f;
+        [SerializeField][Range(0.1f, 5f)] float _bulletHoleSetPoolDelay = 1.2f;
+        [SerializeField][Range(0.1f, 5f)] float _bulletCasinSetPoolDelay = 1f;
         [Header("Camera Movement At Aim")]
         [SerializeField] Transform _defaultGunPos;
         [SerializeField] Transform _aimingGunPos;
@@ -26,85 +31,96 @@ namespace Controllers
         [SerializeField] float _aimCamFOVLerpSpeed;
         [SerializeField] float _defaultFOVCamLerpSpeed;
 
-
+        private float _shootCoolDownTimer;
+        private bool _isShooted;
         private bool _onTransitionToAimCam;
         private bool _isOnDefaultCam;
         float _defaultFov;
         Animator _anim;
-        SwayHandler _swayHandler;
+        [SerializeField] CamSwayHandler swayHandler;
+        
+
+        public bool OnTransitionToAimCam { get => _onTransitionToAimCam; }
 
         private void Awake()
         {
+            
             _anim = GetComponent<Animator>();
-            _swayHandler = GetComponent<SwayHandler>();
+            
             _defaultFov = _fpsCam.fieldOfView;
             transform.position = _defaultGunPos.position;
+            _shootCoolDownTimer = _shootCoolDown;
         }
+
         private void Update()
         {
             if (_onTransitionToAimCam)
-            {
-                _swayHandler.AimSway();
+            {         
+                swayHandler.AimSway();
             }
             else if (_isOnDefaultCam)  //dont check onTransitionToDefaultCam because _swayHandler.WeaponSway also manipulates postion therefore prevents the transition.
             {
-                _swayHandler.WeaponSway();
+                
+                swayHandler.WeaponSway();
             }
-        }
-        private void InstantiateMuzzleFX()
-        {
-            GameObject newObjMuzzleFx = ObjectPoolManager.Instance.GetObjectFromPool(_barrelTransform, PoolObjectId.MuzzleFlashFx);
-            StartCoroutine(SetToPool(newObjMuzzleFx, 0.5f, PoolObjectId.MuzzleFlashFx));
-        }
-        private void InstantiateBullet()
-        {
-            GameObject newObjBullet = ObjectPoolManager.Instance.GetObjectFromPool(_barrelTransform, PoolObjectId.Bullet);
-            newObjBullet.GetComponent<Rigidbody>().AddForce(_barrelTransform.forward * _shotPower);
-            StartCoroutine(SetToPool(newObjBullet, 0.7f, PoolObjectId.Bullet));
-        }
-        public void Shoot()
-        {
-            _anim.SetTrigger("Fire");
-            _recoil.RecoilEffect();
-            InstantiateMuzzleFX();
-            InstantiateBullet();
-            if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward, out RaycastHit hit, _range, _layerMask))
+            if(_isShooted)
             {
-
-
-
+                _shootCoolDownTimer -= Time.deltaTime;
+                if(_shootCoolDownTimer < 0 )
+                {
+                    _shootCoolDownTimer = _shootCoolDown;
+                    _isShooted = false;
+                }
             }
         }
         public void AimCam()
         {
+           
             _isOnDefaultCam = false;
-            if (Vector3.Distance(transform.position, _aimingGunPos.position) < 0.2f && Mathf.Abs(_camFovAtAim - _fpsCam.fieldOfView) < 0.02f) return;
+            if (Mathf.Abs(_camFovAtAim - _fpsCam.fieldOfView) < 0.02f)
+            {
+
+                return;
+            }
+            swayHandler.OnAimCamTransition();
+
             _onTransitionToAimCam = true;
-            transform.position = Vector3.Lerp(transform.position, _aimingGunPos.position, Time.deltaTime * _gunAimPosLerpSpeed);
+
             _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _camFovAtAim, Time.deltaTime * _aimCamFOVLerpSpeed);
 
 
         }
         public void DefaultCam()
         {
-            if (Vector3.Distance(transform.position, _defaultGunPos.position) < 0.03f && Mathf.Abs(_defaultFov - _fpsCam.fieldOfView) < 0.02f)
+           
+            if (Mathf.Abs(_defaultFov - _fpsCam.fieldOfView) < 0.02f)
             {
                 _isOnDefaultCam = true;
-
                 return;
             }
-
             _onTransitionToAimCam = false;
-            _swayHandler.WeaponSwayTime = 5.5f;
-
-            transform.position = Vector3.Lerp(transform.position, _defaultGunPos.position, Time.deltaTime * _gunDefaultPosLerpSpeed);
+            swayHandler.OnDefaultCamTransition();
             _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _defaultFov, Time.deltaTime * _defaultFOVCamLerpSpeed);
 
+        }
+        public void Shoot()
+        {
+            if (_isShooted) return;
+
+            _isShooted = true;
+            _anim.SetTrigger("Fire");
+            _recoil.RecoilEffect();
+            InstantiateMuzzleFX();
+            InstantiateBullet();
+            if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward, out RaycastHit hit, _range, _layerMask))
+            {
+                InstantiateBulletHoleFX(hit).transform.SetParent(hit.transform);
+                
+            }
         }
 
         public void BulletCasingFx() //trigger on the animation event
         {
-            Debug.Log("deneme");
             
             GameObject tempCasing = ObjectPoolManager.Instance.GetObjectFromPool(_casinExitTransform, PoolObjectId.BulletCasin);
           
@@ -114,7 +130,32 @@ namespace Controllers
             tempCasing.GetComponent<Rigidbody>().AddTorque(new Vector3(0, Random.Range(100f, 500f), Random.Range(100f, 1000f)), ForceMode.Impulse);
 
 
-            StartCoroutine(SetToPool(tempCasing, 1f, PoolObjectId.BulletCasin));
+            StartCoroutine(SetToPool(tempCasing, _bulletCasinSetPoolDelay, PoolObjectId.BulletCasin));
+        }
+        private void InstantiateMuzzleFX()
+        {
+            GameObject newObjMuzzleFx = ObjectPoolManager.Instance.GetObjectFromPool(PoolObjectId.MuzzleFlashFx);
+            newObjMuzzleFx.transform.position = _barrelTransform.position;
+            newObjMuzzleFx.transform.rotation = _barrelTransform.rotation;
+            newObjMuzzleFx.SetActive(true);
+            newObjMuzzleFx.transform.SetParent(_barrelTransform);        //move pos after insantiating
+            StartCoroutine(SetToPool(newObjMuzzleFx, _muzzleFxSetPoolDelay, PoolObjectId.MuzzleFlashFx));
+        }
+        private void InstantiateBullet()
+        {
+            GameObject newObjBullet = ObjectPoolManager.Instance.GetObjectFromPool(_barrelTransform, PoolObjectId.Bullet);
+            newObjBullet.GetComponent<Rigidbody>().AddForce(_barrelTransform.forward * _shotPower);
+            StartCoroutine(SetToPool(newObjBullet, _bulletHeadSetPoolDelay, PoolObjectId.Bullet));
+        }
+        private GameObject InstantiateBulletHoleFX(RaycastHit hit)
+        {
+            GameObject newBulletHole = ObjectPoolManager.Instance.GetObjectFromPool(PoolObjectId.WoodBulletHoleFx);
+            newBulletHole.transform.position = hit.point;
+            newBulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+            newBulletHole.SetActive(true);
+            StartCoroutine(SetToPool(newBulletHole, _bulletHoleSetPoolDelay, PoolObjectId.WoodBulletHoleFx));
+
+            return newBulletHole;
         }
         IEnumerator SetToPool(GameObject gameObj, float delay, PoolObjectId objectID)
         {
