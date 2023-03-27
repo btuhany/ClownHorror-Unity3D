@@ -59,6 +59,7 @@ namespace Controllers
 
         void HandleInput()
         {
+
             Vector3 direction = _transform.right * _input.HorizontalAxis + _transform.forward * _input.VerticalAxis;
             if (direction == Vector3.zero)
             {
@@ -94,8 +95,10 @@ namespace Controllers
             {
                 if (_characterMovement.IsCrouched) { _characterMovement.StandUp(); }
                 _characterMovement.Jump(_jumpHeight);
+                _anim.Jumped();
                 _soundController.PlayRunFootStep();
             }
+
             if (_input.Flashlight)
             {
                 _flashLightController.Toggle();
