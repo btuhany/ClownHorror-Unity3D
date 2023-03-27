@@ -96,6 +96,7 @@ namespace Controllers
                 if (_characterMovement.IsCrouched) { _characterMovement.StandUp(); }
                 _characterMovement.Jump(_jumpHeight);
                 _anim.Jumped();
+                _soundController.PlayJump();
                 _soundController.PlayRunFootStep();
             }
 
@@ -112,6 +113,7 @@ namespace Controllers
                 }
                 else
                 {
+                    _soundController.PlayCrouch();
                     _characterMovement.Crouch();
                 }
             } 
@@ -126,11 +128,13 @@ namespace Controllers
             {
                 _gunController.AimCam();
                 _anim.Aimed(true);
+                _soundController.PlayBreathAimed();
                 _pickedUpController.ReleaseIfThereIsObject();
             }
             else 
             {
                 _gunController.DefaultCam();
+                _soundController.StopBreathSound();
                 _anim.Aimed(false);
               
             }

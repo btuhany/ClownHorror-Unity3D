@@ -46,12 +46,14 @@ namespace Controllers
 
         public bool IsShootable => !_isShooted;
         Animator _anim;
+        GunSoundController _soundController;
         
         public bool OnTransitionToAimCam { get => _onTransitionToAimCam; }
 
         private void Awake()
         {
             _anim = GetComponent<Animator>();
+            _soundController = GetComponent<GunSoundController>();
 
             _defaultFov = _fpsCam.fieldOfView;
             transform.position = _defaultGunPos.position;
@@ -112,7 +114,7 @@ namespace Controllers
         public void Shoot()
         {
             if (_isShooted) return;
-
+            _soundController.ShootingSound();
             _isShooted = true;
             _anim.SetTrigger("Fire");
             _recoil.RecoilEffect();
@@ -147,8 +149,8 @@ namespace Controllers
         }
         void ShootProcess(RaycastHit hit)
         {
-            
-            if(hit.collider.CompareTag("PickUpAble"))
+           
+            if (hit.collider.CompareTag("PickUpAble"))
             {
                 hit.collider.GetComponent<PickUpAble>().Throwed(hit.collider.transform.forward, _shotPower / 3);
             }

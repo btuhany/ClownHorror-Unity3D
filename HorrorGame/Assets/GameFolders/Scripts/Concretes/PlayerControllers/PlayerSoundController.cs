@@ -24,10 +24,14 @@ namespace Controllers
         [SerializeField] private List<AudioClip> _walkFootSteps = new List<AudioClip>();
         [SerializeField] private List<AudioClip> _runFootSteps = new List<AudioClip>();
         [SerializeField] private AudioClip _toggleLight;
+        [SerializeField] private AudioClip _breathAimed;
+        [SerializeField] private AudioClip _breathCrouch;
+        [SerializeField] private AudioClip _breathJump;
 
         private AudioSource _audioSource;
         private float _walkTimeCounter = 0;
         private float _runTimeCounter = 0;
+        private float _aimedBreathCounter = 0;
 
 
         private void Awake()
@@ -47,6 +51,11 @@ namespace Controllers
                 _runTimeCounter -= Time.deltaTime;
                 _runTimeCounter = Mathf.Max(0, _runTimeCounter);
             }
+            if(_aimedBreathCounter != 0)
+            {
+                _aimedBreathCounter -= Time.deltaTime;
+                _aimedBreathCounter = Mathf.Max(0, _aimedBreathCounter);
+            }
 
         }
 
@@ -64,10 +73,29 @@ namespace Controllers
             CreateSoundWaves(_runningSoundLevel, SoundType.Serious, _layer, this.gameObject);
             _runTimeCounter = _runTime;
         }
-
+        public void PlayBreathAimed()
+        {
+            if (_aimedBreathCounter > 0) return;
+            _audioSource.PlayOneShot(_breathAimed);
+            _aimedBreathCounter = 7.4f; //length of the clip
+        }
+        public void StopBreathSound()
+        {
+            if (_aimedBreathCounter == 0) return;
+            _aimedBreathCounter = 0f;
+            _audioSource.Stop();
+        }
         public void PlayToggleLight()
         {
             _audioSource.PlayOneShot(_toggleLight);
+        }
+        public void PlayCrouch()
+        {
+            _audioSource.PlayOneShot(_breathCrouch);
+        }
+        public void PlayJump()
+        {
+            _audioSource.PlayOneShot(_breathJump);
         }
         public void CreateSoundWaves(float range, SoundType soundType, LayerMask layer, GameObject gameObj)
         {
