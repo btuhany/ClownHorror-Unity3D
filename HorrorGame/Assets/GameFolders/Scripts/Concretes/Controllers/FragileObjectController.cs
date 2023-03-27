@@ -1,19 +1,22 @@
 using Abstracts;
-
+using Unity;
 using UnityEngine;
-
+using DG.Tweening;
 namespace Controllers
 {
     public class FragileObjectController : PickUpAble
     {
         [SerializeField] ParticleSystem _breakedFX;
+        [SerializeField] [Range(0.1f,0.7f)] float _destroyTime=0.3f;
         private void OnCollisionEnter(Collision collision)
         {
             if (IsThrowed)
             {
                 CreateTheSoundWave();
+                _breakedFX.transform.SetParent(null);
                 _breakedFX.Play();
-                Destroy(this.gameObject,0.5f);
+                transform.DOScale(Vector3.zero, _destroyTime);
+                Destroy(this.gameObject, _destroyTime);
             }
                 
         }

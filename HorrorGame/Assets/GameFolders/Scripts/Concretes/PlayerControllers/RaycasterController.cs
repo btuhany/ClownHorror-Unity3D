@@ -15,15 +15,23 @@ namespace Controllers
         bool _deactivateRaycasting;
         Targetable _currentTargetable;
         PickedUpObjectController _pickedUpObjController;
+        GunController _gunController;
 
         public bool DeactivateRaycasting { get => _deactivateRaycasting; set => _deactivateRaycasting = value; }
 
         private void Awake()
         {
             _pickedUpObjController = GetComponent<PickedUpObjectController>();
+            _gunController = GetComponentInChildren<GunController>();
         }
         private void Update()
         {
+            if (_gunController.IsAimed) 
+            { 
+                ResetCurrentTargetable();
+                
+                return; 
+            }
             if(_deactivateRaycasting) { return; }
             HandleRaycastActions();
         }
@@ -33,21 +41,25 @@ namespace Controllers
             {
                if(hit.collider.TryGetComponent(out Targetable currentTargetable))
                 {
-                    _currentTargetable= currentTargetable;
+                    if(_currentTargetable != currentTargetable)
+                        ResetCurrentTargetable();
+                    _currentTargetable = currentTargetable;
                     _currentTargetable.ToggleHighlight(true);
                 }
-                else if (_currentTargetable)
-                {
-                    _currentTargetable.ToggleHighlight(false);
-                    _currentTargetable = null;
-                }
+               else
+               {
+                    ResetCurrentTargetable();
+               }
+
 
             }
-            else if (_currentTargetable)
+            else
             {
-                _currentTargetable.ToggleHighlight(false);
-                _currentTargetable = null;
+
+                    ResetCurrentTargetable();
+
             }
+
 
         }
         public void InteractOrPickUp()
@@ -66,7 +78,16 @@ namespace Controllers
             }
         }
 
+        private void ResetCurrentTargetable()
+        {
+            if (_currentTargetable)
+            {
+                _currentTargetable.ToggleHighlight(false);
+                _currentTargetable = null;
+            }
+        }
 
+        
     }
 }
 

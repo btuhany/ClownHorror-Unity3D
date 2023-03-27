@@ -123,11 +123,13 @@ namespace Controllers
             {
                 _gunController.AimCam();
                 _anim.Aimed(true);
+                _pickedUpController.ReleaseIfThereIsObject();
             }
             else 
             {
                 _gunController.DefaultCam();
                 _anim.Aimed(false);
+              
             }
             if (_input.ThrowObj && _pickedUpController.IsThereObj)
             {

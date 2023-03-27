@@ -16,6 +16,13 @@ namespace Controllers
 
 
         public bool IsThereObj => _pickedUpObj;
+        public void ReleaseIfThereIsObject()
+        {
+            if(_pickedUpObj) 
+            {
+                ReleaseObject();
+            }
+        }
 
         public void ThrowObject(float force, Vector3 dir)
         {
@@ -23,7 +30,7 @@ namespace Controllers
             _pickedUpObj.Throwed((_grabPoint.forward + dir / 3), force); //groundMovement vector affects throwing
             _pickedUpObj = null;
             _pickedUpObjectRb = null;
-            _raycasterController.DeactivateRaycasting = false;
+            _raycasterController.DeactivateRaycasting = false;    //Raycaster normally controls it in InteractOrPickUp function
         }
         public bool PickUpOrDrop(PickUpAble pickUpAbleObj)  //return true if pickedup (for raycester to stop raycasting)
         {
@@ -43,6 +50,7 @@ namespace Controllers
             pickUpAbleObj.Grabbed();
             _pickedUpObj = pickUpAbleObj;
             _pickedUpObjectRb = pickUpAbleObj.Rb;
+            _raycasterController.DeactivateRaycasting = true;
 
         }
         private void ReleaseObject()
@@ -50,11 +58,13 @@ namespace Controllers
             _pickedUpObj.Released();
             _pickedUpObj = null;
             _pickedUpObjectRb = null;
+            _raycasterController.DeactivateRaycasting = false;
+
         }
         private void LateUpdate()
         {
             if (_pickedUpObj)
-            {
+            {           
                 Vector3 pos = _grabPoint.position - _pickedUpObj.transform.position;
                 Vector3 newVelocity = pos * _objectGrabbedMovingSpeed * pos.magnitude;
 
@@ -64,7 +74,7 @@ namespace Controllers
 
                 if(pos.magnitude> _maxReleaseDistance)
                 {
-                    _raycasterController.DeactivateRaycasting = false;
+
                     ReleaseObject();
                 }
             }

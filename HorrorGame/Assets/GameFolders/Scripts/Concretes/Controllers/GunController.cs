@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Managers;
+using Abstracts;
 
 namespace Controllers
 {
@@ -134,17 +135,29 @@ namespace Controllers
             Vector3 randomVector = new Vector3(randomX, randomY, 0);
             if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward + randomVector, out RaycastHit hit, _range, _layerMask))
             {
-                InstantiateBulletHoleFX(hit).transform.SetParent(hit.transform);
+                ShootProcess(hit);
             }
         }
         void AimedShoot()
         {
             if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward, out RaycastHit hit, _range, _layerMask))
             {
-                InstantiateBulletHoleFX(hit).transform.SetParent(hit.transform);
+                ShootProcess(hit);
             }
         }
-
+        void ShootProcess(RaycastHit hit)
+        {
+            
+            if(hit.collider.CompareTag("PickUpAble"))
+            {
+                hit.collider.GetComponent<PickUpAble>().Throwed(hit.collider.transform.forward, _shotPower / 3);
+            }
+            else if(hit.collider)
+            {
+                InstantiateBulletHoleFX(hit).transform.SetParent(hit.transform);
+            }
+            
+        }
         private void BulletCasingFx() //trigger on the animation event
         {
             
