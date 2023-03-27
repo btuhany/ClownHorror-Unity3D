@@ -16,17 +16,17 @@ public class CamRecoilEffectHandler : MonoBehaviour
     [SerializeField] private float _snapiness = 6;
     [SerializeField] private float _returnSpeed = 2;
 
-    private Vector3 _curentRotation;
-    private Vector3 _tragetRotation;
+    private Vector3 _currentRotation;
+    private Vector3 _targetRotation;
     private void Update()
     {
 
-        if (_tragetRotation != Vector3.zero)
-            _tragetRotation = Vector3.Lerp(_tragetRotation, Vector3.zero, _returnSpeed * Time.deltaTime);
-        if (_curentRotation != _tragetRotation)
+        if (_targetRotation != Vector3.zero)
+            _targetRotation = Vector3.Lerp(_targetRotation, Vector3.zero, _returnSpeed * Time.deltaTime);
+        if (_currentRotation != _targetRotation)
         {
-            _curentRotation = Vector3.Slerp(_curentRotation, _tragetRotation, _snapiness * Time.fixedDeltaTime);
-            transform.localRotation = Quaternion.Euler(_curentRotation);
+            _currentRotation = Vector3.Slerp(_currentRotation, _targetRotation, _snapiness * Time.fixedDeltaTime);
+            transform.localRotation = Quaternion.Euler(_currentRotation);
         }
 
 
@@ -37,6 +37,6 @@ public class CamRecoilEffectHandler : MonoBehaviour
         int randomSign = Random.Range(0, 2);
         if (randomSign == 0)
             randomSign = -1;
-        _tragetRotation += new Vector3(Random.Range(_minRecoilX, _maxRecoilX), Random.Range(_minRecoilY, _maxRecoilY) * randomSign, Random.Range(_minRecoilZ, _maxRecoilZ));
+        _targetRotation += new Vector3(Random.Range(_minRecoilX, _maxRecoilX), Random.Range(_minRecoilY, _maxRecoilY) * randomSign, Random.Range(_minRecoilZ, _maxRecoilZ));
     }
 }

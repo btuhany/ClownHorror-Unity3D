@@ -149,7 +149,14 @@ namespace Controllers
         }
         void ShootProcess(RaycastHit hit)
         {
-           
+            if(hit.collider.CompareTag("Enemy"))
+            {
+                if(hit.collider.TryGetComponent(out BulletHitEffectHandler enemyHead))
+                {
+                    enemyHead.HitImpact(hit);
+                }
+                
+            }
             if (hit.collider.CompareTag("PickUpAble"))
             {
                 hit.collider.GetComponent<PickUpAble>().Throwed(hit.collider.transform.forward, _shotPower / 3);

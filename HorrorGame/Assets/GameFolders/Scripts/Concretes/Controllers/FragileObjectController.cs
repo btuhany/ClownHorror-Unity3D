@@ -16,7 +16,7 @@ namespace Controllers
                 _breakedFX.transform.SetParent(null);
                 _breakedFX.Play();
                 transform.DOScale(Vector3.zero, _destroyTime);
-                Destroy(this.gameObject, _destroyTime);
+                Destroy(this.gameObject, _destroyTime+0.2f);
             }
                 
         }

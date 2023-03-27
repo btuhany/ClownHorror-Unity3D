@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - PickUpAble
+  - FxTemporaire
+  - Enemy
   layers:
   - Default
   - TransparentFX
