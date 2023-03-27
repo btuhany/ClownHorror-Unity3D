@@ -4,11 +4,11 @@ namespace Abstracts
 {
     public abstract class Targetable : MonoBehaviour
     {
-        [SerializeField] Light _objectHighlight;
+        [SerializeField] OutlineHighlight _objectHighlight;
 
         public void ToggleHighlight(bool activeState)
         {
-            _objectHighlight.gameObject.SetActive(activeState);
+            _objectHighlight.enabled = activeState;
         }
     }
 }

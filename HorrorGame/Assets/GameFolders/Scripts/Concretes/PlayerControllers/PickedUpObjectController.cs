@@ -7,8 +7,10 @@ namespace Controllers
     {
         [SerializeField] float _objectGrabbedMovingSpeed;
         [SerializeField] Transform _grabPoint;
+        [SerializeField] float _maxReleaseDistance=5f;
 
-
+        [SerializeField] RaycasterController _raycasterController;
+       
         PickUpAble _pickedUpObj;
         Rigidbody _pickedUpObjectRb;
 
@@ -21,6 +23,7 @@ namespace Controllers
             _pickedUpObj.Throwed((_grabPoint.forward + dir / 3), force); //groundMovement vector affects throwing
             _pickedUpObj = null;
             _pickedUpObjectRb = null;
+            _raycasterController.DeactivateRaycasting = false;
         }
         public bool PickUpOrDrop(PickUpAble pickUpAbleObj)  //return true if pickedup (for raycester to stop raycasting)
         {
@@ -57,6 +60,13 @@ namespace Controllers
 
                 _pickedUpObjectRb.MoveRotation(transform.rotation);
                 _pickedUpObjectRb.velocity = newVelocity;
+
+
+                if(pos.magnitude> _maxReleaseDistance)
+                {
+                    _raycasterController.DeactivateRaycasting = false;
+                    ReleaseObject();
+                }
             }
         }
         //private void Update()

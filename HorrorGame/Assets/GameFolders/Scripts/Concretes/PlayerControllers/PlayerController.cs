@@ -135,7 +135,6 @@ namespace Controllers
             }
             if (_input.Interact && !_gunController.OnTransitionToAimCam)
             {
-
                 _raycaster.InteractOrPickUp();
             }
 

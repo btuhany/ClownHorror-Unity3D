@@ -15,6 +15,9 @@ namespace Controllers
         bool _deactivateRaycasting;
         Targetable _currentTargetable;
         PickedUpObjectController _pickedUpObjController;
+
+        public bool DeactivateRaycasting { get => _deactivateRaycasting; set => _deactivateRaycasting = value; }
+
         private void Awake()
         {
             _pickedUpObjController = GetComponent<PickedUpObjectController>();
@@ -28,8 +31,16 @@ namespace Controllers
         {
             if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _interactDistance, _layer))  // ?Can check it with from layer
             {
-                _currentTargetable = hit.collider.GetComponent<Targetable>();
-                _currentTargetable.ToggleHighlight(true);
+               if(hit.collider.TryGetComponent(out Targetable currentTargetable))
+                {
+                    _currentTargetable= currentTargetable;
+                    _currentTargetable.ToggleHighlight(true);
+                }
+                else if (_currentTargetable)
+                {
+                    _currentTargetable.ToggleHighlight(false);
+                    _currentTargetable = null;
+                }
 
             }
             else if (_currentTargetable)
@@ -37,6 +48,7 @@ namespace Controllers
                 _currentTargetable.ToggleHighlight(false);
                 _currentTargetable = null;
             }
+
         }
         public void InteractOrPickUp()
         {

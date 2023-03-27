@@ -11,7 +11,7 @@ namespace Abstracts
 
         [SerializeField] float _soundRange;
         [SerializeField] LayerMask _soundWaveLayer; //who/which layer can hear
-        protected bool _isThrowed;
+        protected bool IsThrowed;
 
         Rigidbody _rb;
         public Rigidbody Rb { get => _rb; }
@@ -36,7 +36,7 @@ namespace Abstracts
         }
         public void Throwed(Vector3 dir, float force)
         {
-            _isThrowed = true;
+            IsThrowed = true;
             Released();
             _rb.AddForce(dir * force);
         }
