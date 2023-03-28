@@ -9,6 +9,7 @@ public enum AiStateId
     Idle,
     Wander,
     SeekPlayer,
-    GoToPoint
+    GoToPoint,
+    Stunned
 }
 

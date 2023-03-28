@@ -1,4 +1,5 @@
 using UnityEngine;
+using Sensors;
 
 namespace Mechanics
 {

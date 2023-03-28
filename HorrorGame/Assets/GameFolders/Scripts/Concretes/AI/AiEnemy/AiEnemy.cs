@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using Mechanics;
 using AI.States;
-using TMPro;
-
+using Sensors;
+using Controllers;
 namespace AI
 {
     [RequireComponent(typeof(NavMeshAgent))]
@@ -16,8 +16,10 @@ namespace AI
         AiEnemyDifficulties _currentDifficulty;
         AiStateMachine _stateMachine;
         NavMeshAgent _navMeshAgent;
+        EnemyHealthController _health;
         Animator _anim;
         public float[] CurrentMovementSpeeds;
+        
         private SightSensor _sightSensor;
         public Sound LastHeardSound;
 
@@ -27,6 +29,7 @@ namespace AI
         public NavMeshAgent NavMeshAgent { get => _navMeshAgent; }
         public AiStateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
         public Animator Anim { get => _anim; set => _anim = value; }
+        public EnemyHealthController Health { get => _health; set => _health = value; }
 
         private void Awake()
         {
@@ -34,6 +37,7 @@ namespace AI
             CurrentMovementSpeeds = _config.EasyMovementSpeeds;
             _sightSensor = GetComponent<SightSensor>();
             _anim = GetComponent<Animator>();
+            _health = GetComponent<EnemyHealthController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _stateMachine = new AiStateMachine(this);
             _stateMachine.RegisterState(new AiChasePlayerState(this));
@@ -41,9 +45,11 @@ namespace AI
             _stateMachine.RegisterState(new AiWanderState(this));
             _stateMachine.RegisterState(new AiSeekPlayerState(this));
             _stateMachine.RegisterState(new AiGoToPointState(this));
+            _stateMachine.RegisterState(new AiStunnedState(this));
         }
         private void OnEnable()
         {
+            _health.OnStunned += HandleOnStunned;
             _stateMachine.ChangeState(_initialState);
         }
         private void Update()
@@ -53,6 +59,7 @@ namespace AI
             {
                 LastHeardSound = null;
             }
+            Debug.Log(_stateMachine.CurrentState);
         }
         public void ChangeDifficulty(AiEnemyDifficulties newDifficulty)
         {
@@ -110,6 +117,10 @@ namespace AI
                 return hit.position;
             }
             return center;
+        }
+        private void HandleOnStunned()
+        {
+            _stateMachine.ChangeState(AiStateId.Stunned);
         }
     }
 

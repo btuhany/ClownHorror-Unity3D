@@ -7,6 +7,9 @@ namespace AI.States
         private AiEnemy Ai;
         private IAiState[] _states; //Enum's array that can used to switch between states.
         private AiStateId _currentState;  //Assigned at ChangeState
+
+        public AiStateId CurrentState { get => _currentState; }
+
         public AiStateMachine(AiEnemy enemy)   //Constructed at AiEnemy (gameobject).
         {
             Ai = enemy;
@@ -25,6 +28,7 @@ namespace AI.States
         }
         public void Update()
         {
+            
             GetState(_currentState)?.Update();
         }
         private IAiState GetState(AiStateId stateId)  //From the given enum, returns the matching state in the class from arr

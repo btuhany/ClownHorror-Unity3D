@@ -25,6 +25,8 @@ namespace AI
         [Range(0.1f, 15f)] public float SeekForwardDistance;
         [Range(0.5f, 3f)] public float SeekRandomSamplePointRange;
         [Range(1f,30f)] public float SeekTimeOut;
+        [Header("Stunned State")]
+        [Range(1f, 10f)] public float MaxStunTime;
 
         
         

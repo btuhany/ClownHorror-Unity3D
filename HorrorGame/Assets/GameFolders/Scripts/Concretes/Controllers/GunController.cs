@@ -2,10 +2,13 @@ using System.Collections;
 using UnityEngine;
 using Managers;
 using Abstracts;
-
+using Enums;
+using Handlers;
+using Mechanics;
+using Sensors;
 namespace Controllers
 {
-    public class GunController : MonoBehaviour
+    public class GunController : MonoBehaviour, ICreateSound
     {
         [Header("Shooting")]
         [SerializeField] float _aimlessShotRadius = 0.2f;
@@ -13,6 +16,10 @@ namespace Controllers
         [SerializeField] private Camera _fpsCam;
         [SerializeField] LayerMask _layerMask;
         [SerializeField] private float _shootCoolDown;
+        [Header("Sound Waves")]
+        [SerializeField] LayerMask _layer;
+        [SerializeField] float _shootRange;
+        [SerializeField] SoundType _soundType;
         [Header("RecoilFX")]
         [SerializeField] CamRecoilEffectHandler _recoil;
         [Header("FX")]
@@ -81,36 +88,7 @@ namespace Controllers
                 }
             }
         }
-        public void AimCam()
-        {
-           
-            _isOnDefaultCam = false;
-            if (Mathf.Abs(_camFovAtAim - _fpsCam.fieldOfView) < 0.02f)
-            {
 
-                return;
-            }
-            swayHandler.OnAimCamTransition();
-
-            _onTransitionToAimCam = true;
-
-            _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _camFovAtAim, Time.deltaTime * _aimCamFOVLerpSpeed);
-
-
-        }
-        public void DefaultCam()
-        {
-           
-            if (Mathf.Abs(_defaultFov - _fpsCam.fieldOfView) < 0.02f)
-            {
-                _isOnDefaultCam = true;
-                return;
-            }
-            _onTransitionToAimCam = false;
-            swayHandler.OnDefaultCamTransition();
-            _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _defaultFov, Time.deltaTime * _defaultFOVCamLerpSpeed);
-
-        }
         public void Shoot()
         {
             if (_isShooted) return;
@@ -118,6 +96,7 @@ namespace Controllers
             _isShooted = true;
             _anim.SetTrigger("Fire");
             _recoil.RecoilEffect();
+            CreateSoundWaves(_range, _soundType, _layer, this.gameObject);
             InstantiateMuzzleFX();
             InstantiateBullet();
             if(IsAimed)
@@ -151,11 +130,15 @@ namespace Controllers
         {
             if(hit.collider.CompareTag("Enemy"))
             {
-                if(hit.collider.TryGetComponent(out BulletHitEffectHandler enemyHead))
+                if(hit.collider.TryGetComponent(out BulletHitEffectHandler hitEffect))
                 {
-                    enemyHead.HitImpact(hit);
+                    hitEffect.HitImpact(hit);
                 }
-                
+                if (hit.collider.TryGetComponent(out DamageSensor enemy))
+                {
+                    enemy.TakeHit();
+                }
+
             }
             if (hit.collider.CompareTag("PickUpAble"))
             {
@@ -210,6 +193,42 @@ namespace Controllers
             yield return new WaitForSeconds(delay);
             ObjectPoolManager.Instance.SetPool(gameObj, objectID);
             yield return null;
+        }
+
+        public void CreateSoundWaves(float range, SoundType soundType, LayerMask layer, GameObject gameObj)
+        {
+            var sound = new Sound(transform.position, range, soundType, layer, gameObj);
+            Sounds.CreateWaves(sound);
+        }
+
+        public void AimCam()
+        {
+
+            _isOnDefaultCam = false;
+            if (Mathf.Abs(_camFovAtAim - _fpsCam.fieldOfView) < 0.02f)
+            {
+
+                return;
+            }
+            swayHandler.OnAimCamTransition();
+
+            _onTransitionToAimCam = true;
+
+            _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _camFovAtAim, Time.deltaTime * _aimCamFOVLerpSpeed);
+
+        }
+        public void DefaultCam()
+        {
+
+            if (Mathf.Abs(_defaultFov - _fpsCam.fieldOfView) < 0.02f)
+            {
+                _isOnDefaultCam = true;
+                return;
+            }
+            _onTransitionToAimCam = false;
+            swayHandler.OnDefaultCamTransition();
+            _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _defaultFov, Time.deltaTime * _defaultFOVCamLerpSpeed);
+
         }
     }
 

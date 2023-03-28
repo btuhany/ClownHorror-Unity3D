@@ -34,21 +34,25 @@ namespace AI.States
             _delayAfterRotate = _ai.Config.DelayAfterRotate;
             _forwardDistance = _ai.Config.SeekForwardDistance;
             _seekTimeout = _ai.Config.SeekTimeOut;
+            _isRotated = true;
+
         }
 
         public void Exit()
         {
-
+            
         }
 
         public void Update()
         {
+         
             _seekTimeout -= Time.deltaTime;
             if (_ai.IsPlayerInSight() || _ai.IsPlayerHeard())
                 _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
-
+     
             if (_isRotated)
-            {             
+            {
+              
                 _delayAfterRotate -= Time.deltaTime;
                 if (_delayAfterRotate < 0f)
                 {
@@ -56,13 +60,15 @@ namespace AI.States
                     {
                         _ai.StateMachine.ChangeState(AiStateId.Wander);
                     }
+             
                     GoForwardAtRandomDistance();
                     _delayAfterRotate = _ai.Config.DelayAfterRotate;
                     _isRotated = false;
                 } 
             }
             else if(_rotationTimer < 0f)
-            {              
+            {
+            
                 int randomDirectionIndex = Random.Range(1, 4);
                 float randomEuler = Random.Range(5, 91);
                 float oldRotation = _ai.transform.rotation.y;
@@ -79,7 +85,8 @@ namespace AI.States
                     _ai.Anim.SetTrigger("rotateRight");
             }
             else if (Vector3.Distance(_ai.transform.position, _tempDestination) < 0.2f)
-            { 
+            {
+               
                 _rotationTimer -= Time.deltaTime;
             }
         }        

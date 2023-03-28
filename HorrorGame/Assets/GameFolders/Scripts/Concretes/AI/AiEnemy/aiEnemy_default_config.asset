@@ -21,13 +21,14 @@ MonoBehaviour:
   NormalMovementSpeeds: []
   HardMovementSpeeds: []
   MaxSetDestTime: 0.54
-  ChasePlayerTimeout: 0
+  ChasePlayerTimeout: 1.74
   WanderRandomPointRadius: 15
   WanderRandomSamplePointRange: 2.074
   WanderForwardDistance: 10.75
   IdleWaitTime: 3
   MaxRotationTime: 1.11
-  DelayAfterRotate: 2.07
+  DelayAfterRotate: 1.04
   SeekForwardDistance: 4.47
   SeekRandomSamplePointRange: 1.98
-  SeekTimeOut: 9.6
+  SeekTimeOut: 4.7
+  MaxStunTime: 6.2
