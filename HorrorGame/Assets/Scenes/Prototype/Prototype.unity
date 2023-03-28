@@ -1066,6 +1066,7 @@ GameObject:
   - component: {fileID: 5924030370370935337}
   - component: {fileID: 407499501}
   - component: {fileID: 407499507}
+  - component: {fileID: 5924030370370935338}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1229,7 +1230,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 2.0435658
+  MinDistance: 2.0324185
   MaxDistance: 19.432888
   Pan2D: 0
   rolloffMode: 0
@@ -4586,7 +4587,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148694170317}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.99, y: 6.87, z: -15.1}
+  m_LocalPosition: {x: -56.2, y: 0.08, z: -59.9}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4668,7 +4669,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 666551594241724892}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: M1911 Magazine_Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4871,6 +4872,7 @@ MonoBehaviour:
   _playerTransform: {fileID: 407499502}
   _initialState: 4
   _config: {fileID: 11400000, guid: a9313718d9107034babfc04fff2abc4a, type: 2}
+  _combat: {fileID: 2715566404646840990}
   CurrentMovementSpeeds: []
 --- !u!114 &919132148694170319
 MonoBehaviour:
@@ -4957,7 +4959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0bbe684d17a3043948d291b1f885cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 12
+  _maxHealth: 18
   _regenaratingTimer: 4
 --- !u!1 &919132148741735727
 GameObject:
@@ -5236,7 +5238,7 @@ GameObject:
   - component: {fileID: 921090568446420177}
   - component: {fileID: 921090568443028721}
   - component: {fileID: 921090568444126769}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5258,9 +5260,9 @@ GameObject:
   - component: {fileID: 921090568443028723}
   - component: {fileID: 921090568444126771}
   - component: {fileID: 7931135121277141122}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HandGun
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5276,7 +5278,7 @@ GameObject:
   - component: {fileID: 921090568446420181}
   - component: {fileID: 921090568443028725}
   - component: {fileID: 921090568444126773}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5294,7 +5296,7 @@ GameObject:
   - component: {fileID: 921090568446420183}
   - component: {fileID: 921090568443028727}
   - component: {fileID: 921090568444126775}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CasingExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5312,7 +5314,7 @@ GameObject:
   - component: {fileID: 921090568446420191}
   - component: {fileID: 921090568443028735}
   - component: {fileID: 921090568444126783}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5494,7 +5496,7 @@ GameObject:
   - component: {fileID: 984043090429851803}
   - component: {fileID: 984043090426460347}
   - component: {fileID: 984043090427427451}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: M1911 Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6488,6 +6490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1852576807025932372}
+  - component: {fileID: 2715566404646840990}
   m_Layer: 7
   m_Name: mixamorig:RightHand
   m_TagString: Untagged
@@ -6495,6 +6498,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2715566404646840990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715566404646840989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983376151608af349b58692eb7d8ac0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layer:
+    serializedVersion: 2
+    m_Bits: 256
+  _radius: 0.85
+  IsAttacking: 0
 --- !u!1 &2742706977645230497
 GameObject:
   m_ObjectHideFlags: 0
@@ -8707,6 +8727,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd21e7b9d58dbdd4dbdbb130ddd4bd5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &5924030370370935338
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407499500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.2248306
+  m_Height: 3.5922575
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.5262475, z: 0.7248306}
 --- !u!1 &5924030371014918866
 GameObject:
   m_ObjectHideFlags: 0
@@ -9802,7 +9836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8144588d0b8fa4eae7b51381d57934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDamage: 4
+  _maxDamage: 6
   _enemy: {fileID: 919132148694170323}
 --- !u!1 &7492347805939649269
 GameObject:
@@ -9925,7 +9959,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2500524580220855097}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Magazine_Location
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10236,7 +10270,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 128
-  _shootRange: 40.4
+  _shootRange: 41.89
   _soundType: 2
   _recoil: {fileID: 1367222934}
   _barrelTransform: {fileID: 8574493023208317082}
@@ -10778,7 +10812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8574493023208317082}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel_Location
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10794,7 +10828,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8574721986917438062}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ejection_Location
   m_TagString: Untagged
   m_Icon: {fileID: 0}

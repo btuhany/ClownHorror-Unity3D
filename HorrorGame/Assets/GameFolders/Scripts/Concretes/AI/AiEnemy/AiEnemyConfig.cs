@@ -13,6 +13,7 @@ namespace AI
         [Header("Chase Player State")]
         [Range(0, 5f)] public float MaxSetDestTime;
         [Range(0, 5f)] public float ChasePlayerTimeout;
+        [Range(1f, 10f)] public float MaxAttackDistance;
         [Header("Wander/Roam State")]
         [Range(2f, 35f)] public float WanderRandomPointRadius;
         [Range(0.5f, 3f)] public float WanderRandomSamplePointRange;

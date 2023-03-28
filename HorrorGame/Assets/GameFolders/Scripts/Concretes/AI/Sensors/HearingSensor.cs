@@ -12,7 +12,7 @@ namespace Sensors
         public void Hear(Sound sound)
         {
             _ai.LastHeardSound = sound;
-            Debug.Log(sound.GameObject.name + sound.Type + sound.Pos);
+            // Debug.Log(sound.GameObject.name + sound.Type + sound.Pos);
         }
 
     }

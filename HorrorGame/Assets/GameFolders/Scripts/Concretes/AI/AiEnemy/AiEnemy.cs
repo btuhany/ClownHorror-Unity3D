@@ -4,6 +4,8 @@ using Mechanics;
 using AI.States;
 using Sensors;
 using Controllers;
+using System.Collections;
+
 namespace AI
 {
     [RequireComponent(typeof(NavMeshAgent))]
@@ -13,12 +15,13 @@ namespace AI
         [SerializeField] Transform _playerTransform;
         [SerializeField] AiStateId _initialState;
         [SerializeField] AiEnemyConfig _config;
+        [SerializeField] EnemyCombatController _combat;
         AiEnemyDifficulties _currentDifficulty;
         AiStateMachine _stateMachine;
         NavMeshAgent _navMeshAgent;
         EnemyHealthController _health;
         Animator _anim;
-        public float[] CurrentMovementSpeeds;
+        [HideInInspector] public float[] CurrentMovementSpeeds;
         
         private SightSensor _sightSensor;
         public Sound LastHeardSound;
@@ -30,6 +33,7 @@ namespace AI
         public AiStateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
         public Animator Anim { get => _anim; set => _anim = value; }
         public EnemyHealthController Health { get => _health; set => _health = value; }
+        public EnemyCombatController Combat { get => _combat; set => _combat = value; }
 
         private void Awake()
         {
@@ -50,6 +54,7 @@ namespace AI
         private void OnEnable()
         {
             _health.OnStunned += HandleOnStunned;
+            _health.OnHealthDecreased += HandleOnHealthDecreased;
             _stateMachine.ChangeState(_initialState);
         }
         private void Update()
@@ -121,6 +126,16 @@ namespace AI
         private void HandleOnStunned()
         {
             _stateMachine.ChangeState(AiStateId.Stunned);
+        }
+        private void HandleOnHealthDecreased()
+        {
+            _navMeshAgent.isStopped = true;
+            StartCoroutine(ContinueNavMesh());
+        }
+        private IEnumerator ContinueNavMesh()
+        {
+            yield return new WaitForSeconds(1);
+            _navMeshAgent.isStopped = false;
         }
     }
 

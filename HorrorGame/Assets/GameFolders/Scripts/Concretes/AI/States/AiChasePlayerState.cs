@@ -22,6 +22,19 @@ namespace AI.States
         {
             if(_ai.IsPlayerInSight())
             {
+                if (Vector3.Distance(_ai.transform.position, _ai.NavMeshAgent.destination) < _ai.Config.MaxAttackDistance)
+                {
+                    _ai.Combat.IsAttacking= true;
+                    _ai.NavMeshAgent.isStopped = true;
+                    _ai.Anim.SetTrigger("IsAttacked");
+                }
+                else if (_ai.NavMeshAgent.isStopped)
+                {
+                    _ai.Combat.IsAttacking = false;
+                    _ai.NavMeshAgent.isStopped = false;
+                    _ai.Anim.ResetTrigger("IsAttacked");
+                }
+
                 if (_isPlayerLost) //PlayerFound
                 {
                     OnPlayerFound();
@@ -63,6 +76,7 @@ namespace AI.States
         public void Enter()
         {
             OnPlayerFound();
+            _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
         }
 
         public void Exit()
@@ -82,6 +96,7 @@ namespace AI.States
         {
             _chasePlayerTimeout = _ai.Config.ChasePlayerTimeout;
             _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[0];
+            _setDestinationTimer = 0f;
             //Debug.Log("PlayerFound");
             _isPlayerLost = false;
         }
