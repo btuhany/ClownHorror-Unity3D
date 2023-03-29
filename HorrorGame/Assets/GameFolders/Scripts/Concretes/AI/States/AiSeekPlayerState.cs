@@ -28,6 +28,7 @@ namespace AI.States
 
         public void Enter()
         {
+            _ai.NavMeshAgent.ResetPath();
             _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[2];
             _rotationTimer = _ai.Config.MaxRotationTime;
             _tempDestination = _ai.transform.position;
@@ -40,7 +41,7 @@ namespace AI.States
 
         public void Exit()
         {
-            
+            _ai.NavMeshAgent.ResetPath();
         }
 
         public void Update()

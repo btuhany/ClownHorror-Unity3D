@@ -24,15 +24,7 @@ namespace AI.States
             {
                 if (Vector3.Distance(_ai.transform.position, _ai.NavMeshAgent.destination) < _ai.Config.MaxAttackDistance)
                 {
-                    _ai.Combat.IsAttacking= true;
-                    _ai.NavMeshAgent.isStopped = true;
-                    _ai.Anim.SetTrigger("IsAttacked");
-                }
-                else if (_ai.NavMeshAgent.isStopped)
-                {
-                    _ai.Combat.IsAttacking = false;
-                    _ai.NavMeshAgent.isStopped = false;
-                    _ai.Anim.ResetTrigger("IsAttacked");
+                    _ai.StateMachine.ChangeState(AiStateId.Attack);
                 }
 
                 if (_isPlayerLost) //PlayerFound

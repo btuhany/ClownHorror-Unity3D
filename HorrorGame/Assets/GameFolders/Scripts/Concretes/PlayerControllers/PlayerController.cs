@@ -19,6 +19,7 @@ namespace Controllers
 
 
         ArmsAnimationController _anim;
+        PlayerHealthController _health;
         GunController _gunController;
         RaycasterController _raycaster;
         HeadBobController _headbob;
@@ -42,6 +43,7 @@ namespace Controllers
             _flashLightController = GetComponentInChildren<FlashlightController>();
             _raycaster = GetComponent<RaycasterController>();
             _pickedUpController = GetComponent<PickedUpObjectController>();
+            _health = GetComponent<PlayerHealthController>();
             _input = new PcInput();
         }
         private void OnEnable()
@@ -54,6 +56,7 @@ namespace Controllers
         }
         private void Update()
         {
+            if(_health.IsDead) return;
             HandleInput();
         }
 

@@ -10,6 +10,7 @@ public enum AiStateId
     Wander,
     SeekPlayer,
     GoToPoint,
-    Stunned
+    Stunned,
+    Attack
 }
 
