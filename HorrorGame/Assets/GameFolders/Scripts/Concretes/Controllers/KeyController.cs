@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Abstracts;
 
 namespace Controllers
 {
@@ -9,9 +7,9 @@ namespace Controllers
         public override void Interact()
         {
             base.Interact();
-            
-
         }
+
+
 
     }
 

@@ -1,15 +1,18 @@
 using Abstracts;
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : Interactable
 {
+    [SerializeField] private CollectableID _requirementItem;
     bool _isOpened;
     public override void Interact()
     {
-        OpenOrClose();
+        if(PlayerInventoryManager.Instance.IsInInventory(_requirementItem))
+        {
+            OpenOrClose();
+
+        }
     }
     private void OpenOrClose()
     {

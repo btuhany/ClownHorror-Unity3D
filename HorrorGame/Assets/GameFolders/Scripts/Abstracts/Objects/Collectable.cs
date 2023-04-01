@@ -1,17 +1,21 @@
 
 using Abstracts;
-using System.Diagnostics;
 
-public abstract class Collectable : Interactable
+namespace Abstracts
 {
-    public override void Interact()
+    public abstract class Collectable : Interactable
     {
-        Collect();
-    }
-    protected virtual void Collect()
-    {
+        public CollectableID CollectableID;
+        public override void Interact()
+        {
+            Collect();
+        }
+        protected virtual void Collect()
+        {
+            PlayerInventoryManager.Instance.AddToList(this);
+            Destroy(this.gameObject);
+        }
 
-        Destroy(this.gameObject);
     }
 
 }
