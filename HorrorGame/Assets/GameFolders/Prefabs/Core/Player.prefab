@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1267428037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1267428038}
+  m_Layer: 8
+  m_Name: MuzzleFXLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1267428038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267428037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 0.079, z: 0.002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1104563511450447061}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &150303662486134368
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +472,8 @@ Transform:
   m_LocalPosition: {x: 0.000010589759, y: 0.098868065, z: 0.19291022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1267428038}
   m_Father: {fileID: 8458564586777290908}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3096,12 +3128,12 @@ MonoBehaviour:
   _shootRange: 41.89
   _soundType: 2
   _recoil: {fileID: 8766966205887489753}
-  _barrelTransform: {fileID: 1104563511450447061}
+  _barrelTransform: {fileID: 1267428038}
   _casinExitTransform: {fileID: 6564313716304342902}
   _shotPower: 5000
   ejectPower: 150
   _bulletHeadSetPoolDelay: 0.7
-  _muzzleFxSetPoolDelay: 0.5
+  _muzzleFxSetPoolDelay: 0.45
   _bulletHoleSetPoolDelay: 2.51
   _bulletCasinSetPoolDelay: 1
   _defaultGunPos: {fileID: 1101964881317995311}
@@ -3570,6 +3602,7 @@ GameObject:
   - component: {fileID: 8766966206014980915}
   - component: {fileID: 8766966206014980913}
   - component: {fileID: 8766966206014980912}
+  - component: {fileID: 8766966206675094609}
   m_Layer: 8
   m_Name: Spot Light
   m_TagString: Untagged
@@ -3669,6 +3702,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &8766966206675094609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8766966206014980916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &8766966206054875319
 GameObject:
   m_ObjectHideFlags: 0
@@ -4281,6 +4334,7 @@ GameObject:
   - component: {fileID: 8766966207364473148}
   - component: {fileID: 8766966207364473149}
   - component: {fileID: 8766966207364473145}
+  - component: {fileID: 1183612733}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4434,6 +4488,39 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1183612733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8766966207364473150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &8771207079525430742
 GameObject:
   m_ObjectHideFlags: 0

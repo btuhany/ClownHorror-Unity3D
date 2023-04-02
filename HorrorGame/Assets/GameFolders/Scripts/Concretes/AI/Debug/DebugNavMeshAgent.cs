@@ -33,7 +33,7 @@ namespace AI.DebugGizmos
             }
             if (Path)
             {
-                Gizmos.color = Color.black;
+                Gizmos.color = Color.white;
                 Vector3 prevCorner = _transform.position;
                 var agentPath = _agent.path;
                 foreach (var corner in agentPath.corners)

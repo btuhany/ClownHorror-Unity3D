@@ -23,13 +23,13 @@ MonoBehaviour:
   MaxSetDestTime: 0.54
   ChasePlayerTimeout: 1.74
   MaxAttackDistance: 3.98
-  WanderRandomPointRadius: 15
-  WanderRandomSamplePointRange: 2.074
-  WanderForwardDistance: 10.75
+  WanderRandomPointRadius: 9.6
+  WanderRandomSamplePointRange: 1.75
+  WanderForwardDistance: 9.75
   IdleWaitTime: 0.91
   MaxRotationTime: 1.11
   DelayAfterRotate: 1.04
-  SeekForwardDistance: 4.47
-  SeekRandomSamplePointRange: 1.98
+  SeekForwardDistance: 3.58
+  SeekRandomSamplePointRange: 1.92
   SeekTimeOut: 4.7
   MaxStunTime: 6.2

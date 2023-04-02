@@ -26,9 +26,10 @@ namespace AI.States
             if (_ai.IsPlayerInSight() || _ai.IsPlayerHeard())
                 _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
 
+ 
 
-           if (Vector3.Distance(_ai.transform.position,_tempDestination)<0.3f || !_ai.NavMeshAgent.hasPath)
-           {
+           if (Vector3.Distance(_ai.transform.position, _tempDestination) < 0.3f || !_ai.NavMeshAgent.hasPath) 
+            {
                 int randomNumber = Random.Range(1, 101);
                 if (randomNumber < 40)
                 {
@@ -43,7 +44,8 @@ namespace AI.States
 
       
            }
-
+            if (_ai.IsHeardSomething())
+                _ai.StateMachine.ChangeState(AiStateId.CheckNoise);
 
         }
 

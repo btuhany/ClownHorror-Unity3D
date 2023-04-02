@@ -25,6 +25,7 @@ namespace AI
         
         private SightSensor _sightSensor;
         public Sound LastHeardSound;
+        public Vector3 LastHeardSoundPos;
 
 
         public AiEnemyConfig Config { get => _config; }
@@ -51,6 +52,7 @@ namespace AI
             _stateMachine.RegisterState(new AiGoToPointState(this));
             _stateMachine.RegisterState(new AiStunnedState(this));
             _stateMachine.RegisterState(new AiAttackState(this));
+            _stateMachine.RegisterState(new AiCheckNoise(this));
         }
         private void OnEnable()
         {
@@ -63,6 +65,7 @@ namespace AI
             _stateMachine.Update();
             if(LastHeardSound!= null)  //LastHeardProcesses in stateMachine Updates
             {
+                LastHeardSoundPos = LastHeardSound.Pos;
                 LastHeardSound = null;
             }
             Debug.Log(_stateMachine.CurrentState);
@@ -105,6 +108,17 @@ namespace AI
             if (LastHeardSound != null)
             {
                 if (LastHeardSound.GameObject.CompareTag("Player"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool IsHeardSomething()
+        {
+            if(LastHeardSound != null)
+            {
+                if (!LastHeardSound.GameObject.CompareTag("Player"))
                 {
                     return true;
                 }

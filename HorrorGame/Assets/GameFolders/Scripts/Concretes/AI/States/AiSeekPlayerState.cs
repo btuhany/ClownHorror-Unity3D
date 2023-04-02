@@ -50,15 +50,26 @@ namespace AI.States
             _seekTimeout -= Time.deltaTime;
             if (_ai.IsPlayerInSight() || _ai.IsPlayerHeard())
                 _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
+
      
+            
+            
+            Debug.Log(_delayAfterRotate );
+            Debug.Log(_rotationTimer );
+            Debug.Log( _forwardDistance );
+            Debug.Log( _seekTimeout);
+
+
             if (_isRotated)
             {
-              
+                Debug.Log("123");
                 _delayAfterRotate -= Time.deltaTime;
                 if (_delayAfterRotate < 0f)
                 {
+                    Debug.Log("1234");
                     if (_seekTimeout < 0)  // dont change state while rotating
                     {
+                        
                         _ai.StateMachine.ChangeState(AiStateId.Wander);
                     }
              
@@ -69,7 +80,7 @@ namespace AI.States
             }
             else if(_rotationTimer < 0f)
             {
-            
+                Debug.Log("1");
                 int randomDirectionIndex = Random.Range(1, 4);
                 float randomEuler = Random.Range(5, 91);
                 float oldRotation = _ai.transform.rotation.y;
@@ -85,11 +96,13 @@ namespace AI.States
                 else
                     _ai.Anim.SetTrigger("rotateRight");
             }
-            else if (Vector3.Distance(_ai.transform.position, _tempDestination) < 0.2f)
+            else if (Vector3.Distance(_ai.transform.position, _tempDestination) < 0.3f)
             {
-               
+                Debug.Log("12");
                 _rotationTimer -= Time.deltaTime;
             }
+            if (_ai.IsHeardSomething())
+                _ai.StateMachine.ChangeState(AiStateId.CheckNoise);
         }        
         private Vector3 ForwardPointOnNavmesh(float distance,float samplePointRange)
         {

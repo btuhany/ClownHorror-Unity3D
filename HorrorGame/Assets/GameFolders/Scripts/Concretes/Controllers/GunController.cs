@@ -166,10 +166,12 @@ namespace Controllers
         private void InstantiateMuzzleFX()
         {
             GameObject newObjMuzzleFx = ObjectPoolManager.Instance.GetObjectFromPool(PoolObjectId.MuzzleFlashFx);
+            
             newObjMuzzleFx.transform.position = _barrelTransform.position;
             newObjMuzzleFx.transform.rotation = _barrelTransform.rotation;
             newObjMuzzleFx.SetActive(true);
-            newObjMuzzleFx.transform.SetParent(_barrelTransform);        //move pos after insantiating
+            newObjMuzzleFx.transform.SetParent(_barrelTransform); //move pos after insantiating
+
             StartCoroutine(SetToPool(newObjMuzzleFx, _muzzleFxSetPoolDelay, PoolObjectId.MuzzleFlashFx));
         }
         private void InstantiateBullet()

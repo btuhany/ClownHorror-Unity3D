@@ -2,24 +2,28 @@ using Enums;
 
 using UnityEngine;
 using Mechanics;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 
 namespace Abstracts
 {
     public abstract class PickUpAble : Targetable , ICreateSound
     {
 
+        [SerializeField] protected List<AudioClip> _throwedAudioClips;
         [SerializeField] float _soundRange;
         [SerializeField] LayerMask _soundWaveLayer; //who/which layer can hear
         protected bool IsThrowed;
-
+        protected AudioSource _audioSource;
+        public bool IsGrabbed;
         Rigidbody _rb;
         public Rigidbody Rb { get => _rb; }
+        
         
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         public void Grabbed()
@@ -27,15 +31,18 @@ namespace Abstracts
             _rb.velocity = Vector3.zero;
             _rb.freezeRotation = true;
             _rb.useGravity = false;
+            IsGrabbed = true;
         }
         public void Released()
         {
             _rb.velocity = Vector3.zero;
             _rb.freezeRotation = false;
             _rb.useGravity = true;
+            IsGrabbed = false;
         }
         public void Throwed(Vector3 dir, float force)
         {
+            IsGrabbed = false;
             IsThrowed = true;
             Released();
             _rb.AddForce(dir * force);
@@ -50,6 +57,7 @@ namespace Abstracts
             var sound = new Sound(transform.position, range, soundType, layer, gameObj);
             Sounds.CreateWaves(sound);
         }
+        
 
     }
 }

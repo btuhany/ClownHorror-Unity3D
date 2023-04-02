@@ -11,6 +11,7 @@ public enum AiStateId
     SeekPlayer,
     GoToPoint,
     Stunned,
-    Attack
+    Attack,
+    CheckNoise
 }
 
