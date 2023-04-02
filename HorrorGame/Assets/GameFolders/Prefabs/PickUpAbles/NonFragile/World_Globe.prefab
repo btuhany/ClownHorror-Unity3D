@@ -18,10 +18,10 @@ GameObject:
   - component: {fileID: 6043278411690644550}
   m_Layer: 10
   m_Name: World_Globe
-  m_TagString: Untagged
+  m_TagString: PickUpAble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6032706638873382931
 Transform:

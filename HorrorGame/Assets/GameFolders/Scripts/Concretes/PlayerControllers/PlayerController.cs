@@ -123,20 +123,30 @@ namespace Controllers
             } 
             if (_input.Fire && !_pickedUpController.IsThereObj )
             {
-                if (_gunController.IsShootable)
+                if(_gunController.IsShootable)
+                {
                     _anim.Shooted();
-                _gunController.Shoot();
+                    _gunController.Shoot();
+                }
+                else if(!PlayerInventoryManager.Instance.IsThereAmmo)
+                {
+                    _anim.NoAmmo();
+                }
+
 
             }
+            
             if (_input.Aim)
             {
                 _gunController.AimCam();
                 _anim.Aimed(true);
+                
                 _soundController.PlayBreathAimed();
                 _pickedUpController.ReleaseIfThereIsObject();
             }
             else 
             {
+                
                 _gunController.DefaultCam();
                 _soundController.StopBreathSound();
                 _anim.Aimed(false);

@@ -8,7 +8,7 @@ using Mechanics;
 using Sensors;
 namespace Controllers
 {
-    public class GunController : MonoBehaviour, ICreateSound
+    public class GunController : MonoBehaviour, ICreateSound   //cam transitions would be done with events
     {
         [Header("Shooting")]
         [SerializeField] float _aimlessShotRadius = 0.2f;
@@ -39,8 +39,8 @@ namespace Controllers
         [SerializeField] float _gunDefaultPosLerpSpeed;
         [SerializeField] float _aimCamFOVLerpSpeed;
         [SerializeField] float _defaultFOVCamLerpSpeed;
-
         [SerializeField] CamSwayHandler swayHandler;
+        [SerializeField] InGamePanel _inGamePanel;
         private float _shootCoolDownTimer;
         private bool _isShooted;
         private bool _onTransitionToAimCam;
@@ -51,7 +51,7 @@ namespace Controllers
         public bool IsAimed => _onTransitionToAimCam && !_isOnDefaultCam;
 
 
-        public bool IsShootable => !_isShooted;
+        public bool IsShootable => !_isShooted && PlayerInventoryManager.Instance.IsThereAmmo;
         Animator _anim;
         GunSoundController _soundController;
         
@@ -70,7 +70,8 @@ namespace Controllers
         private void Update()
         {
             if (_onTransitionToAimCam)
-            {         
+            {
+               
                 swayHandler.AimSway();
             }
             else if (_isOnDefaultCam)  //dont check onTransitionToDefaultCam because _swayHandler.WeaponSway also manipulates postion therefore prevents the transition.
@@ -92,6 +93,7 @@ namespace Controllers
         public void Shoot()
         {
             if (_isShooted) return;
+            PlayerInventoryManager.Instance.DecreaseAmmo(1);
             _soundController.ShootingSound();
             _isShooted = true;
             _anim.SetTrigger("Fire");
@@ -205,7 +207,6 @@ namespace Controllers
 
         public void AimCam()
         {
-
             _isOnDefaultCam = false;
             if (Mathf.Abs(_camFovAtAim - _fpsCam.fieldOfView) < 0.02f)
             {
@@ -213,7 +214,7 @@ namespace Controllers
                 return;
             }
             swayHandler.OnAimCamTransition();
-
+            _inGamePanel.HideCrossHair();
             _onTransitionToAimCam = true;
 
             _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _camFovAtAim, Time.deltaTime * _aimCamFOVLerpSpeed);
@@ -229,6 +230,7 @@ namespace Controllers
             }
             _onTransitionToAimCam = false;
             swayHandler.OnDefaultCamTransition();
+            _inGamePanel.UnhideCrossHair();
             _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _defaultFov, Time.deltaTime * _defaultFOVCamLerpSpeed);
 
         }

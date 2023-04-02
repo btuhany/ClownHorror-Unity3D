@@ -19,6 +19,7 @@ public class ArmsAnimationController : MonoBehaviour
     private int _isRunningHash;
     private int _isJumpedHash;
     private int _isInAirShoot;
+    private int _isNoAmmoHash;
     private void Awake()
     {
         _anim = GetComponentInChildren<Animator>();
@@ -27,6 +28,7 @@ public class ArmsAnimationController : MonoBehaviour
         _isRunningHash = Animator.StringToHash("IsRunning");
         _isJumpedHash = Animator.StringToHash("IsJumped");
         _isInAirShoot = Animator.StringToHash("IsInAirShoot");
+        _isNoAmmoHash = Animator.StringToHash("IsNoAmmo");
     }
     public void Aimed(bool isAimed)
     {
@@ -38,13 +40,20 @@ public class ArmsAnimationController : MonoBehaviour
         
         _anim.SetBool(_isAimedHash, isAimed);
     }
+    public void NoAmmo()
+    {
+        _anim.ResetTrigger(_isNoAmmoHash);
+        _anim.SetTrigger(_isNoAmmoHash);
+    }
     public void Shooted()
     {
+        
         if(_isJumped)
         {
             _anim.SetBool(_isInAirShoot, true);
             return;
         }
+        
         _anim.SetTrigger(_isShootedHash);
     }
     public void Running(bool isRunning)

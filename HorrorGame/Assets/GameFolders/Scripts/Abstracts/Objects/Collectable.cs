@@ -12,8 +12,8 @@ namespace Abstracts
         }
         protected virtual void Collect()
         {
-            PlayerInventoryManager.Instance.AddToList(this);
-            Destroy(this.gameObject);
+            
+            Destroy(this.gameObject,0.1f);
         }
 
     }

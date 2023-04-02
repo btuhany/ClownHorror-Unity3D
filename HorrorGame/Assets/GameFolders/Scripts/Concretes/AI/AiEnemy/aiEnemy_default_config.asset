@@ -22,7 +22,7 @@ MonoBehaviour:
   HardMovementSpeeds: []
   MaxSetDestTime: 0.54
   ChasePlayerTimeout: 1.74
-  MaxAttackDistance: 3.98
+  MaxAttackDistance: 3.21
   WanderRandomPointRadius: 9.6
   WanderRandomSamplePointRange: 1.75
   WanderForwardDistance: 9.75

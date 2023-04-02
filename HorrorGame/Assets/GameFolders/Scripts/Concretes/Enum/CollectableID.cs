@@ -3,5 +3,8 @@ public enum CollectableID
     Ammo,
     KeyBlue,
     KeyGreen,
-    KeyRed
+    KeyRed,
+    KeyBlack,
+    Fuel,
+    Firelighter,
 }

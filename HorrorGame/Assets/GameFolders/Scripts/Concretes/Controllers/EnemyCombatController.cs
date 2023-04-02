@@ -14,7 +14,7 @@ public class EnemyCombatController : MonoBehaviour
     {
         if (!IsAttacking) return;
         _isHit = Physics.CheckSphere(_attackHitSphere.position, _radius, _layer); //player layer
-        if(_isHit)
+        if (_isHit)
         {
             _playerHealth.DecreaseHealth();
         }
@@ -22,5 +22,11 @@ public class EnemyCombatController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(_attackHitSphere.position, _radius);
+    }
+    IEnumerator CheckHitBoxhWithDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        
+        yield return null;
     }
 }

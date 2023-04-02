@@ -31,8 +31,13 @@ public class AiAttackState : IAiState
     public void Update()
     {
         _ai.Anim.SetTrigger("IsAttacked");
-        LookAtPlayer();
-        if(Vector3.Distance(_ai.PlayerTransform.position,_ai.transform.position)>_ai.Config.MaxAttackDistance)
+        
+        if (Vector3.Distance(_ai.PlayerTransform.position, _ai.transform.position) > 5f)
+        {
+            LookAtPlayer();
+            Debug.Log(Vector3.Distance(_ai.PlayerTransform.position, _ai.transform.position));
+        }
+        if (Vector3.Distance(_ai.PlayerTransform.position,_ai.transform.position)>_ai.Config.MaxAttackDistance)
         {
             _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
         }
@@ -42,7 +47,7 @@ public class AiAttackState : IAiState
     void LookAtPlayer()
     {
         Vector3 playerPos = _ai.PlayerTransform.position;
-        Vector3 targetPos = new Vector3(playerPos.x, _ai.transform.position.y - 0.2f, playerPos.z);
+        Vector3 targetPos = new Vector3(playerPos.x, _ai.transform.position.y - 1f, playerPos.z);
         _ai.transform.LookAt(targetPos);
     }
 }
