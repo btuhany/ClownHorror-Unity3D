@@ -53,12 +53,18 @@ namespace AI
             _stateMachine.RegisterState(new AiStunnedState(this));
             _stateMachine.RegisterState(new AiAttackState(this));
             _stateMachine.RegisterState(new AiCheckNoise(this));
+            _stateMachine.RegisterState(new AiAgressiveChase(this));
         }
         private void OnEnable()
         {
             _health.OnStunned += HandleOnStunned;
             _health.OnHealthDecreased += HandleOnHealthDecreased;
             _stateMachine.ChangeState(_initialState);
+        }
+        private void OnDisable()
+        {
+            _health.OnStunned -= HandleOnStunned;
+            _health.OnHealthDecreased -= HandleOnHealthDecreased;
         }
         private void Update()
         {

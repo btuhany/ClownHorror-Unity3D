@@ -12,6 +12,7 @@ public enum AiStateId
     GoToPoint,
     Stunned,
     Attack,
-    CheckNoise
+    CheckNoise,
+    AggressiveChase
 }
 

@@ -14,7 +14,7 @@ namespace Abstracts
         [SerializeField] LayerMask _soundWaveLayer; //who/which layer can hear
         protected bool IsThrowed;
         protected AudioSource _audioSource;
-        public bool IsGrabbed;
+        protected bool IsGrabbed;
         Rigidbody _rb;
         public Rigidbody Rb { get => _rb; }
         

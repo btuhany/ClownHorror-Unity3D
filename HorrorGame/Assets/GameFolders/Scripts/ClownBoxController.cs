@@ -1,18 +1,64 @@
+using Abstracts;
+using Controllers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClownBoxController : MonoBehaviour
+public class ClownBoxController : PickUpAble
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] PickedUpObjectController _pickedUpController;
+    [SerializeField] float _maxBurnTime = 5f;
+
+    float _burnTimer;
+
+    bool _isBurning = false;
+    private void OnEnable()
     {
+        _burnTimer = _maxBurnTime;
+
+
+    }
+    private void Update()
+    {
+        if(_burnTimer<_maxBurnTime && !_isBurning)
+        {
+            _burnTimer += Time.deltaTime;
+        }
+        if (IsGrabbed)
+        {
+            //ses
+        }
         
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if(IsThrowed)
+        {
+            StartCoroutine(ResetIsThrowed());
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Fire"))
+        {
+            if(IsGrabbed)
+            {
+                _isBurning = true;
+                _burnTimer -= Time.deltaTime;
+                if(_burnTimer < 0)
+                {
+                    _pickedUpController.ReleaseObject();
+                    GameManager.Instance.ClownEvent();
+                    
+                }
+            }
+        }
+    }
+
+    IEnumerator ResetIsThrowed()
+    {
+        yield return new WaitForSeconds(2f);
+        IsThrowed = false;
+        yield return null;
     }
 }

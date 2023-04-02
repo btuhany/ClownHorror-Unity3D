@@ -53,7 +53,7 @@ namespace Controllers
             _raycasterController.DeactivateRaycasting = true;
 
         }
-        private void ReleaseObject()
+        public void ReleaseObject()
         {
             _pickedUpObj.Released();
             _pickedUpObj = null;
