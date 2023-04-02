@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using Abstracts;
 using UnityEngine;
-
-public class LastBarrelController : MonoBehaviour
+public class LastBarrelController : Interactable
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject _fire;
+    public override void Interact()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(PlayerInventoryManager.Instance.IsInInventory(CollectableID.Fuel) && PlayerInventoryManager.Instance.IsInInventory(CollectableID.Firelighter))
+        {
+            _fire.SetActive(true);
+            PlayerInventoryManager.Instance.RemoveFromList(CollectableID.Fuel);
+        }
+        else if(PlayerInventoryManager.Instance.IsInInventory(CollectableID.Fuel))
+        {
+            //need firelighter
+        }
+        else if(PlayerInventoryManager.Instance.IsInInventory(CollectableID.Firelighter))
+        {
+            //need Fuel
+        }
     }
 }

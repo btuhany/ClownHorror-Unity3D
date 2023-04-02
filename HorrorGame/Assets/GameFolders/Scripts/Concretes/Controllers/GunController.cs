@@ -41,6 +41,7 @@ namespace Controllers
         [SerializeField] float _defaultFOVCamLerpSpeed;
         [SerializeField] CamSwayHandler swayHandler;
         [SerializeField] InGamePanel _inGamePanel;
+        [SerializeField] private Camera _fpsArmsCam;
         private float _shootCoolDownTimer;
         private bool _isShooted;
         private bool _onTransitionToAimCam;
@@ -218,6 +219,7 @@ namespace Controllers
             _onTransitionToAimCam = true;
 
             _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _camFovAtAim, Time.deltaTime * _aimCamFOVLerpSpeed);
+            _fpsArmsCam.fieldOfView = _fpsCam.fieldOfView;
 
         }
         public void DefaultCam()
@@ -232,6 +234,7 @@ namespace Controllers
             swayHandler.OnDefaultCamTransition();
             _inGamePanel.UnhideCrossHair();
             _fpsCam.fieldOfView = Mathf.Lerp(_fpsCam.fieldOfView, _defaultFov, Time.deltaTime * _defaultFOVCamLerpSpeed);
+            _fpsArmsCam.fieldOfView = _fpsCam.fieldOfView;
 
         }
     }
