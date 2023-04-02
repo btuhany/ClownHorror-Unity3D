@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1124082712315103390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6623055537812701128}
-  m_Layer: 6
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6623055537812701128
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1124082712315103390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3169004345918967043}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2827127485832059222
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3202105328480224236}
   - component: {fileID: 3169004346755350276}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +63,7 @@ GameObject:
   - component: {fileID: 3169004345918967042}
   - component: {fileID: 3169004345918967040}
   - component: {fileID: 3169004345918967041}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: DoorBlack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +83,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3202105328480224236}
-  - {fileID: 6623055537812701128}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -131,7 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectHighlight: {fileID: 3169004345918967041}
-  _requirementItem: 1
+  _unlockAudio: {fileID: 8300000, guid: dce7413b79d06524ca7f242372fd3a90, type: 3}
+  _openAudio: {fileID: 8300000, guid: 3af05249fc838a44081a6eb9ad38cc6c, type: 3}
+  _closeAudio: {fileID: 8300000, guid: 661a6c6d24505b54894b9d80e5b25be3, type: 3}
+  _requirementItem: 4
 --- !u!65 &3169004345918967040
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -174,7 +145,7 @@ GameObject:
   - component: {fileID: 2861463148145268595}
   - component: {fileID: 8884684578928693749}
   - component: {fileID: 5731810665861298512}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: sol kol 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +228,7 @@ GameObject:
   - component: {fileID: 5026050023699171700}
   - component: {fileID: 6733437287838555075}
   - component: {fileID: 494228947603899331}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Cube.035
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +311,7 @@ GameObject:
   - component: {fileID: 6119116669281179772}
   - component: {fileID: 3851629498439285530}
   - component: {fileID: 8544918143420427137}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: "sa\u011F kol.001"
   m_TagString: Untagged
   m_Icon: {fileID: 0}

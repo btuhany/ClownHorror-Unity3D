@@ -21,6 +21,7 @@ public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager
     private AudioSource _audio;
     private void Awake()
     {
+        _audio = GetComponent<AudioSource>();
         SingletonThisObject(this);
         OnItemAcquired += HandleSoundsOnItemAcquired;
     }

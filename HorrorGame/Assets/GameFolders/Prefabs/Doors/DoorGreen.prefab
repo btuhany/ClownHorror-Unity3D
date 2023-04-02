@@ -328,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 8637004609616384773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.73, y: 0.05, z: -46.19}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3999996, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1048213687165831422}
@@ -348,7 +348,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectHighlight: {fileID: 3599653904924373999}
-  _requirementItem: 3
+  _unlockAudio: {fileID: 8300000, guid: dce7413b79d06524ca7f242372fd3a90, type: 3}
+  _openAudio: {fileID: 8300000, guid: 3af05249fc838a44081a6eb9ad38cc6c, type: 3}
+  _closeAudio: {fileID: 8300000, guid: 661a6c6d24505b54894b9d80e5b25be3, type: 3}
+  _requirementItem: 2
 --- !u!65 &3508170587699029834
 BoxCollider:
   m_ObjectHideFlags: 0
