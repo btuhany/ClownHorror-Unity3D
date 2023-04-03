@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity;
 using AI;
 using System.Collections;
+using System;
 
 namespace AI.States
 {
@@ -10,17 +11,28 @@ namespace AI.States
         float _setDestinationTimer;  // Set destination sample tiner
         float _chasePlayerTimeout;
         bool _isPlayerLost;
-        
+        bool _isNewChase=true;
         AiEnemy _ai;
 
         public AiChasePlayerState(AiEnemy enemy)
         {
             _ai = enemy;
+            _ai.Health.OnStunned += HandleOnStunned;
         }
+
+        private void HandleOnStunned()
+        {
+            _isNewChase = true;
+        }
+
         public AiStateId StateId => AiStateId.ChasePlayer;
+
+        public bool IsNewChase { get => _isNewChase; set => _isNewChase = value; }
+
         public void Update()   //use functions from AiEnemy?
         {
-            if(_ai.IsPlayerInSight())
+            
+            if (_ai.IsPlayerInSight())
             {
                 if (Vector3.Distance(_ai.transform.position, _ai.NavMeshAgent.destination) < _ai.Config.MaxAttackDistance)
                 {
@@ -51,7 +63,7 @@ namespace AI.States
             else if(!_isPlayerLost) //PlayerLost
             {
                 OnPlayerLost();
-
+                _ai.NavMeshAgent.SetDestination(_ai.LastHeardSound.Pos);
             }
 
 
@@ -60,7 +72,8 @@ namespace AI.States
                 _chasePlayerTimeout -= Time.deltaTime;
                 if (_chasePlayerTimeout < 0f)
                 {
-                   
+                    _ai.SoundController.ChaseOver();
+                    _isNewChase = true;
                     _ai.StateMachine.ChangeState(AiStateId.SeekPlayer);
                 }
             }
@@ -68,17 +81,26 @@ namespace AI.States
         }
         public void Enter()
         {
+
             OnPlayerFound();
             _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
-            SoundManager.Instance.EnemyActionSounds(0);
-            _ai.SoundController.PlayerFound();
+            
+            if(_isNewChase)
+            {
+                SoundManager.Instance.EnemyActionSounds(0);
+                _ai.SoundController.PlayerFound();
+                _isNewChase = false;
+            }
+                
+            
             
         }
 
         public void Exit()
         {
-            SoundManager.Instance.EnemyActionSounds(1);
-            _ai.SoundController.ChaseOver();
+            if(_isNewChase)
+                SoundManager.Instance.EnemyActionSounds(1);
+            
         }
 
 

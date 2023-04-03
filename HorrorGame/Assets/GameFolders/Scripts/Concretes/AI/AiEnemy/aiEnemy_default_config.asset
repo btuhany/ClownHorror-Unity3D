@@ -28,16 +28,16 @@ MonoBehaviour:
   HardMovementSpeeds:
   - 5
   - 7
-  - 8
-  - 10
-  - 25
+  - 9
+  - 12
+  - 24
   NormalSightAngle: 45
   HardSightAngle: 56
-  MaxSetDestTime: 0.54
-  EasyChaseTimeout: 3.4
+  MaxSetDestTime: 0
+  EasyChaseTimeout: 2.3
   NormalChaseTimeout: 1.4
   HardChaseTimeout: 0.2
-  MaxAttackDistance: 3.21
+  MaxAttackDistance: 3.3
   WanderRandomPointRadius: 9.6
   WanderRandomSamplePointRange: 1.75
   WanderForwardDistance: 9.75

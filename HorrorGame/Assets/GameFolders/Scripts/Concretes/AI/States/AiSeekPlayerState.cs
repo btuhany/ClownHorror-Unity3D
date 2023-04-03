@@ -28,6 +28,7 @@ namespace AI.States
 
         public void Enter()
         {
+            _ai.SoundController.Rotate();
             _ai.NavMeshAgent.ResetPath();
             _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[2];
             _rotationTimer = _ai.Config.MaxRotationTime;
@@ -97,6 +98,7 @@ namespace AI.States
                     _ai.Anim.SetTrigger("rotateLeft");
                 else
                     _ai.Anim.SetTrigger("rotateRight");
+                _ai.SoundController.Rotate();
             }
             else if (Vector3.Distance(_ai.transform.position, _tempDestination) < 0.3f)
             {

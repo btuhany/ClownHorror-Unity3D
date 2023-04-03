@@ -20,6 +20,7 @@ namespace AI.States
         public void Enter()
         {
             _ai.Anim.SetBool("IsStunned",true);
+            _ai.SoundController.StunAgonize();
             _stunTimer = _ai.Config.MaxStunTime;
             _ai.NavMeshAgent.SetDestination(_ai.transform.position);  //stop?  
             
@@ -27,7 +28,7 @@ namespace AI.States
 
         public void Exit()
         {
-         
+            _ai.SoundController.AgonizeEnd();
         }
 
         public void Update()
