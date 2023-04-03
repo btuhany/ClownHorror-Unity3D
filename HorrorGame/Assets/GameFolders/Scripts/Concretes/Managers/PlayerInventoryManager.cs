@@ -2,6 +2,7 @@ using Abstracts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager>
 {
@@ -14,6 +15,7 @@ public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager
     public CollectableID LastChangedItemID;
     public event System.Action OnAmmoChanged;
     public event System.Action OnItemAcquired;
+    public event System.Action OnItemRemoved;
     
     public int TotalAmmo { get => _totalAmmo; }
     public bool IsThereAmmo => _totalAmmo > 0;
@@ -33,12 +35,15 @@ public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager
     }
     public void RemoveFromList(CollectableID collectable)
     {
+       
         foreach (var item in _collectableInventory)
         {
             if (item.CollectableID == collectable)
             {
                 LastChangedItemID = collectable;
                 _collectableInventory.Remove(item);
+                OnItemRemoved?.Invoke();
+                break;
             }
         }
         

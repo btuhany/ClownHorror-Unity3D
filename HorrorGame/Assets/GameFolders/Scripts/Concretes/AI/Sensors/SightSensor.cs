@@ -1,4 +1,6 @@
 
+using AI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +8,7 @@ namespace Sensors
 {
     public class SightSensor : MonoBehaviour
     {
+        [SerializeField] AiEnemyConfig _config;
 
         [Header("Sight")]
         [SerializeField] Transform _eyeTransform;
@@ -38,8 +41,21 @@ namespace Sensors
 
         private void Start()
         {
+            GameManager.Instance.OnHardDiff += HandleOnHardDiff;
+            GameManager.Instance.OnNormalDiff += HandleOnNormalDiff;
             _scanInterval = 1.0f / _scanFreq;
         }
+
+        private void HandleOnNormalDiff()
+        {
+            _angle = _config.NormalSightAngle;
+        }
+
+        private void HandleOnHardDiff()
+        {
+            _angle = _config.HardSightAngle;
+        }
+
         private void Update()
         {
             _scanTimer -= Time.deltaTime;

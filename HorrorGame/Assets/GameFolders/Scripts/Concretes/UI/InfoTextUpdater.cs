@@ -12,9 +12,21 @@ public class InfoTextUpdater : MonoBehaviour
     {
         _text = GetComponent<TextMeshProUGUI>();
     }
-    private void Start()
+    private void OnEnable()
     {
         PlayerInventoryManager.Instance.OnItemAcquired += HandleOnItemAcquired;
+        PlayerInventoryManager.Instance.OnItemRemoved  += HandleOnItemRemoved;
+    }
+    void HandleOnItemRemoved()
+    {
+        CollectableID collectableID = PlayerInventoryManager.Instance.LastChangedItemID;
+        switch (collectableID)
+        {
+            case CollectableID.Fuel:
+                _text.SetText("Item 'Fuel' removed from your inventory.");
+                break;
+        }
+        StartCoroutine(TextFadeInAndOut());
     }
     void HandleOnItemAcquired()
     {
@@ -42,13 +54,12 @@ public class InfoTextUpdater : MonoBehaviour
             default:
                 break;
         }
-        _text.DOFade(1, 2f);
-        StartCoroutine(TextFadeOut());
-      
         
+        StartCoroutine(TextFadeInAndOut());
     }
-    IEnumerator TextFadeOut()
+    IEnumerator TextFadeInAndOut()
     {
+        _text.DOFade(1, 2f);
         yield return new WaitForSeconds(3.2f);
         _text.DOFade(0, 0.5f);
         yield return null;

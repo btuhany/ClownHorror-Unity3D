@@ -17,7 +17,7 @@ namespace AI.States
 
         public void Enter()
         {
-
+            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[1];
             _ai.NavMeshAgent.ResetPath();
             _ai.NavMeshAgent.SetDestination(_ai.LastHeardSoundPos);
         }

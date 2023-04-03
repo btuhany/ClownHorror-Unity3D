@@ -13,6 +13,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     [SerializeField] Transform[] _eventRandomEnemyPositions;
     [SerializeField] Transform _eventPlayerPos;
 
+    public event System.Action OnEventStarted;
     public event System.Action OnEventCompleted;
     private bool _isInEvent;
 
@@ -57,7 +58,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     }
     public void StartEvent()
     {
-        _enemy.StateMachine.ChangeState(AiStateId.AggressiveChase);
+        OnEventStarted?.Invoke();
         MoveGameObjectsToEventArea();
         _isInEvent = true;
     }

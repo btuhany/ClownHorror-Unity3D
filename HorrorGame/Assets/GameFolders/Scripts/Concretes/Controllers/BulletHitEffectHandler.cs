@@ -25,7 +25,7 @@ namespace Handlers
         }
         public void HitImpact(RaycastHit hit)
         {
-            Debug.Log(this.gameObject.name);
+           
             Vector3 normal = hit.normal;
             _targetPos += new Vector3(-normal.x, -normal.y, normal.z) / _headStrechScale;
         }

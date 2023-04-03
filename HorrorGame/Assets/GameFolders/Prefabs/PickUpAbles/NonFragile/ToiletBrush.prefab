@@ -30,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8448452409656443822}
-  m_LocalRotation: {x: -0.23777165, y: -0.6659314, z: -0.6659314, w: 0.23777162}
+  m_LocalRotation: {x: -0.23776965, y: -0.6659321, z: -0.6659321, w: 0.23776965}
   m_LocalPosition: {x: -32.263012, y: -2.6119494, z: 32.47017}
   m_LocalScale: {x: 8.250007, y: 8.250004, z: 8.250004}
   m_ConstrainProportionsScale: 0
@@ -211,7 +211,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.643
       inSlope: 0
       outSlope: 0
       tangentMode: 0

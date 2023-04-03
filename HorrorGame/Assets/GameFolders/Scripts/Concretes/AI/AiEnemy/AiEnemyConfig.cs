@@ -6,13 +6,19 @@ namespace AI
     [CreateAssetMenu()]
     public class AiEnemyConfig : ScriptableObject
     {
+        [Range(1f, 5f)] public float MaxStopTimeOnHealthDecrease;
         [Header("Movement Speeds")]  //Walk,FastWalk,Run,FastRun,Sprint
         public float[] EasyMovementSpeeds = new float[5];
         public float[] NormalMovementSpeeds = new float[5];
         public float[] HardMovementSpeeds = new float[5];
+        [Header("Sight Sensor")]
+        [Range(1, 150f)] public float NormalSightAngle;
+        [Range(1, 150f)] public float HardSightAngle;
         [Header("Chase Player State")]
         [Range(0, 5f)] public float MaxSetDestTime;
-        [Range(0, 5f)] public float ChasePlayerTimeout;
+        [Range(0, 30f)] public float EasyChaseTimeout;
+        [Range(0, 30f)] public float NormalChaseTimeout;
+        [Range(0, 30f)] public float HardChaseTimeout;
         [Range(1f, 10f)] public float MaxAttackDistance;
         [Header("Wander/Roam State")]
         [Range(2f, 35f)] public float WanderRandomPointRadius;
@@ -28,6 +34,7 @@ namespace AI
         [Range(1f,30f)] public float SeekTimeOut;
         [Header("Stunned State")]
         [Range(1f, 10f)] public float MaxStunTime;
+        
 
         
         

@@ -14,6 +14,7 @@ namespace AI
     {
         [SerializeField] Transform _playerTransform;
         [SerializeField] AiStateId _initialState;
+        [SerializeField] AiEnemyDifficulties _initalDifficulty;
         [SerializeField] AiEnemyConfig _config;
         [SerializeField] EnemyCombatController _combat;
         AiEnemyDifficulties _currentDifficulty;
@@ -22,10 +23,10 @@ namespace AI
         EnemyHealthController _health;
         Animator _anim;
         [HideInInspector] public float[] CurrentMovementSpeeds;
-        
+        [HideInInspector] public float ChaseStateTimeout;
         private SightSensor _sightSensor;
         public Sound LastHeardSound;
-        public Vector3 LastHeardSoundPos;
+        [HideInInspector] public Vector3 LastHeardSoundPos;
 
 
         public AiEnemyConfig Config { get => _config; }
@@ -38,8 +39,9 @@ namespace AI
 
         private void Awake()
         {
-            _currentDifficulty = AiEnemyDifficulties.Easy;
-            CurrentMovementSpeeds = _config.EasyMovementSpeeds;
+           
+            _currentDifficulty = _initalDifficulty;
+            SetInitialMovementSpeed();
             _sightSensor = GetComponent<SightSensor>();
             _anim = GetComponent<Animator>();
             _health = GetComponent<EnemyHealthController>();
@@ -57,10 +59,41 @@ namespace AI
         }
         private void OnEnable()
         {
+            ChaseStateTimeout = _config.EasyChaseTimeout;
+            ClownEventManager.Instance.OnEventStarted += HandleOnClownEvent;
+            GameManager.Instance.OnNormalDiff += HandleOnNormalDiff;
+            GameManager.Instance.OnHardDiff += HandleOnHardDiff;
             _health.OnStunned += HandleOnStunned;
             _health.OnHealthDecreased += HandleOnHealthDecreased;
             _stateMachine.ChangeState(_initialState);
         }
+        private void SetInitialMovementSpeed()
+        {
+            if (_initalDifficulty == AiEnemyDifficulties.Easy)
+            {
+                CurrentMovementSpeeds = _config.EasyMovementSpeeds;
+            }
+            else if (_initalDifficulty == AiEnemyDifficulties.Normal)
+            {
+                CurrentMovementSpeeds = _config.NormalMovementSpeeds;
+            }
+            else if (_initalDifficulty == AiEnemyDifficulties.Hard)
+            {
+                CurrentMovementSpeeds = _config.HardMovementSpeeds;
+            }
+        }
+        private void HandleOnHardDiff()
+        {
+            ChangeDifficulty(AiEnemyDifficulties.Hard);
+            ChaseStateTimeout = _config.HardChaseTimeout;
+        }
+
+        private void HandleOnNormalDiff()
+        {
+            ChangeDifficulty(AiEnemyDifficulties.Normal);
+            ChaseStateTimeout = _config.NormalChaseTimeout;
+        }
+
         private void OnDisable()
         {
             _health.OnStunned -= HandleOnStunned;
@@ -79,18 +112,19 @@ namespace AI
         public void ChangeDifficulty(AiEnemyDifficulties newDifficulty)
         {
             _currentDifficulty = newDifficulty;
-            if(_currentDifficulty == AiEnemyDifficulties.Easy)
+            if (_currentDifficulty == AiEnemyDifficulties.Easy)
             {
                 CurrentMovementSpeeds = _config.EasyMovementSpeeds;
             }
-            else if(_currentDifficulty == AiEnemyDifficulties.Normal)
+            else if (_currentDifficulty == AiEnemyDifficulties.Normal)
             {
                 CurrentMovementSpeeds = _config.NormalMovementSpeeds;
             }
-            else if(_currentDifficulty == AiEnemyDifficulties.Hard)
+            else if (_currentDifficulty == AiEnemyDifficulties.Hard)
             {
                 CurrentMovementSpeeds = _config.HardMovementSpeeds;
-            }   
+            }
+            
         }
 
 
@@ -144,6 +178,11 @@ namespace AI
             }
             return center;
         }
+        private void HandleOnClownEvent()
+        {
+            _stateMachine.ChangeState(AiStateId.AggressiveChase);
+         
+        }
         private void HandleOnStunned()
         {
             _stateMachine.ChangeState(AiStateId.Stunned);
@@ -155,7 +194,7 @@ namespace AI
         }
         private IEnumerator ContinueNavMesh()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(_config.MaxStopTimeOnHealthDecrease);
             _navMeshAgent.isStopped = false;
         }
     }

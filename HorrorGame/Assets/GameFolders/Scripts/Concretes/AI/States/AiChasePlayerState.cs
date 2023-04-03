@@ -55,7 +55,7 @@ namespace AI.States
             }
 
 
-            if (_isPlayerLost)
+            if (_isPlayerLost && !_ai.NavMeshAgent.hasPath)
             {
                 _chasePlayerTimeout -= Time.deltaTime;
                 if (_chasePlayerTimeout < 0f)
@@ -80,14 +80,14 @@ namespace AI.States
 
         void OnPlayerLost()
         {
-            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[1];            
+            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[3];            
           //  Debug.Log("PlayerLost");
             _isPlayerLost = true;
         }
         void OnPlayerFound()
         {
-            _chasePlayerTimeout = _ai.Config.ChasePlayerTimeout;
-            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[0];
+            _chasePlayerTimeout = _ai.ChaseStateTimeout;
+            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[2];
             _setDestinationTimer = 0f;
             //Debug.Log("PlayerFound");
             _isPlayerLost = false;

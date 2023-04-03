@@ -12,16 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb1fba5965669f42b5886146eeb6bd4, type: 3}
   m_Name: aiEnemy_default_config
   m_EditorClassIdentifier: 
+  MaxStopTimeOnHealthDecrease: 1.33
   EasyMovementSpeeds:
-  - 2
-  - 4.7
+  - 3
+  - 4.4
+  - 5.5
+  - 7
+  - 15
+  NormalMovementSpeeds:
+  - 4
+  - 6
+  - 7
   - 8
-  - 11.4
-  - 27.4
-  NormalMovementSpeeds: []
-  HardMovementSpeeds: []
+  - 20
+  HardMovementSpeeds:
+  - 5
+  - 7
+  - 8
+  - 10
+  - 25
+  NormalSightAngle: 45
+  HardSightAngle: 56
   MaxSetDestTime: 0.54
-  ChasePlayerTimeout: 1.74
+  EasyChaseTimeout: 3.4
+  NormalChaseTimeout: 1.4
+  HardChaseTimeout: 0.2
   MaxAttackDistance: 3.21
   WanderRandomPointRadius: 9.6
   WanderRandomSamplePointRange: 1.75
@@ -32,4 +47,4 @@ MonoBehaviour:
   SeekForwardDistance: 3.58
   SeekRandomSamplePointRange: 1.92
   SeekTimeOut: 4.7
-  MaxStunTime: 6.2
+  MaxStunTime: 5.33

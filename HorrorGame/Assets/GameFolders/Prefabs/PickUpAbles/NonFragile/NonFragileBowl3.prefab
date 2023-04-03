@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 5931148315459638026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -59.854, y: 1.102, z: 50.17}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5931148314852169623}
@@ -161,7 +161,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.643
       inSlope: 0
       outSlope: 0
       tangentMode: 0

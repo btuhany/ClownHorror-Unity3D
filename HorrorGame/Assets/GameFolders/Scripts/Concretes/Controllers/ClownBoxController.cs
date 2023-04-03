@@ -7,60 +7,59 @@ using UnityEngine;
 public class ClownBoxController : PickUpAble
 {
     [SerializeField] PickedUpObjectController _pickedUpController;
+    [SerializeField] List<AudioClip> _audioClips = new List<AudioClip>();
     [SerializeField] float _maxBurnTime = 5f;
 
+    AudioSource _audio;
     float _burnTimer;
 
-    bool _isBurning = false;
+
+
     private void OnEnable()
     {
+        _audio = GetComponent<AudioSource>();
         _burnTimer = _maxBurnTime;
+        _audio.clip = _audioClips[0];
+        _audio.Play();
 
 
     }
-    private void Update()
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(_burnTimer<_maxBurnTime && !_isBurning)
+        if (other.CompareTag("Fire") && IsGrabbed)
         {
-            _burnTimer += Time.deltaTime;
-        }
-        if (IsGrabbed)
-        {
-            //ses
-        }
-        
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(IsThrowed)
-        {
-            StartCoroutine(ResetIsThrowed());
+            SoundManager.Instance.PlaySound(0);
+            _audio.Stop();
+            _audio.clip = _audioClips[1];
+            _audio.Play();
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Fire"))
+        if(other.CompareTag("Fire") && IsGrabbed)
         {
-            if(IsGrabbed)
+
+           
+            _burnTimer -= Time.deltaTime;
+            if(_burnTimer < 0)
             {
-                _isBurning = true;
-                _burnTimer -= Time.deltaTime;
-                if(_burnTimer < 0)
-                {
-                    _pickedUpController.ReleaseObject();
-                    GameManager.Instance.ClownEvent();
-                    Destroy(other.gameObject, 0.2f);
-                    Destroy(this.gameObject, 0.5f);
+                _pickedUpController.ReleaseObject();
+                GameManager.Instance.ClownEvent();
+                Destroy(other.gameObject, 0.2f);
+                Destroy(this.gameObject, 0.5f);
                     
-                }
             }
+            
         }
     }
-
-    IEnumerator ResetIsThrowed()
+    private void OnTriggerExit(Collider other)
     {
-        yield return new WaitForSeconds(2f);
-        IsThrowed = false;
-        yield return null;
+       
+        _burnTimer = _maxBurnTime;
+        _audio.Stop();
+        _audio.clip = _audioClips[0];
+        _audio.Play();
     }
+
 }

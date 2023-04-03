@@ -35,7 +35,7 @@ public class AiAttackState : IAiState
         if (Vector3.Distance(_ai.PlayerTransform.position, _ai.transform.position) > 5f)
         {
             LookAtPlayer();
-            Debug.Log(Vector3.Distance(_ai.PlayerTransform.position, _ai.transform.position));
+            
         }
         if (Vector3.Distance(_ai.PlayerTransform.position,_ai.transform.position)>_ai.Config.MaxAttackDistance)
         {

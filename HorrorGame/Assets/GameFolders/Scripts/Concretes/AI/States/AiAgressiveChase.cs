@@ -15,7 +15,7 @@ public class AiAgressiveChase : IAiState
 
     public void Enter()
     {
-        
+        _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[4];
     }
 
     public void Exit()

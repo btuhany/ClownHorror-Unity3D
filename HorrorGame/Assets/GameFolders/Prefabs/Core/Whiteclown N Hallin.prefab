@@ -2004,7 +2004,7 @@ Transform:
   m_GameObject: {fileID: 6942553516803922857}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -56.2, y: 0.08, z: -59.9}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 3, y: 2.8, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2829216882505195911}
@@ -2026,9 +2026,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 0}
   _initialState: 2
+  _initalDifficulty: 2
   _config: {fileID: 11400000, guid: a9313718d9107034babfc04fff2abc4a, type: 2}
   _combat: {fileID: 6942553516803922864}
   CurrentMovementSpeeds: []
+  ChaseStateTimeout: 0
+  LastHeardSoundPos: {x: 0, y: 0, z: 0}
 --- !u!114 &6942553516803922871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2042,7 +2045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 18
-  _regenaratingTimer: 4
+  _regenaratingTimer: 7
 --- !u!114 &6942553516803922864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2059,7 +2062,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 256
-  _radius: 1.23
+  _radius: 2.12
   _playerHealth: {fileID: 0}
   IsAttacking: 0
 --- !u!114 &6942553516803922868
@@ -2086,10 +2089,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a59de5f1687cd7344a727563cd0b1f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: a9313718d9107034babfc04fff2abc4a, type: 2}
   _eyeTransform: {fileID: 4431443044579529616}
-  _distance: 15
-  _angle: 59.6
-  _height: 3.96
+  _distance: 29.1
+  _angle: 27
+  _height: 5.34
   _count: 4
   _scanFreq: 46
   _scanInterval: 0.02173913
@@ -2107,12 +2111,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6942553516803922857}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bab126bc036ed4147bdb2c7ff01ab93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshColor: {r: 1, g: 0, b: 0, a: 0}
+  _meshColor: {r: 1, g: 0, b: 0, a: 0.70980394}
   _sensor: {fileID: 6942553516803922869}
   _transform: {fileID: 7715571126084878611}
 --- !u!114 &6942553516803922859
@@ -2130,8 +2134,8 @@ MonoBehaviour:
   Velocity: 1
   DesiredVelocity: 1
   Path: 1
-  SeekForwDist: 0
-  WanderRadius: 0
+  SeekForwDist: 1
+  WanderRadius: 1
   _ai: {fileID: 6942553516803922858}
   _agent: {fileID: 7825442448065275584}
   _transform: {fileID: 7715571126084878611}
@@ -2165,7 +2169,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6942553516803922857}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 0.37
   m_Speed: 5.26
   m_Acceleration: 50
   avoidancePriority: 50
@@ -2174,7 +2178,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.9
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
@@ -2299,7 +2303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7825442449030130919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.574, z: -0.02}
+  m_LocalPosition: {x: 0, y: -0.147, z: 0.275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

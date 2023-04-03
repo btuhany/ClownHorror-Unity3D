@@ -22,6 +22,7 @@ namespace AI.States
             _ai.Anim.SetBool("IsStunned",true);
             _stunTimer = _ai.Config.MaxStunTime;
             _ai.NavMeshAgent.SetDestination(_ai.transform.position);  //stop?  
+            
         }
 
         public void Exit()

@@ -23,7 +23,7 @@ namespace Controllers
         }
         private void Update()
         {
-            if (_currentHealth < 0 && !_isStunned)
+            if (_currentHealth <= 0 && !_isStunned)
             {
                 _isStunned = true;
                 OnStunned?.Invoke();
@@ -40,7 +40,8 @@ namespace Controllers
         {
             if (_isStunned) return;
             _currentHealth -= damage;
-            OnHealthDecreased?.Invoke();
+            if(_currentHealth > 0)
+                OnHealthDecreased?.Invoke();
         }
         void RegenerateHealth()
         {

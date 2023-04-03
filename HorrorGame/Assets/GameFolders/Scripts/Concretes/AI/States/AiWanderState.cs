@@ -51,7 +51,7 @@ namespace AI.States
 
         public void Enter()
         {
-            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[1];
+            _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[0];
             _forwardDistance = _ai.Config.WanderForwardDistance;
             _tempDestination = _ai.transform.position;
         }
