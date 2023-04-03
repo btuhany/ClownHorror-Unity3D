@@ -5,8 +5,8 @@ using UnityEngine;
 
 public enum AiStateId
 {
-    ChasePlayer,
     Idle,
+    ChasePlayer,
     Wander,
     SeekPlayer,
     GoToPoint,

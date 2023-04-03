@@ -60,6 +60,7 @@ namespace AI.States
                 _chasePlayerTimeout -= Time.deltaTime;
                 if (_chasePlayerTimeout < 0f)
                 {
+                   
                     _ai.StateMachine.ChangeState(AiStateId.SeekPlayer);
                 }
             }
@@ -69,11 +70,15 @@ namespace AI.States
         {
             OnPlayerFound();
             _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
+            SoundManager.Instance.EnemyActionSounds(0);
+            _ai.SoundController.PlayerFound();
+            
         }
 
         public void Exit()
         {
-
+            SoundManager.Instance.EnemyActionSounds(1);
+            _ai.SoundController.ChaseOver();
         }
 
 
@@ -83,6 +88,7 @@ namespace AI.States
             _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[3];            
           //  Debug.Log("PlayerLost");
             _isPlayerLost = true;
+            
         }
         void OnPlayerFound()
         {
@@ -91,6 +97,7 @@ namespace AI.States
             _setDestinationTimer = 0f;
             //Debug.Log("PlayerFound");
             _isPlayerLost = false;
+            
         }
 
     }

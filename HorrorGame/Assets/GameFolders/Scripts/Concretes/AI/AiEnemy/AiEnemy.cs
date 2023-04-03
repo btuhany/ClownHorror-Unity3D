@@ -22,6 +22,7 @@ namespace AI
         NavMeshAgent _navMeshAgent;
         EnemyHealthController _health;
         Animator _anim;
+        AiSoundController _soundController;
         [HideInInspector] public float[] CurrentMovementSpeeds;
         [HideInInspector] public float ChaseStateTimeout;
         private SightSensor _sightSensor;
@@ -32,10 +33,11 @@ namespace AI
         public AiEnemyConfig Config { get => _config; }
         public Transform PlayerTransform { get => _playerTransform; }
         public NavMeshAgent NavMeshAgent { get => _navMeshAgent; }
-        public AiStateMachine StateMachine { get => _stateMachine; set => _stateMachine = value; }
-        public Animator Anim { get => _anim; set => _anim = value; }
-        public EnemyHealthController Health { get => _health; set => _health = value; }
-        public EnemyCombatController Combat { get => _combat; set => _combat = value; }
+        public AiStateMachine StateMachine { get => _stateMachine;  }
+        public Animator Anim { get => _anim;  }
+        public EnemyHealthController Health { get => _health;  }
+        public EnemyCombatController Combat { get => _combat;  }
+        public AiSoundController SoundController { get => _soundController; }
 
         private void Awake()
         {
@@ -46,9 +48,10 @@ namespace AI
             _anim = GetComponent<Animator>();
             _health = GetComponent<EnemyHealthController>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _soundController = GetComponent<AiSoundController>();
             _stateMachine = new AiStateMachine(this);
-            _stateMachine.RegisterState(new AiChasePlayerState(this));
             _stateMachine.RegisterState(new AiIdleState(this));
+            _stateMachine.RegisterState(new AiChasePlayerState(this));
             _stateMachine.RegisterState(new AiWanderState(this));
             _stateMachine.RegisterState(new AiSeekPlayerState(this));
             _stateMachine.RegisterState(new AiGoToPointState(this));
@@ -65,7 +68,7 @@ namespace AI
             GameManager.Instance.OnHardDiff += HandleOnHardDiff;
             _health.OnStunned += HandleOnStunned;
             _health.OnHealthDecreased += HandleOnHealthDecreased;
-            _stateMachine.ChangeState(_initialState);
+           _stateMachine.ChangeState(_initialState);
         }
         private void SetInitialMovementSpeed()
         {

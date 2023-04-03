@@ -29,7 +29,7 @@ public class ClownBoxController : PickUpAble
     {
         if (other.CompareTag("Fire") && IsGrabbed)
         {
-            SoundManager.Instance.PlaySound(0);
+            SoundManager.Instance.PlaySoundFromSingleSource(0);
             _audio.Stop();
             _audio.clip = _audioClips[1];
             _audio.Play();

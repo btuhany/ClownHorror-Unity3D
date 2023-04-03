@@ -36,12 +36,14 @@ namespace AI.States
             _forwardDistance = _ai.Config.SeekForwardDistance;
             _seekTimeout = _ai.Config.SeekTimeOut;
             _isRotated = true;
-
+            
         }
 
         public void Exit()
         {
             _ai.NavMeshAgent.ResetPath();
+            _ai.Anim.ResetTrigger("rotateLeft");
+            _ai.Anim.ResetTrigger("rotateRight");
         }
 
         public void Update()

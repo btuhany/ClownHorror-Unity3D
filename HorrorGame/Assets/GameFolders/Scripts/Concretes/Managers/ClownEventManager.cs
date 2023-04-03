@@ -35,6 +35,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     {
         _isInEvent = false;
         OnEventCompleted?.Invoke();
+        SoundManager.Instance.PlaySoundFromSingleSource(1);
         MoveGameObjectsToLastPositions();
         
 

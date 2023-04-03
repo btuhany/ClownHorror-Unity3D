@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class SoundManager : SingletonMonoObject<SoundManager>
 {
-    [SerializeField] AudioSource[] _audioSources;
+    [SerializeField] AudioClip[] _enemyActionAudioClips;
+    AudioSource[] _audioSources;
     private void Awake()
     {
         SingletonThisObject(this);
         _audioSources = GetComponentsInChildren<AudioSource>();
     }
-    public void PlaySound(int index)
+    public void PlaySoundFromSingleSource(int index)
     {
         _audioSources[index].Play();
+    }
+    public void EnemyActionSounds(int index)
+    {
+        _audioSources[2].PlayOneShot(_enemyActionAudioClips[index]);
     }
 
 

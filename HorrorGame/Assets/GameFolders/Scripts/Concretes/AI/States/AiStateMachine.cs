@@ -4,7 +4,7 @@ namespace AI.States
 {
     public class AiStateMachine
     {
-        private AiEnemy Ai;
+    
         private IAiState[] _states; //Enum's array that can used to switch between states.
         private AiStateId _currentState;  //Assigned at ChangeState
 
@@ -12,7 +12,7 @@ namespace AI.States
 
         public AiStateMachine(AiEnemy enemy)   //Constructed at AiEnemy (gameobject).
         {
-            Ai = enemy;
+           
             CreateEnumArray();
         }
         public void ChangeState(AiStateId newState)
