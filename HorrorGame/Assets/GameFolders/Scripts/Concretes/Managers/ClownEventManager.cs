@@ -24,6 +24,17 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     {
         SingletonThisObject(this);
     }
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameRestart += HandleOnGameRestart;
+
+    }
+
+    private void HandleOnGameRestart()
+    {
+        _isInEvent = false;
+    }
+
     private void Update()
     {
         if(_isInEvent && _enemy.StateMachine.CurrentState == AiStateId.Stunned)

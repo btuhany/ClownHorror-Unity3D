@@ -10,12 +10,19 @@ public class InfoTextUpdater : MonoBehaviour
     TextMeshProUGUI _text;
     private void Awake()
     {
+        StopAllCoroutines();
         _text = GetComponent<TextMeshProUGUI>();
     }
     private void OnEnable()
     {
         PlayerInventoryManager.Instance.OnItemAcquired += HandleOnItemAcquired;
         PlayerInventoryManager.Instance.OnItemRemoved  += HandleOnItemRemoved;
+        
+    }
+    private void OnDisable()
+    {
+        PlayerInventoryManager.Instance.OnItemAcquired -= HandleOnItemAcquired;
+        PlayerInventoryManager.Instance.OnItemRemoved -= HandleOnItemRemoved;
     }
     void HandleOnItemRemoved()
     {
@@ -34,28 +41,28 @@ public class InfoTextUpdater : MonoBehaviour
         switch (collectableID)
         {
             case CollectableID.KeyBlue:
-                _text.SetText("Item 'Blue Key' Acquired");
+                _text.SetText("Item 'Blue Key' acquired");
                 break;
             case CollectableID.KeyGreen:
-                _text.SetText("Item 'Green Key' Acquired");
+                _text.SetText("Item 'Green Key' acquired");
                 break;
             case CollectableID.KeyRed:
-                _text.SetText("Item 'Red Key' Acquired");
+                _text.SetText("Item 'Red Key' acquired");
                 break;
             case CollectableID.KeyBlack:
-                _text.SetText("Item 'Black Key' Acquired");
+                _text.SetText("Item 'Black Key' acquired");
                 break;
             case CollectableID.Fuel:
-                _text.SetText("Item 'Fuel' Acquired. Use it with an unused barrel to make fire");
+                _text.SetText("Item 'Fuel' acquired. Use it with an unused barrel to make fire");
                 break;
             case CollectableID.Firelighter:
-                _text.SetText("Item 'Firelighter' Acquired. Use it with an unused barrel to make fire");
+                _text.SetText("Item 'Firelighter' acquired. Use it with an unused barrel to make fire");
                 break;
             default:
                 break;
         }
         
-        StartCoroutine(TextFadeInAndOut());
+       StartCoroutine(TextFadeInAndOut());
     }
     public void DoorLocked(CollectableID key)
     {

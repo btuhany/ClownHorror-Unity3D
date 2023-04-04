@@ -1,7 +1,9 @@
 using Abstracts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager>
@@ -10,7 +12,7 @@ public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager
     [SerializeField] List<AudioClip> _audioClips = new List<AudioClip>(); 
     [Header("Ammo")]
     [SerializeField] int _ammoIncrement = 5;
-    private List<Collectable> _collectableInventory = new List<Collectable>();
+     List<CollectableID> _collectableInventory = new List<CollectableID>();
     private int _totalAmmo = 0;
     public CollectableID LastChangedItemID;
     public event System.Action OnAmmoChanged;
@@ -25,22 +27,32 @@ public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager
     {
         _audio = GetComponent<AudioSource>();
         SingletonThisObject(this);
+        
+    }
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameRestart += HandleOnRestart;
         OnItemAcquired += HandleSoundsOnItemAcquired;
+    }
+    private void HandleOnRestart()
+    {
+        _collectableInventory.Clear();
+        LastChangedItemID = CollectableID.KeyBlue;
+        _totalAmmo = 0;
     }
     public void AddToList(Collectable collectable)
     {
         LastChangedItemID = collectable.CollectableID;
-        _collectableInventory.Add(collectable);
+        _collectableInventory.Add(collectable.CollectableID);
         OnItemAcquired?.Invoke();
     }
-    public void RemoveFromList(CollectableID collectable)
+    public void RemoveFromList(CollectableID collectableID)
     {
-       
         foreach (var item in _collectableInventory)
         {
-            if (item.CollectableID == collectable)
+            if (item == collectableID)
             {
-                LastChangedItemID = collectable;
+                LastChangedItemID = collectableID;
                 _collectableInventory.Remove(item);
                 OnItemRemoved?.Invoke();
                 break;
@@ -60,11 +72,11 @@ public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager
         OnAmmoChanged?.Invoke();
     }
 
-    public bool IsInInventory(CollectableID collectable)
+    public bool IsInInventory(CollectableID collectableID)
     {
         foreach (var item in _collectableInventory)
         {
-            if(item.CollectableID == collectable)
+            if(item == collectableID)
             {
                 return true;
             }

@@ -10,9 +10,13 @@ public class AmmoTextUpdater : MonoBehaviour
     {
         _text= GetComponent<TextMeshProUGUI>();
     }
-    private void Start()
+    private void OnEnable()
     {
         PlayerInventoryManager.Instance.OnAmmoChanged += HandleOnHealthChanged;
+    }
+    private void OnDisable()
+    {
+        PlayerInventoryManager.Instance.OnAmmoChanged -= HandleOnHealthChanged;
     }
     void HandleOnHealthChanged()
     {

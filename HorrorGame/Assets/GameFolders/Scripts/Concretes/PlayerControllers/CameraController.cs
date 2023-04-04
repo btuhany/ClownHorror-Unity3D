@@ -11,17 +11,22 @@ namespace Controllers
         [Header("Vertical Clamp")]
         [SerializeField] float MinVerticalAngle;
         [SerializeField] float MaxVerticalAngle;
-
+        bool _disableInput;
 
         float _yRotation;
-        private void Start()
+        private void OnEnable()
         {
             Cursor.lockState = CursorLockMode.Locked;
+            GameManager.Instance.OnGameOver += HandleOnGameOver;
 
-
+        }
+        private void HandleOnGameOver()
+        {
+            _disableInput= true;
         }
         private void LateUpdate()
         {
+            if (_disableInput) return;
             float vertical = Input.GetAxis("Mouse Y") * _mouseYSensitivity * Time.fixedDeltaTime;
             float horizontal = Input.GetAxis("Mouse X") * _mouseXSensitivity * Time.fixedDeltaTime;
 

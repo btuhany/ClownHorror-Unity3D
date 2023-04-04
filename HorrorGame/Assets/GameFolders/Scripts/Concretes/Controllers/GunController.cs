@@ -160,7 +160,7 @@ namespace Controllers
         }
         public void BulletCasingFx() //trigger on the animation event
         {
-            Debug.Log("denem343e");    
+               
             GameObject tempCasing = ObjectPoolManager.Instance.GetObjectFromPool(_casinExitTransform, PoolObjectId.BulletCasin);
           
          

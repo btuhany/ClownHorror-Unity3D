@@ -19,6 +19,7 @@ public class PlayerHealthController : MonoBehaviour
         _sound = GetComponent<PlayerSoundController>();
         _regenerateCounter = _maxRegenerateTime;
         _currentHealth = _maxHealth;
+       
     }
     bool _isInvincible;
     private void Update()
@@ -26,9 +27,7 @@ public class PlayerHealthController : MonoBehaviour
         if(_currentHealth < _maxHealth)
         {
             RegenerateHealth();
-
         }
-
     }
     void RegenerateHealth()
     {
@@ -43,7 +42,7 @@ public class PlayerHealthController : MonoBehaviour
     }
     public void DecreaseHealth()
     {
-        if (!_isInvincible)
+        if (!_isInvincible && !IsDead)
         {
             _currentHealth--;
             if(_currentHealth ==1)

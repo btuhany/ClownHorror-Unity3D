@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,16 @@ public class SoundManager : SingletonMonoObject<SoundManager>
         SingletonThisObject(this);
         _audioSources = GetComponentsInChildren<AudioSource>();
     }
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameRestart += HandleOnGameRestart;
+    }
+
+    private void HandleOnGameRestart()
+    {
+        StopAllSounds();
+        PlaySoundFromSingleSource(5);
+    }
 
     public void PlaySoundFromSingleSource(int index)
     {
@@ -27,6 +38,13 @@ public class SoundManager : SingletonMonoObject<SoundManager>
     public void EnemyActionSounds(int index)
     {
         _audioSources[2].PlayOneShot(_enemyActionAudioClips[index]);
+    }
+    public void StopAllSounds()
+    {
+        foreach(AudioSource source in _audioSources)
+        {
+            source.Stop();
+        }
     }
     public void StartHeartbeatLoop()
     {

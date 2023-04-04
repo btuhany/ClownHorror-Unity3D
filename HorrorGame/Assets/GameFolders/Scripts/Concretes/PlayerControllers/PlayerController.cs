@@ -2,6 +2,7 @@ using Controllers;
 using UnityEngine;
 using Inputs;
 using Movements;
+using System;
 
 namespace Controllers
 {
@@ -18,7 +19,7 @@ namespace Controllers
         [Header("Interact")]
         [SerializeField][Range(100f, 2000f)] float _throwingForce;
 
-
+        
         ArmsAnimationController _anim;
         PlayerHealthController _health;
         GunController _gunController;
@@ -49,8 +50,12 @@ namespace Controllers
         }
         private void OnEnable()
         {
+            
             _groundCheck.OnLanded += HandleOnLanded;
         }
+
+
+
         private void OnDisable()
         {
             _groundCheck.OnLanded -= HandleOnLanded;
