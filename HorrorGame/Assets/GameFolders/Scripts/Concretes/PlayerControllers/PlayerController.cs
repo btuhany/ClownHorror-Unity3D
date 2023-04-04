@@ -74,7 +74,7 @@ namespace Controllers
             {
                 if (_characterMovement.IsCrouched) { _characterMovement.StandUp(); }
                 _characterMovement.GroundMovement(direction, _sprintSpeed);
-                _headbob.RunningHeadBob();
+               _headbob.RunningHeadBob();
                 _anim.Running(true);
                 if (_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                     _soundController.PlayRunFootStep();
@@ -89,7 +89,7 @@ namespace Controllers
             {
                 _anim.Running(false);
                 _characterMovement.GroundMovement(direction, _walkSpeed);
-                _headbob.WalkingHeadBob();
+               _headbob.WalkingHeadBob();
                 if (_groundCheck.IsGrounded && direction.magnitude > 0.9f)
                     _soundController.PlayWalkFootStep();
 

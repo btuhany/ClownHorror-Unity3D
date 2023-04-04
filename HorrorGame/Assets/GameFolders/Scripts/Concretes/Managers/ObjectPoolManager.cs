@@ -9,6 +9,8 @@ public enum PoolObjectId
     Bullet,
     BulletCasin,
     WoodBulletHoleFx,
+    Blood,
+    BloodHole
 }
 
 namespace Managers

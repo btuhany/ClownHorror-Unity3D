@@ -71,8 +71,7 @@ namespace Controllers
         private void Update()
         {
             if (_onTransitionToAimCam)
-            {
-               
+            {  
                 swayHandler.AimSway();
             }
             else if (_isOnDefaultCam)  //dont check onTransitionToDefaultCam because _swayHandler.WeaponSway also manipulates postion therefore prevents the transition.
@@ -102,6 +101,7 @@ namespace Controllers
             CreateSoundWaves(_range, _soundType, _layer, this.gameObject);
             InstantiateMuzzleFX();
             InstantiateBullet();
+
             if(IsAimed)
             {
                 AimedShoot();
@@ -110,8 +110,9 @@ namespace Controllers
             {
                 AimlessShoot();
             }
-           
+      
         }
+
         void AimlessShoot()
         {
             float randomX = Random.Range(-_aimlessShotRadius, _aimlessShotRadius);
@@ -122,6 +123,7 @@ namespace Controllers
                 ShootProcess(hit);
             }
         }
+
         void AimedShoot()
         {
             if (Physics.Raycast(_fpsCam.transform.position, _fpsCam.transform.forward, out RaycastHit hit, _range, _layerMask))
@@ -129,21 +131,24 @@ namespace Controllers
                 ShootProcess(hit);
             }
         }
+
         void ShootProcess(RaycastHit hit)
         {
             if(hit.collider.CompareTag("Enemy"))
             {
+                
                 if(hit.collider.TryGetComponent(out BulletHitEffectHandler hitEffect))
                 {
+                    InstantiateBloodFX(hit).transform.SetParent(hit.transform);
+                    InstantiateBloodHole(hit).transform.SetParent(hit.transform);
                     hitEffect.HitImpact(hit);
                 }
                 if (hit.collider.TryGetComponent(out DamageSensor enemy))
                 {
                     enemy.TakeHit();
                 }
-
             }
-            if (hit.collider.CompareTag("PickUpAble"))
+            else if (hit.collider.CompareTag("PickUpAble"))
             {
                 hit.collider.GetComponent<PickUpAble>().Throwed(hit.collider.transform.forward, _shotPower / 3);
             }
@@ -153,9 +158,9 @@ namespace Controllers
             }
             
         }
-        private void BulletCasingFx() //trigger on the animation event
+        public void BulletCasingFx() //trigger on the animation event
         {
-            
+            Debug.Log("denem343e");    
             GameObject tempCasing = ObjectPoolManager.Instance.GetObjectFromPool(_casinExitTransform, PoolObjectId.BulletCasin);
           
          
@@ -190,6 +195,26 @@ namespace Controllers
             newBulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
             newBulletHole.SetActive(true);
             StartCoroutine(SetToPool(newBulletHole, _bulletHoleSetPoolDelay, PoolObjectId.WoodBulletHoleFx));
+
+            return newBulletHole;
+        }
+        private GameObject InstantiateBloodFX(RaycastHit hit)
+        {
+            GameObject newBulletHole = ObjectPoolManager.Instance.GetObjectFromPool(PoolObjectId.Blood);
+            newBulletHole.transform.position = hit.point;
+            newBulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+            newBulletHole.SetActive(true);
+            StartCoroutine(SetToPool(newBulletHole, _bulletHoleSetPoolDelay, PoolObjectId.Blood));
+
+            return newBulletHole;
+        }
+        private GameObject InstantiateBloodHole(RaycastHit hit)
+        {
+            GameObject newBulletHole = ObjectPoolManager.Instance.GetObjectFromPool(PoolObjectId.BloodHole);
+            newBulletHole.transform.position = hit.point;
+            newBulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+            newBulletHole.SetActive(true);
+            StartCoroutine(SetToPool(newBulletHole, _bulletHoleSetPoolDelay, PoolObjectId.BloodHole));
 
             return newBulletHole;
         }

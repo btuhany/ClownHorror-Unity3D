@@ -1,15 +1,17 @@
 using Abstracts;
+using AI;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
 public class DoorController : Interactable
 {
+    
     [SerializeField] AudioClip _unlockAudio;
     [SerializeField] AudioClip _openAudio;
     [SerializeField] AudioClip _closeAudio;
     [SerializeField] private CollectableID _requirementItem;
-
+    Vector3 _closedPos;
     AudioSource _audio;
     bool _isOpened;
     bool _isPlaying;
@@ -17,6 +19,7 @@ public class DoorController : Interactable
     private void Awake()
     {
         _audio= GetComponent<AudioSource>();
+        _closedPos = transform.rotation.eulerAngles;
     }
     public override void Interact()
     {
@@ -41,7 +44,7 @@ public class DoorController : Interactable
         if(_isOpened)
         {
             _audio.PlayOneShot(_closeAudio);
-            transform.DOLocalRotate(new Vector3(0, 0, 0), 0.3f);
+            transform.DOLocalRotate(_closedPos, 0.3f);
             StartCoroutine(SetIsOpened(false, 0.3f));
            
         }
@@ -61,5 +64,13 @@ public class DoorController : Interactable
         _isPlaying = false;
         yield return null;
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("ac");
+        if(collision.gameObject.CompareTag("Enemy") && _isUnlocked && !_isOpened)
+        {
+            OpenOrClose();
+        }
     }
 }
