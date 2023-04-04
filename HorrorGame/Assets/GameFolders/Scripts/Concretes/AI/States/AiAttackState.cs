@@ -51,12 +51,15 @@ public class AiAttackState : IAiState
         }
         if (Vector3.Distance(_ai.PlayerTransform.position,_ai.transform.position)>_ai.Config.MaxAttackDistance)
         {
-            Debug.Log(Vector3.Distance(_ai.PlayerTransform.position, _ai.transform.position));
+            
             _timeCounter -= Time.deltaTime;
             if(_timeCounter < 0 )
             {
                 _timeCounter = 1.2f;
-                _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
+                if (_ai.IsInClownEvent)
+                    _ai.StateMachine.ChangeState(AiStateId.AggressiveChase);
+                else
+                    _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
             }
             
         }

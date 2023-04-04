@@ -26,5 +26,9 @@ public class AiAgressiveChase : IAiState
     public void Update()
     {
        _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
+        if (Vector3.Distance(_ai.transform.position, _ai.PlayerTransform.position) < _ai.Config.MaxAttackDistance)
+        {
+            _ai.StateMachine.ChangeState(AiStateId.Attack);
+        }
     }
 }

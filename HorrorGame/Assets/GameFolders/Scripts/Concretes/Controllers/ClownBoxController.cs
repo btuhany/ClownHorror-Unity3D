@@ -1,4 +1,5 @@
 using Abstracts;
+using AI;
 using Controllers;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ public class ClownBoxController : PickUpAble
     [SerializeField] PickedUpObjectController _pickedUpController;
     [SerializeField] List<AudioClip> _audioClips = new List<AudioClip>();
     [SerializeField] float _maxBurnTime = 5f;
-
+    [SerializeField] AiEnemy _ai;
     AudioSource _audio;
     float _burnTimer;
 
@@ -29,6 +30,7 @@ public class ClownBoxController : PickUpAble
     {
         if (other.CompareTag("Fire") && IsGrabbed)
         {
+            _ai.IsClownBoxBurning();
             SoundManager.Instance.PlaySoundFromSingleSource(0);
             _audio.Stop();
             _audio.clip = _audioClips[1];
@@ -38,9 +40,7 @@ public class ClownBoxController : PickUpAble
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("Fire") && IsGrabbed)
-        {
-
-           
+        {   
             _burnTimer -= Time.deltaTime;
             if(_burnTimer < 0)
             {

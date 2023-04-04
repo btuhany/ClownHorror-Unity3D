@@ -29,7 +29,7 @@ namespace Controllers
         [SerializeField] private AudioClip _breathJump;
         [SerializeField] private AudioClip _noAmmoSound;
         [SerializeField] private AudioClip[] _takeHitSound;
-        [SerializeField] private AudioClip _woundedSound;
+      
         private AudioSource _audioSource;
         private float _walkTimeCounter = 0;
         private float _runTimeCounter = 0;

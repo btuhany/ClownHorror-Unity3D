@@ -176,7 +176,8 @@ MonoBehaviour:
   _audioClips:
   - {fileID: 8300000, guid: 566b9d224a9dd0d42a9c781ceb169470, type: 3}
   - {fileID: 8300000, guid: a7b92b82805ac86478c2f2ea3e73f7f6, type: 3}
-  _maxBurnTime: 10
+  _maxBurnTime: 8
+  _ai: {fileID: 0}
 --- !u!114 &2033103150703233222
 MonoBehaviour:
   m_ObjectHideFlags: 0

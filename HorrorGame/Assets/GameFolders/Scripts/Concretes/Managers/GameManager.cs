@@ -27,6 +27,7 @@ public class GameManager : SingletonMonoObject<GameManager>
         if(CompletedClownEvents == 6)
         {
             GameCompleted();
+            return;
         }
         else if(CompletedClownEvents == 4)
         {
@@ -36,6 +37,8 @@ public class GameManager : SingletonMonoObject<GameManager>
         {
             OnNormalDiff?.Invoke();
         }
+        SoundManager.Instance.PlaySoundFromSingleSource(7);
+        SoundManager.Instance.StopSoundSource(8);
     }
     private void GameCompleted()
     {
@@ -48,6 +51,8 @@ public class GameManager : SingletonMonoObject<GameManager>
     }
     public void ClownEvent()
     {
+        SoundManager.Instance.PlaySoundFromSingleSource(8);
+        SoundManager.Instance.PlaySoundFromSingleSource(6);
         ClownEventManager.Instance.StartEvent();
 
     }

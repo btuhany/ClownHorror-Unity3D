@@ -172,7 +172,7 @@ public class AiSoundController : MonoBehaviour
     }
     public void MorphSound()
     {
-        _audioSource.PlayOneShot(_audioClips[6],0.6f);
+        _audioSource.PlayOneShot(_audioClips[6],0.7f);
     }
     public void EnterEvent()
     {

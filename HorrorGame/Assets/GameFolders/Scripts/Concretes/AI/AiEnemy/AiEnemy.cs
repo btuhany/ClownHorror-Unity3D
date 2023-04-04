@@ -27,6 +27,7 @@ namespace AI
         [HideInInspector] public float ChaseStateTimeout;
         private SightSensor _sightSensor;
         public Sound LastHeardSound;
+        public bool IsInClownEvent;
         [HideInInspector] public Vector3 LastHeardSoundPos;
 
 
@@ -168,6 +169,12 @@ namespace AI
             }
             return false;
         }
+        public void IsClownBoxBurning()
+        {
+            if (_currentDifficulty == AiEnemyDifficulties.Easy) return;
+            if(_stateMachine.CurrentState == AiStateId.ChasePlayer) { return; }
+            _stateMachine.ChangeState(AiStateId.ChasePlayer);
+        }
         public Vector3 RandomPointOnNavMesh(Vector3 center, float range, float samplePointRange)
         {
             Vector3 randomVector = Random.insideUnitSphere;
@@ -184,12 +191,13 @@ namespace AI
         private void HandleOnClownEvent()
         {
             _soundController.EnterEvent();
+            IsInClownEvent = true;
             _stateMachine.ChangeState(AiStateId.AggressiveChase);
          
         }
         private void HandleOnStunned()
         {
-
+            if (IsInClownEvent) IsInClownEvent = false;
             _stateMachine.ChangeState(AiStateId.Stunned);
         }
         private void HandleOnHealthDecreased()
