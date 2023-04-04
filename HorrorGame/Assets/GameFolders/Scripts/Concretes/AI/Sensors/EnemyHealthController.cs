@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Controllers;
 namespace Controllers
 {
     public class EnemyHealthController : MonoBehaviour
@@ -11,13 +11,14 @@ namespace Controllers
         float _regenerateCounter;
         int _currentHealth;
         bool _isStunned;
-
+        AiSoundController _sound;
         public bool IsStunned { get => _isStunned; set => _isStunned = value; }
 
         public event System.Action OnHealthDecreased;
         public event System.Action OnStunned;
         private void Awake()
         {
+            _sound = GetComponent<AiSoundController>();
             _currentHealth = _maxHealth;
             _regenerateCounter = _regenaratingTimer;
         }
@@ -38,7 +39,16 @@ namespace Controllers
         }
         public void DecreaseHealth(int damage)
         {
-            if (_isStunned) return;
+            _sound.TakeHitSound();
+
+            if (_isStunned) 
+                return;
+
+            if(damage>5)
+            {
+                _sound.LaughSound();
+            }
+                
             _currentHealth -= damage;
             if(_currentHealth > 0)
                 OnHealthDecreased?.Invoke();

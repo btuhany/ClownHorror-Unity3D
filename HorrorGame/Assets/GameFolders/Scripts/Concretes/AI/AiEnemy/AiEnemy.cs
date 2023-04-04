@@ -183,6 +183,7 @@ namespace AI
         }
         private void HandleOnClownEvent()
         {
+            _soundController.EnterEvent();
             _stateMachine.ChangeState(AiStateId.AggressiveChase);
          
         }
@@ -194,6 +195,7 @@ namespace AI
         private void HandleOnHealthDecreased()
         {
             _navMeshAgent.isStopped = true;
+            _soundController.MorphSound();
             StartCoroutine(ContinueNavMesh());
         }
         private IEnumerator ContinueNavMesh()

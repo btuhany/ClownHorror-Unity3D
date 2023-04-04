@@ -15,6 +15,7 @@ namespace Sensors
         [SerializeField] private int _maxDamage;
         [SerializeField] EnemyHealthController _enemy;
 
+        
 
         public void TakeHit()
         {

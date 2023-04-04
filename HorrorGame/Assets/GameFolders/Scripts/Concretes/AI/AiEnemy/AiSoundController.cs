@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,8 @@ public class AiSoundController : MonoBehaviour
     [SerializeField] AudioClip[] _rotateClips;
     [SerializeField] float[] _maxRunFootStepTime;
     [SerializeField] float[] _maxWalkFootStepTime;
+    [SerializeField] AudioClip[] _takeHitClips;
+    [SerializeField] AudioClip[] _laughClips;
 
     AudioSource _audioSource;
     NavMeshAgent _agent;
@@ -91,7 +94,7 @@ public class AiSoundController : MonoBehaviour
     private void PlayWalkingFootStep()
     {
        
-        _audioSource.PlayOneShot(_walkFootStepsClips[Random.Range(0, _walkFootStepsClips.Length)], 0.65f);
+        _audioSource.PlayOneShot(_walkFootStepsClips[Random.Range(0, _walkFootStepsClips.Length)], 0.4f);
     }
 
     private void ChangeRunFootStepTimer()  //or raycast check?
@@ -158,5 +161,21 @@ public class AiSoundController : MonoBehaviour
     public void ChaseOver()
     {
         _audioSource.PlayOneShot(_audioClips[1]);
+    }
+    public void TakeHitSound()
+    {
+        _audioSource.PlayOneShot(_takeHitClips[Random.Range(0, _takeHitClips.Length)]);
+    }
+    public void LaughSound()
+    {
+        _audioSource.PlayOneShot(_laughClips[Random.Range(0, _laughClips.Length)]);
+    }
+    public void MorphSound()
+    {
+        _audioSource.PlayOneShot(_audioClips[6],0.6f);
+    }
+    public void EnterEvent()
+    {
+        SoundManager.Instance.EnemyActionSounds(2);
     }
 }
