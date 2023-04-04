@@ -42,8 +42,10 @@ public class ArmsAnimationController : MonoBehaviour
     }
     public void NoAmmo()
     {
+        if (_anim.GetCurrentAnimatorStateInfo(0).IsName("IsNoAmmo")) return;
         _anim.ResetTrigger(_isNoAmmoHash);
         _anim.SetTrigger(_isNoAmmoHash);
+         
     }
     public void Shooted()
     {

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -89,7 +90,8 @@ public class AiSoundController : MonoBehaviour
 
     private void PlayWalkingFootStep()
     {
-        _audioSource.PlayOneShot(_walkFootStepsClips[Random.Range(0, _walkFootStepsClips.Length)], 0.7f);
+       
+        _audioSource.PlayOneShot(_walkFootStepsClips[Random.Range(0, _walkFootStepsClips.Length)], 0.65f);
     }
 
     private void ChangeRunFootStepTimer()  //or raycast check?
@@ -130,7 +132,7 @@ public class AiSoundController : MonoBehaviour
     
     private void PlayRunningFootStep()
     {
-        _audioSource.PlayOneShot(_runFootStepsClips[Random.Range(0, _runFootStepsClips.Length)],0.7f);
+        _audioSource.PlayOneShot(_runFootStepsClips[Random.Range(0, _runFootStepsClips.Length)],1f);
     }
     public void Rotate()
     {
@@ -147,7 +149,7 @@ public class AiSoundController : MonoBehaviour
     public void AttackLaugh()
     {
         _audioSource.PlayOneShot(_audioClips[2]);
-        _audioSource.PlayOneShot(_audioClips[3],0.6f);
+        _audioSource.PlayOneShot(_audioClips[3],0.2f);
     }
     public void PlayerFound()
     {

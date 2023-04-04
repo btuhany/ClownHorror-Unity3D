@@ -27,7 +27,9 @@ namespace Controllers
         [SerializeField] private AudioClip _breathAimed;
         [SerializeField] private AudioClip _breathCrouch;
         [SerializeField] private AudioClip _breathJump;
-
+        [SerializeField] private AudioClip _noAmmoSound;
+        [SerializeField] private AudioClip[] _takeHitSound;
+        [SerializeField] private AudioClip _woundedSound;
         private AudioSource _audioSource;
         private float _walkTimeCounter = 0;
         private float _runTimeCounter = 0;
@@ -73,10 +75,14 @@ namespace Controllers
             CreateSoundWaves(_runningSoundLevel, SoundType.Serious, _layer, this.gameObject);
             _runTimeCounter = _runTime;
         }
+        public void PlayNoAmmo()
+        {
+            _audioSource.PlayOneShot(_noAmmoSound);
+        }
         public void PlayBreathAimed()
         {
             if (_aimedBreathCounter > 0) return;
-            _audioSource.PlayOneShot(_breathAimed);
+            _audioSource.PlayOneShot(_breathAimed,0.6f);
             _aimedBreathCounter = 7.4f; //length of the clip
         }
         public void StopBreathSound()
@@ -91,12 +97,17 @@ namespace Controllers
         }
         public void PlayCrouch()
         {
-            _audioSource.PlayOneShot(_breathCrouch);
+            _audioSource.PlayOneShot(_breathCrouch,0.4f);
         }
         public void PlayJump()
         {
-            _audioSource.PlayOneShot(_breathJump);
+            _audioSource.PlayOneShot(_breathJump,0.5f);
         }
+        public void PlayTakeHit()
+        {
+            _audioSource.PlayOneShot(_takeHitSound[Random.Range(0,_takeHitSound.Length)]);
+        }
+
         public void CreateSoundWaves(float range, SoundType soundType, LayerMask layer, GameObject gameObj)
         {
             var sound = new Sound(transform.position, range, soundType, layer, gameObj);

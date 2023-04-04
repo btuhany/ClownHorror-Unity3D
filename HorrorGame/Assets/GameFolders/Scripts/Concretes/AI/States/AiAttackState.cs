@@ -23,6 +23,8 @@ public class AiAttackState : IAiState
         _ai.NavMeshAgent.isStopped = true;
         _ai.NavMeshAgent.ResetPath();
         _ai.Anim.SetTrigger("IsAttacked");
+        _soundTimeCounter = 2f;
+        _timeCounter = 1.2f; 
     }
 
     public void Exit()

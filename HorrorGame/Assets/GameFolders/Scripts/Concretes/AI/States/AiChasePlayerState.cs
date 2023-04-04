@@ -12,6 +12,8 @@ namespace AI.States
         float _chasePlayerTimeout;
         bool _isPlayerLost;
         bool _isNewChase=true;
+        float _chaseAfterLostTimer;
+        bool _chaseAfterLost;
         AiEnemy _ai;
 
         public AiChasePlayerState(AiEnemy enemy)
@@ -22,7 +24,9 @@ namespace AI.States
 
         private void HandleOnStunned()
         {
+            _ai.SoundController.ChaseOver();
             _isNewChase = true;
+            SoundManager.Instance.ResetStopHeartbeat();
         }
 
         public AiStateId StateId => AiStateId.ChasePlayer;
@@ -63,7 +67,7 @@ namespace AI.States
             else if(!_isPlayerLost) //PlayerLost
             {
                 OnPlayerLost();
-                _ai.NavMeshAgent.SetDestination(_ai.LastHeardSound.Pos);
+                
             }
 
 
@@ -74,19 +78,32 @@ namespace AI.States
                 {
                     _ai.SoundController.ChaseOver();
                     _isNewChase = true;
+                    SoundManager.Instance.ResetStopHeartbeat();
                     _ai.StateMachine.ChangeState(AiStateId.SeekPlayer);
                 }
             }
+            if(_chaseAfterLost)
+            {
+                _chaseAfterLostTimer-=Time.deltaTime;
+                if(_chaseAfterLostTimer<0)
+                {
+                   
+                    _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
+                    _chaseAfterLost = false;
+                }
+            }
+            SoundManager.Instance.SetHeartbeatSpeed(10f/Vector3.Distance(_ai.transform.position, _ai.PlayerTransform.position),0.1f);
 
         }
         public void Enter()
         {
-
+            _chaseAfterLostTimer = 1.2f;
             OnPlayerFound();
             _ai.NavMeshAgent.SetDestination(_ai.PlayerTransform.position);
             
             if(_isNewChase)
             {
+                SoundManager.Instance.StartHeartbeatLoop();
                 SoundManager.Instance.EnemyActionSounds(0);
                 _ai.SoundController.PlayerFound();
                 _isNewChase = false;
@@ -110,7 +127,8 @@ namespace AI.States
             _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[3];            
           //  Debug.Log("PlayerLost");
             _isPlayerLost = true;
-            
+            _chaseAfterLost = true;
+
         }
         void OnPlayerFound()
         {
@@ -121,6 +139,7 @@ namespace AI.States
             _isPlayerLost = false;
             
         }
+
 
     }
 

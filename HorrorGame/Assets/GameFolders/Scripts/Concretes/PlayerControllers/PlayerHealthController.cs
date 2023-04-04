@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Controllers;
 
 public class PlayerHealthController : MonoBehaviour
 {
@@ -10,10 +11,12 @@ public class PlayerHealthController : MonoBehaviour
     [HideInInspector] public bool IsDead;
     int _currentHealth;
     float _regenerateCounter;
-  
+    PlayerSoundController _sound;
+
     public event System.Action OnHealthDecreased;
     private void Awake()
     {
+        _sound = GetComponent<PlayerSoundController>();
         _regenerateCounter = _maxRegenerateTime;
         _currentHealth = _maxHealth;
     }
@@ -23,6 +26,7 @@ public class PlayerHealthController : MonoBehaviour
         if(_currentHealth < _maxHealth)
         {
             RegenerateHealth();
+
         }
 
     }
@@ -32,6 +36,7 @@ public class PlayerHealthController : MonoBehaviour
         if (_regenerateCounter < 0)
         {
             _currentHealth++;
+            SoundManager.Instance.StopSoundSource(3);
             _regenerateCounter = _maxRegenerateTime;
         }
     }
@@ -40,11 +45,17 @@ public class PlayerHealthController : MonoBehaviour
         if (!_isInvincible)
         {
             _currentHealth--;
+            if(_currentHealth ==1)
+            {
+                SoundManager.Instance.PlaySoundFromSingleSource(3);
+            }
+            _sound.PlayTakeHit();
             _regenerateCounter = _maxRegenerateTime;
             OnHealthDecreased?.Invoke();
             if (_currentHealth <= 0)
             {
                 IsDead = true;
+                SoundManager.Instance.StopSoundSource(3);
                 GameManager.Instance.GameOver();
             }
             StartCoroutine(InvincibileCooldown(_invincibiltyCooldown));
