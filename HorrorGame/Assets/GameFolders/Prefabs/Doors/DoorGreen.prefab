@@ -211,7 +211,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.6, y: 1.205, z: 0.105}
+  m_Extents: {x: 0.6, y: 1.205, z: 0.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -468,6 +468,7 @@ MonoBehaviour:
   _unlockAudio: {fileID: 8300000, guid: dce7413b79d06524ca7f242372fd3a90, type: 3}
   _openAudio: {fileID: 8300000, guid: 3af05249fc838a44081a6eb9ad38cc6c, type: 3}
   _closeAudio: {fileID: 8300000, guid: 661a6c6d24505b54894b9d80e5b25be3, type: 3}
+  _lockedDoor: {fileID: 8300000, guid: 026eeb9515149c54d9136aeab347576e, type: 3}
   _requirementItem: 2
 --- !u!65 &3508170587699029834
 BoxCollider:

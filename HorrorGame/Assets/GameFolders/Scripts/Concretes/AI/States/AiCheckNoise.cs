@@ -20,6 +20,7 @@ namespace AI.States
             _ai.NavMeshAgent.speed = _ai.CurrentMovementSpeeds[1];
             _ai.NavMeshAgent.ResetPath();
             _ai.NavMeshAgent.SetDestination(_ai.LastHeardSoundPos);
+            _ai.SoundController.Rotate();
         }
 
         public void Exit()

@@ -103,7 +103,6 @@ namespace Controllers
                 _soundController.PlayJump();
                 _soundController.PlayRunFootStep();
             }
-
             if (_input.Flashlight)
             {
                 _flashLightController.Toggle();

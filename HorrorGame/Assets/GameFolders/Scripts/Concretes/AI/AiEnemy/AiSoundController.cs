@@ -94,7 +94,7 @@ public class AiSoundController : MonoBehaviour
     private void PlayWalkingFootStep()
     {
        
-        _audioSource.PlayOneShot(_walkFootStepsClips[Random.Range(0, _walkFootStepsClips.Length)], 0.4f);
+        _audioSource.PlayOneShot(_walkFootStepsClips[Random.Range(0, _walkFootStepsClips.Length)], 0.3f);
     }
 
     private void ChangeRunFootStepTimer()  //or raycast check?

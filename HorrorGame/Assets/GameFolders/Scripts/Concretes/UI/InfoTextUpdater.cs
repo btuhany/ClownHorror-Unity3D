@@ -57,6 +57,27 @@ public class InfoTextUpdater : MonoBehaviour
         
         StartCoroutine(TextFadeInAndOut());
     }
+    public void DoorLocked(CollectableID key)
+    {
+        if(key == CollectableID.KeyRed)
+        {
+            _text.SetText("Door is locked. You must find 'Red Key' ");
+        }
+        else if(key == CollectableID.KeyBlack)
+        {
+            _text.SetText("Door is locked. You must find 'Black Key' ");
+        }
+        else if(key == CollectableID.KeyGreen)
+        {
+            _text.SetText("Door is locked. You must find 'Green Key' ");
+        }
+        else if(key == CollectableID.KeyBlue)
+        {
+            _text.SetText("Door is locked. You must find 'Blue Key' ");
+        }
+        StopAllCoroutines();
+        StartCoroutine(TextFadeInAndOut());
+    }
     IEnumerator TextFadeInAndOut()
     {
         _text.DOFade(1, 2f);

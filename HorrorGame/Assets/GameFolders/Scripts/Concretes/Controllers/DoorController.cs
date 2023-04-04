@@ -3,6 +3,7 @@ using AI;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DoorController : Interactable
 {
@@ -10,9 +11,12 @@ public class DoorController : Interactable
     [SerializeField] AudioClip _unlockAudio;
     [SerializeField] AudioClip _openAudio;
     [SerializeField] AudioClip _closeAudio;
+    [SerializeField] AudioClip _lockedDoor;
     [SerializeField] private CollectableID _requirementItem;
+    [SerializeField] InfoTextUpdater _infoUpdate;
     Vector3 _closedPos;
     AudioSource _audio;
+    NavMeshObstacle _navmeshObs;
     bool _isOpened;
     bool _isPlaying;
     bool _isUnlocked;
@@ -20,6 +24,7 @@ public class DoorController : Interactable
     {
         _audio= GetComponent<AudioSource>();
         _closedPos = transform.rotation.eulerAngles;
+        _navmeshObs = GetComponentInChildren<NavMeshObstacle>();
     }
     public override void Interact()
     {
@@ -37,12 +42,18 @@ public class DoorController : Interactable
             }
 
         }
+        else
+        {
+            _infoUpdate.DoorLocked(_requirementItem);
+            _audio.PlayOneShot(_lockedDoor);
+        }
     }
     private void OpenOrClose()
     {
         if(_isPlaying) { return; }
         if(_isOpened)
         {
+            _navmeshObs.carving = true;
             _audio.PlayOneShot(_closeAudio);
             transform.DOLocalRotate(_closedPos, 0.3f);
             StartCoroutine(SetIsOpened(false, 0.3f));
@@ -50,9 +61,14 @@ public class DoorController : Interactable
         }
         else
         {
-            
+            _navmeshObs.carving = false;
             _audio.PlayOneShot(_openAudio);
-            transform.DOLocalRotate(new Vector3(0, 90, 0), 2.5f);
+            if(_closedPos.y == 90f)
+            {
+                transform.DOLocalRotate(new Vector3(0, 0, 0), 2.5f);
+            }
+            else
+                transform.DOLocalRotate(new Vector3(0, 90, 0), 2.5f);
             StartCoroutine(SetIsOpened(true,2.5f));
         }
     }

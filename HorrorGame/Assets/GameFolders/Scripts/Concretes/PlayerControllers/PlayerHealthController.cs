@@ -9,10 +9,10 @@ public class PlayerHealthController : MonoBehaviour
     [SerializeField] float _invincibiltyCooldown = 0.7f;
     [SerializeField] float _maxRegenerateTime = 10f;
     [HideInInspector] public bool IsDead;
+    [SerializeField] GlobalVolumeController _volume;
     int _currentHealth;
     float _regenerateCounter;
     PlayerSoundController _sound;
-
     public event System.Action OnHealthDecreased;
     private void Awake()
     {
@@ -36,6 +36,7 @@ public class PlayerHealthController : MonoBehaviour
         if (_regenerateCounter < 0)
         {
             _currentHealth++;
+            _volume.FXOff();
             SoundManager.Instance.StopSoundSource(3);
             _regenerateCounter = _maxRegenerateTime;
         }
@@ -47,6 +48,7 @@ public class PlayerHealthController : MonoBehaviour
             _currentHealth--;
             if(_currentHealth ==1)
             {
+                _volume.FXOn();
                 SoundManager.Instance.PlaySoundFromSingleSource(3);
             }
             _sound.PlayTakeHit();
