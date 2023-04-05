@@ -16,6 +16,7 @@ public class GameManager : SingletonMonoObject<GameManager>
     public event System.Action OnGameRestart;
     public event System.Action OnNormalDiff;
     public event System.Action OnHardDiff;
+    public event System.Action OnCompletedClownIncreased;
     private void Awake()
     {
         SingletonThisObject(this);
@@ -28,7 +29,8 @@ public class GameManager : SingletonMonoObject<GameManager>
     private void HandleOnEventCompleted()
     {
         CompletedClownEvents++;
-        if(CompletedClownEvents == 6)
+        OnCompletedClownIncreased?.Invoke();
+        if (CompletedClownEvents == 6)
         {
             GameCompleted();
             return;

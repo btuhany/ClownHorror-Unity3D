@@ -171,7 +171,7 @@ namespace AI
         }
         public void IsClownBoxBurning()
         {
-            if (_currentDifficulty == AiEnemyDifficulties.Easy) return;
+           // if (_currentDifficulty == AiEnemyDifficulties.Easy) return;
             if(_stateMachine.CurrentState == AiStateId.ChasePlayer) { return; }
             _stateMachine.ChangeState(AiStateId.ChasePlayer);
         }

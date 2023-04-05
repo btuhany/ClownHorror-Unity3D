@@ -24,7 +24,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     {
         SingletonThisObject(this);
     }
-    private void OnEnable()
+    private void Start()
     {
         GameManager.Instance.OnGameRestart += HandleOnGameRestart;
 
@@ -46,6 +46,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     {
         _isInEvent = false;
         OnEventCompleted?.Invoke();
+        PlayerInventoryManager.Instance.DecreaseAmmo(8);
         SoundManager.Instance.PlaySoundFromSingleSource(1);
         MoveGameObjectsToLastPositions();
         
@@ -71,6 +72,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     public void StartEvent()
     {
         OnEventStarted?.Invoke();
+        PlayerInventoryManager.Instance.AddAmmo(8);
         MoveGameObjectsToEventArea();
         _isInEvent = true;
     }

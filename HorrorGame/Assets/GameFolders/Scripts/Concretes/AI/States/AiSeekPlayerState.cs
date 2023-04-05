@@ -10,7 +10,7 @@ namespace AI.States
     public class AiSeekPlayerState : IAiState
     {
         bool _isRotated;
-
+        float _timeOutForPotantialBug;
         float _delayAfterRotate;
         float _rotationTimer;
         float _forwardDistance;
@@ -37,7 +37,7 @@ namespace AI.States
             _forwardDistance = _ai.Config.SeekForwardDistance;
             _seekTimeout = _ai.Config.SeekTimeOut;
             _isRotated = true;
-            
+            _timeOutForPotantialBug = 15f;
         }
 
         public void Exit()
@@ -49,7 +49,12 @@ namespace AI.States
 
         public void Update()
         {
-         
+            _timeOutForPotantialBug -= Time.deltaTime;
+            if(_timeOutForPotantialBug<0f)
+            {
+                _timeOutForPotantialBug = 15f;
+                _ai.StateMachine.ChangeState(AiStateId.Wander);
+            }
             _seekTimeout -= Time.deltaTime;
             if (_ai.IsPlayerInSight() || _ai.IsPlayerHeard())
                 _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);

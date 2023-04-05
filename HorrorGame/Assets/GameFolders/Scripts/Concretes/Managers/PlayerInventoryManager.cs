@@ -68,9 +68,16 @@ public class PlayerInventoryManager : SingletonMonoObject<PlayerInventoryManager
     }
     public void DecreaseAmmo(int number)
     {
-        _totalAmmo -= number; 
+        _totalAmmo -= number;
+        if (_totalAmmo < 0) _totalAmmo = 0;
         OnAmmoChanged?.Invoke();
     }
+    public void AddAmmo(int number)
+    {
+        _totalAmmo += number;
+        OnAmmoChanged?.Invoke();
+    }
+
 
     public bool IsInInventory(CollectableID collectableID)
     {

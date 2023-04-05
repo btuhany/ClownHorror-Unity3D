@@ -11,6 +11,7 @@ public class ClownBoxController : PickUpAble
     [SerializeField] List<AudioClip> _audioClips = new List<AudioClip>();
     [SerializeField] float _maxBurnTime = 5f;
     [SerializeField] AiEnemy _ai;
+    [SerializeField] SliderController _slider;
     AudioSource _audio;
     float _burnTimer;
 
@@ -30,6 +31,7 @@ public class ClownBoxController : PickUpAble
     {
         if (other.CompareTag("Fire") && IsGrabbed)
         {
+            _slider.gameObject.SetActive(true);
             _ai.IsClownBoxBurning();
             SoundManager.Instance.PlaySoundFromSingleSource(0);
             _audio.Stop();
@@ -42,8 +44,10 @@ public class ClownBoxController : PickUpAble
         if(other.CompareTag("Fire") && IsGrabbed)
         {   
             _burnTimer -= Time.deltaTime;
-            if(_burnTimer < 0)
+            _slider.SetSlider(_burnTimer);
+            if (_burnTimer < 0)
             {
+                _slider.gameObject.SetActive(false);
                 _pickedUpController.ReleaseObject();
                 GameManager.Instance.ClownEvent();
                 Destroy(other.gameObject, 0.2f);
@@ -55,7 +59,7 @@ public class ClownBoxController : PickUpAble
     }
     private void OnTriggerExit(Collider other)
     {
-       
+        _slider.gameObject.SetActive(false);
         _burnTimer = _maxBurnTime;
         _audio.Stop();
         _audio.clip = _audioClips[0];
