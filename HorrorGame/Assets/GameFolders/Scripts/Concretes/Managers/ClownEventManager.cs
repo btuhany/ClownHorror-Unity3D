@@ -41,14 +41,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
         _isInEvent = false;
     }
 
-    private void Update()
-    {
-        if(_isInEvent && _enemy.StateMachine.CurrentState == AiStateId.Stunned)
-        {  
-            FinishEvent();
-        }
-    }
-    private void FinishEvent()
+    public void FinishEvent()
     {
         _isInEvent = false;
         OnEventCompleted?.Invoke();

@@ -8,13 +8,18 @@ public class DecorWhiteclown : MonoBehaviour
 {
     Vector3 position1;
     [SerializeField] Transform position2;
-    
+    private bool _isStop;
+
     private void Awake()
     {
         position1 = transform.position;
     }
     private void Update()
-    {   
+    {
+        if (_isStop)
+        {
+            return;
+        }
         
         if(transform.position.y == position2.position.y)
         {
@@ -24,7 +29,11 @@ public class DecorWhiteclown : MonoBehaviour
         {
             transform.DOMove(position2.position, 4f);
         }
-
-
+        
+    }
+    public void DoStop()
+    {
+        _isStop = true;
+        transform.DOKill();
     }
 }

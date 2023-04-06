@@ -21,9 +21,7 @@ public class ClownBoxController : PickUpAble
     {
         _audio = GetComponent<AudioSource>();
         _burnTimer = _maxBurnTime;
-        _audio.clip = _audioClips[0];
-        _audio.Play();
-
+ 
 
     }
 

@@ -99,7 +99,7 @@ public class DoorController : Interactable
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("ac");
+        
         if(collision.gameObject.CompareTag("Enemy") && _isUnlocked && !_isOpened)
         {
             OpenOrClose();

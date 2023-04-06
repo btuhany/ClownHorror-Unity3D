@@ -55,7 +55,10 @@ namespace Controllers
                 _isStunned = true;
                 OnStunned?.Invoke();
                 _currentHealth = _maxHealth;
-               
+               if(_isInEvent)
+                {
+                    ClownEventManager.Instance.FinishEvent();
+                }
 
             }
             else if (_currentHealth < _maxHealth)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MenuPanel : MonoBehaviour
 {
     [SerializeField] GameObject HelpPanel;
+    
     public void HelpButton()
     {
         if(HelpPanel.activeSelf)
@@ -22,6 +23,7 @@ public class MenuPanel : MonoBehaviour
     }
     public void PlayButton()
     {
+       
         GameManager.Instance.StartGame();
     }
 }
