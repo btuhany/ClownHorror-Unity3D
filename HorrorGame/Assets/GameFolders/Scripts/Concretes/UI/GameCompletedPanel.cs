@@ -22,9 +22,9 @@ public class GameCompletedPanel : MonoBehaviour
     }
     private void YouDiedTextAnim()
     {
-        _youWinText.localScale = new Vector3(0, 0, 1);
-        _youWinText.DOScaleX(1, 2f);
-        _youWinText.DOScaleX(1, 2f);
+        _youWinText.localScale = new Vector3(1, 0, 1);
+        _youWinText.DOScaleY(1, 2f);
+
 
     }
 
