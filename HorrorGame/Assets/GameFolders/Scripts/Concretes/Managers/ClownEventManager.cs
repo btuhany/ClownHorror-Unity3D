@@ -16,7 +16,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
 
     public event System.Action OnEventStarted;
     public event System.Action OnEventCompleted;
-    private bool _isInEvent;
+    
 
     Vector3 _lastPlayerPos;
     Vector3 _lastEnemyPos;
@@ -38,12 +38,12 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
 
     private void HandleOnGameRestart()
     {
-        _isInEvent = false;
+       
     }
 
     public void FinishEvent()
     {
-        _isInEvent = false;
+        
         OnEventCompleted?.Invoke();
         PlayerInventoryManager.Instance.DecreaseAmmo(8);
         SoundManager.Instance.PlaySoundFromSingleSource(1);
@@ -73,7 +73,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
         OnEventStarted?.Invoke();
         PlayerInventoryManager.Instance.AddAmmo(8);
         MoveGameObjectsToEventArea();
-        _isInEvent = true;
+      
     }
     IEnumerator GetTransformsWithDelay()
     {

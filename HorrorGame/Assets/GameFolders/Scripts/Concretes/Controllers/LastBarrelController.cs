@@ -7,16 +7,17 @@ public class LastBarrelController : Interactable
     [SerializeField] GameObject _fire;
     [SerializeField] List<AudioClip> _audioClips= new List<AudioClip>();
     AudioSource _audio;
-    
+    bool _isLightenedUp;
     private void Awake()
     {
         _audio= GetComponent<AudioSource>();
     }
     public override void Interact()
     {
-        if(PlayerInventoryManager.Instance.IsInInventory(CollectableID.Fuel) && PlayerInventoryManager.Instance.IsInInventory(CollectableID.Firelighter))
+        if(PlayerInventoryManager.Instance.IsInInventory(CollectableID.Fuel) && PlayerInventoryManager.Instance.IsInInventory(CollectableID.Firelighter) && !_isLightenedUp)
         {
             _fire.SetActive(true);
+            _isLightenedUp = true;
             StartCoroutine(PlaySoundsInOrder());
             PlayerInventoryManager.Instance.RemoveFromList(CollectableID.Fuel);
         }

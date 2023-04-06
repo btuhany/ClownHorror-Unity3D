@@ -45,6 +45,7 @@ public class ClownBoxController : PickUpAble
             _slider.SetSlider(_burnTimer);
             if (_burnTimer < 0)
             {
+                other.GetComponentInParent<AudioSource>().Stop();
                 _slider.gameObject.SetActive(false);
                 _pickedUpController.ReleaseObject();
                 GameManager.Instance.ClownEvent();

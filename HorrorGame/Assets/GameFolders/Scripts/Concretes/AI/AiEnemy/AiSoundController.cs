@@ -103,7 +103,7 @@ public class AiSoundController : MonoBehaviour
         if(speed >= 23f)
         {
             _currentMaxFootStepTime = _maxRunFootStepTime[5]; //0.15
-            Debug.Log("a");
+            //Debug.Log("a");
         }
         else if(speed >= 19f)
         {

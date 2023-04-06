@@ -31,8 +31,8 @@ MonoBehaviour:
   - 9
   - 12
   - 24
-  NormalSightAngle: 63
-  HardSightAngle: 78
+  NormalSightAngle: 45
+  HardSightAngle: 64
   MaxSetDestTime: 0
   EasyChaseTimeout: 2.3
   NormalChaseTimeout: 1.4
