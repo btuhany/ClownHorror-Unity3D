@@ -49,6 +49,7 @@ namespace AI.States
 
         public void Update()
         {
+            _ai.IsThereDoorOpenIt();
             _timeOutForPotantialBug -= Time.deltaTime;
             if(_timeOutForPotantialBug<0f)
             {
@@ -61,20 +62,16 @@ namespace AI.States
 
      
             
-            
-            Debug.Log(_delayAfterRotate );
-            Debug.Log(_rotationTimer );
-            Debug.Log( _forwardDistance );
-            Debug.Log( _seekTimeout);
+
 
 
             if (_isRotated)
             {
-                Debug.Log("123");
+              
                 _delayAfterRotate -= Time.deltaTime;
                 if (_delayAfterRotate < 0f)
                 {
-                    Debug.Log("1234");
+                 
                     if (_seekTimeout < 0)  // dont change state while rotating
                     {
                         
@@ -88,7 +85,7 @@ namespace AI.States
             }
             else if(_rotationTimer < 0f)
             {
-                Debug.Log("1");
+               
                 int randomDirectionIndex = Random.Range(1, 4);
                 float randomEuler = Random.Range(5, 91);
                 float oldRotation = _ai.transform.rotation.y;
@@ -107,7 +104,7 @@ namespace AI.States
             }
             else if (Vector3.Distance(_ai.transform.position, _tempDestination) < 0.3f)
             {
-                Debug.Log("12");
+                
                 _rotationTimer -= Time.deltaTime;
             }
             if (_ai.IsHeardSomething())

@@ -26,8 +26,8 @@ namespace Sensors
 
 
         Transform _transform;
-        Collider[] _colliders = new Collider[5];
-        private List<GameObject> _objectsInSightList = new List<GameObject>();
+        public Collider[] _colliders = new Collider[100];
+        public List<GameObject> _objectsInSightList = new List<GameObject>();
 
         public List<GameObject> ObjectsInSightList { get => _objectsInSightList; }
         public float Distance { get => _distance; }
@@ -77,6 +77,7 @@ namespace Sensors
             for (int i = 0; i < _count; i++)
             {
                 GameObject obj = _colliders[i].gameObject;
+                
                 if (IsInSight(obj))
                 {
                     _objectsInSightList.Add(obj);
@@ -87,7 +88,7 @@ namespace Sensors
         }
         public bool IsInSight(GameObject obj)
         {
-
+            
             Vector3 objPosInAiLocal = obj.gameObject.transform.position - _transform.position;
 
             if (objPosInAiLocal.y < 0 || objPosInAiLocal.y > _height)
@@ -102,10 +103,21 @@ namespace Sensors
                 return false;
             }
 
-            if (Physics.Linecast(_eyeTransform.position, obj.gameObject.transform.position, _obstacleLayers))
+            if (obj.layer == 10)
             {
-                return false;  // returns false if it finds something
+                return true;
             }
+            if (Physics.Linecast(_eyeTransform.position, obj.gameObject.transform.position, _obstacleLayers) )
+            {
+
+
+                return false;  // returns false if it finds something
+
+
+
+
+            }
+            
             return true;
 
         }

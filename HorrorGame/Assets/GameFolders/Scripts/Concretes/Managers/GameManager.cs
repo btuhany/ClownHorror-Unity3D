@@ -7,10 +7,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
+
+
+
 public class GameManager : SingletonMonoObject<GameManager> 
 {
-
+    bool _isInGame;
+    bool _isGamePaused;
     public int CompletedClownEvents;
+
+    public bool IsGamePaused { get => _isGamePaused; }
+
+    public event System.Action OnGameUnpaused;
+    public event System.Action OnGamePaused;
     public event System.Action OnGameOver;
     public event System.Action OnGameCompleted;
     public event System.Action OnGameRestart;
@@ -48,6 +57,7 @@ public class GameManager : SingletonMonoObject<GameManager>
     }
     public void GameCompleted()
     {
+        _isInGame = false;
         SoundManager.Instance.StopAllSounds();
         SoundManager.Instance.PlaySoundFromSingleSource(10);
         OnGameCompleted?.Invoke();
@@ -55,6 +65,7 @@ public class GameManager : SingletonMonoObject<GameManager>
     }
     public void GameOver()
     {
+        _isInGame = false;
         SoundManager.Instance.StopAllSounds();
         SoundManager.Instance.PlaySoundFromSingleSource(9);
         OnGameOver?.Invoke();
@@ -72,12 +83,42 @@ public class GameManager : SingletonMonoObject<GameManager>
         Debug.Log("Quit");
         Application.Quit();
     }
+    public void PauseResumeGame()
+    {
+        if(_isInGame)
+        {
+            Time.timeScale= 0f;
+            SoundManager.Instance.PauseAllSounds();
+            OnGamePaused?.Invoke();
+            _isGamePaused = true;
+            _isInGame= false;
+        }
+        else if(_isGamePaused)
+        {   
+            Time.timeScale = 1f;
+            SoundManager.Instance.UnpauseAllSounds();
+            OnGameUnpaused?.Invoke();
+            _isInGame = true;
+            _isGamePaused = false;
+        }
+       
+       
+    }
     public void RestartGame()
     {
         StopAllCoroutines();
         OnGameRestart?.Invoke();
         Time.timeScale = 1f;
         StartCoroutine(LoadSceneFromIndexAsync(0));
+    }
+    public void StartGame()
+    {
+        _isInGame = true;
+        SoundManager.Instance.StopAllSounds();
+        SoundManager.Instance.PlaySoundFromSingleSource(5);
+        StartCoroutine(LoadSceneFromIndexAsync(1));
+        ClownEventManager.Instance.GameStarted();
+      
     }
     private IEnumerator LoadSceneFromIndexAsync(int sceneIndex)
     {

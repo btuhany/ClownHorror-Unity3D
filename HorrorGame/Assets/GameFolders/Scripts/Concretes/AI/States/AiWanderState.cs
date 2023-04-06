@@ -23,12 +23,13 @@ namespace AI.States
         }
         public void Update()
         {
+            _ai.IsThereDoorOpenIt();
             if (_ai.IsPlayerInSight() || _ai.IsPlayerHeard())
             { 
-                if (_ai.IsPlayerInSight())
-                    Debug.Log("gordm");
-                else if (_ai.IsPlayerHeard())
-                    Debug.Log("duydum");
+                //if (_ai.IsPlayerInSight())
+                //    Debug.Log("seen");
+                //else if (_ai.IsPlayerHeard())
+                //    Debug.Log("heard");
 
                     _ai.StateMachine.ChangeState(AiStateId.ChasePlayer);
             }

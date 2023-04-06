@@ -8,7 +8,7 @@ namespace Controllers
 {
     public class PlayerController : MonoBehaviour
     {
-
+      
         [Header("Movement")]
         [SerializeField][Range(2, 10)] float _walkSpeed;
         [SerializeField][Range(0.5f, 5)] float _crouchSpeed;
@@ -50,7 +50,7 @@ namespace Controllers
         }
         private void OnEnable()
         {
-            
+
             _groundCheck.OnLanded += HandleOnLanded;
         }
 
@@ -63,6 +63,13 @@ namespace Controllers
         private void Update()
         {
             if(_health.IsDead) return;
+
+            if (_input.PauseUnpause)
+            {
+                GameManager.Instance.PauseResumeGame();
+            }
+
+            if (GameManager.Instance.IsGamePaused) return;
             HandleInput();
         }
 
@@ -164,6 +171,7 @@ namespace Controllers
             {
                 _raycaster.InteractOrPickUp();
             }
+
 
         }
 

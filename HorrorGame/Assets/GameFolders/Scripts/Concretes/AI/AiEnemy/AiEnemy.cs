@@ -111,7 +111,7 @@ namespace AI
                 LastHeardSoundPos = LastHeardSound.Pos;
                 LastHeardSound = null;
             }
-            Debug.Log(_stateMachine.CurrentState);
+            //Debug.Log(_stateMachine.CurrentState);
         }
         public void ChangeDifficulty(AiEnemyDifficulties newDifficulty)
         {
@@ -131,7 +131,24 @@ namespace AI
             
         }
 
+        public void IsThereDoorOpenIt()
+        {
+            if (_sightSensor.ObjectsInSightList.Count > 0)
+            {
 
+                foreach (var gameObj in _sightSensor.ObjectsInSightList)
+                {
+                    if (gameObj.CompareTag("Door"))
+                    {
+                        gameObj.GetComponent<DoorController>().OpenIfClosedAndUnlocked();
+                    }
+                        
+                }
+
+
+            }
+        
+        }
         public bool IsPlayerInSight()
         {
             if (_sightSensor.ObjectsInSightList.Count > 0)

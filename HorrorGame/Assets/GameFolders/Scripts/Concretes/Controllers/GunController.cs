@@ -136,11 +136,11 @@ namespace Controllers
         {
             if(hit.collider.CompareTag("Enemy"))
             {
-                
-                if(hit.collider.TryGetComponent(out BulletHitEffectHandler hitEffect))
+                InstantiateBloodHole(hit).transform.SetParent(hit.transform);
+                if (hit.collider.TryGetComponent(out BulletHitEffectHandler hitEffect))
                 {
                     InstantiateBloodFX(hit).transform.SetParent(hit.transform);
-                    InstantiateBloodHole(hit).transform.SetParent(hit.transform);
+
                     hitEffect.HitImpact(hit);
                 }
                 if (hit.collider.TryGetComponent(out DamageSensor enemy))

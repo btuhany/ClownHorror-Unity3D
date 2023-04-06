@@ -103,30 +103,37 @@ public class AiSoundController : MonoBehaviour
         if(speed >= 23f)
         {
             _currentMaxFootStepTime = _maxRunFootStepTime[5]; //0.15
+            Debug.Log("a");
         }
         else if(speed >= 19f)
         {
             _currentMaxFootStepTime =_maxRunFootStepTime[4];//0.25
+            //Debug.Log("b");
         }
         else if(speed >= 14)
         {
             _currentMaxFootStepTime = _maxRunFootStepTime[3]; //0.28
+            //Debug.Log("c");
         }
         else if(speed >= 8.2f)
         {
             _currentMaxFootStepTime = _maxRunFootStepTime[2];// 0.32
+            //Debug.Log("d");
         }
         else if (speed >= 6.9f)
         {
             _currentMaxFootStepTime = _maxRunFootStepTime[1];  //0.34
+           // Debug.Log("e");
         }
         else if (speed >= 6)
         {
             _currentMaxFootStepTime = _maxRunFootStepTime[0]; //0.5
+            //Debug.Log("f");
         }
         else if(speed >= 0.1f)
         {
             _currentMaxFootStepTime = 0.5f;
+            //Debug.Log("g");
         }
 
         

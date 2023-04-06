@@ -46,6 +46,20 @@ public class SoundManager : SingletonMonoObject<SoundManager>
             source.Stop();
         }
     }
+    public void PauseAllSounds()
+    {
+        foreach (AudioSource source in _audioSources)
+        {
+            source.Pause();
+        }
+    }
+    public void UnpauseAllSounds()
+    {
+        foreach (AudioSource source in _audioSources)
+        {
+            source.UnPause();
+        }
+    }
     public void StartHeartbeatLoop()
     {
         _audioSources[4].Play();

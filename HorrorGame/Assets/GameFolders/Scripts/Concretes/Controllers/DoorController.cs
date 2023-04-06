@@ -72,6 +72,22 @@ public class DoorController : Interactable
             StartCoroutine(SetIsOpened(true,2.5f));
         }
     }
+    public void OpenIfClosedAndUnlocked()
+    {
+        if (_isPlaying) { return; }
+        if (!_isOpened && _isUnlocked)
+        {
+            _navmeshObs.carving = false;
+            _audio.PlayOneShot(_openAudio);
+            if (_closedPos.y == 90f)
+            {
+                transform.DOLocalRotate(new Vector3(0, 0, 0), 2.5f);
+            }
+            else
+                transform.DOLocalRotate(new Vector3(0, 90, 0), 2.5f);
+            StartCoroutine(SetIsOpened(true, 2.5f));
+        }
+    }
     IEnumerator SetIsOpened(bool state, float duration)
     {
         _isPlaying = true;

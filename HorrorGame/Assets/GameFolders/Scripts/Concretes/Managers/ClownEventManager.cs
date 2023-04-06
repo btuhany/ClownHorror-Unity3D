@@ -1,4 +1,5 @@
 using AI;
+using Controllers;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using UnityEngine.AI;
 public class ClownEventManager : SingletonMonoObject<ClownEventManager>
 {
     [SerializeField] Transform _player;
-    [SerializeField] Transform _enemyWhiteClown;
+    [SerializeField] Transform _enemyWhiteClownTransform;
     [SerializeField] AiEnemy _enemy;
     [SerializeField] Transform[] _eventRandomEnemyPositions;
     [SerializeField] Transform _eventPlayerPos;
@@ -23,6 +24,11 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     private void Awake()
     {
         SingletonThisObject(this);
+
+    }
+    public void GameStarted()
+    {
+        StartCoroutine(GetTransformsWithDelay());
     }
     private void Start()
     {
@@ -56,18 +62,18 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     void MoveGameObjectsToEventArea()
     {
         _lastPlayerPos = _player.position;
-        _lastEnemyPos = _enemyWhiteClown.position;
+        _lastEnemyPos = _enemyWhiteClownTransform.position;
         _player.transform.position = _eventPlayerPos.position;
-        _enemyWhiteClown.GetComponent<NavMeshAgent>().enabled = false;
-        _enemyWhiteClown.transform.position = _eventRandomEnemyPositions[Random.Range(0, _eventRandomEnemyPositions.Length)].position;
-        _enemyWhiteClown.GetComponent<NavMeshAgent>().enabled = true;
+        _enemyWhiteClownTransform.GetComponent<NavMeshAgent>().enabled = false;
+        _enemyWhiteClownTransform.transform.position = _eventRandomEnemyPositions[Random.Range(0, _eventRandomEnemyPositions.Length)].position;
+        _enemyWhiteClownTransform.GetComponent<NavMeshAgent>().enabled = true;
     }
     void MoveGameObjectsToLastPositions()
     {
         _player.transform.DOMove(_lastPlayerPos,0.1f);  //doesn't work otherwise?
-        _enemyWhiteClown.GetComponent<NavMeshAgent>().enabled = false;
-        _enemyWhiteClown.transform.position = _lastEnemyPos;
-        _enemyWhiteClown.GetComponent<NavMeshAgent>().enabled = true;
+        _enemyWhiteClownTransform.GetComponent<NavMeshAgent>().enabled = false;
+        _enemyWhiteClownTransform.transform.position = _lastEnemyPos;
+        _enemyWhiteClownTransform.GetComponent<NavMeshAgent>().enabled = true;
     }
     public void StartEvent()
     {
@@ -75,6 +81,14 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
         PlayerInventoryManager.Instance.AddAmmo(8);
         MoveGameObjectsToEventArea();
         _isInEvent = true;
+    }
+    IEnumerator GetTransformsWithDelay()
+    {
+        yield return new WaitForSeconds(5f);
+        _player = FindFirstObjectByType<PlayerController>().transform;
+        _enemy = FindFirstObjectByType<AiEnemy>();
+        _enemyWhiteClownTransform = _enemy.transform;
+        yield return null;
     }
 
 }
