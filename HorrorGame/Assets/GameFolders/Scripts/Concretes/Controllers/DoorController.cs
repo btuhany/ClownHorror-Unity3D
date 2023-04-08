@@ -63,7 +63,7 @@ public class DoorController : Interactable
         {
             _navmeshObs.carving = false;
             _audio.PlayOneShot(_openAudio);
-            if(_closedPos.y == 90f)
+            if (_closedPos.y == 90f || _closedPos.y == -90f)
             {
                 transform.DOLocalRotate(new Vector3(0, 0, 0), 2.5f);
             }
@@ -79,7 +79,7 @@ public class DoorController : Interactable
         {
             _navmeshObs.carving = false;
             _audio.PlayOneShot(_openAudio);
-            if (_closedPos.y == 90f)
+            if (_closedPos.y == 90f || _closedPos.y == -90f) //MAthf abs
             {
                 transform.DOLocalRotate(new Vector3(0, 0, 0), 2.5f);
             }
