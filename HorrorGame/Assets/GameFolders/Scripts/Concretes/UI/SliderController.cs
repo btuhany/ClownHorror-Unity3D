@@ -10,7 +10,7 @@ public class SliderController : MonoBehaviour
     private void Awake()
     {
         _slider= GetComponent<Slider>();
-        _slider.maxValue = 8f;
+        _slider.maxValue = 6.5f;
     }
     public void SetSlider(float value)
     {

@@ -140,7 +140,8 @@ namespace AI
                 {
                     if (gameObj.CompareTag("Door"))
                     {
-                        gameObj.GetComponent<DoorController>().OpenIfClosedAndUnlocked();
+                        if(Vector3.Distance(gameObj.transform.position,transform.position)<6f)
+                            gameObj.GetComponent<DoorController>().OpenIfClosedAndUnlocked();
                     }
                         
                 }
@@ -189,7 +190,7 @@ namespace AI
         public void IsClownBoxBurning()
         {
            // if (_currentDifficulty == AiEnemyDifficulties.Easy) return;
-            if(_stateMachine.CurrentState == AiStateId.ChasePlayer || _stateMachine.CurrentState == AiStateId.Stunned) { return; }
+            if(_stateMachine.CurrentState == AiStateId.Stunned) { return; }
             _stateMachine.ChangeState(AiStateId.ChasePlayer);
         }
         public Vector3 RandomPointOnNavMesh(Vector3 center, float range, float samplePointRange)

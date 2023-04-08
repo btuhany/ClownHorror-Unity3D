@@ -35,7 +35,7 @@ namespace AI.States
 
         public void Update()   //use functions from AiEnemy?
         {
-            
+            _ai.IsThereDoorOpenIt();
             if (_ai.IsPlayerInSight())
             {
                 if (Vector3.Distance(_ai.transform.position, _ai.NavMeshAgent.destination) < _ai.Config.MaxAttackDistance)

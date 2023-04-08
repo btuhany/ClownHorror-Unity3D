@@ -60,7 +60,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _breakedFX: {fileID: 7493760351818916686}
-  _destroyTime: 0.3
+  _destroyTime: 0.2
 --- !u!114 &319835478666711406
 MonoBehaviour:
   m_ObjectHideFlags: 0

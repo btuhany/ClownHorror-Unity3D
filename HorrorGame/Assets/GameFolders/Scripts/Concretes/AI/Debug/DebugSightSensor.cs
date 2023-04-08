@@ -37,7 +37,7 @@ namespace AI.DebugGizmos
             foreach (var obj in _sensor.ObjectsInSightList)
             {
                 if (_sensor.IsInSight(obj))
-                    Gizmos.DrawSphere(obj.transform.position, 0.5f);
+                    Gizmos.DrawSphere(obj.transform.position, 1f);
             }
 
         }

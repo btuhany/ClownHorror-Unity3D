@@ -15,7 +15,7 @@ namespace Sensors
         [SerializeField] float _distance = 10f;
         [SerializeField] float _angle = 30f;
         [SerializeField] float _height = 1.0f;
-
+        
         [Header("Scanner")]
         [SerializeField] int _count; //how many colliders are triggered during the scan
         [SerializeField] int _scanFreq = 30;
@@ -49,11 +49,13 @@ namespace Sensors
         private void HandleOnNormalDiff()
         {
             _angle = _config.NormalSightAngle;
+            _distance = _config.NormalSightDistance;
         }
 
         private void HandleOnHardDiff()
         {
             _angle = _config.HardSightAngle;
+            _distance = _config.HardSightAngle;
         }
 
         private void Update()
@@ -89,11 +91,13 @@ namespace Sensors
         public bool IsInSight(GameObject obj)
         {
             
-            Vector3 objPosInAiLocal = obj.gameObject.transform.position - _transform.position;
+            Vector3 objPosInAiLocal = obj.gameObject.transform.position - transform.position;
 
-            if (objPosInAiLocal.y < 0 || objPosInAiLocal.y > _height)
-                return false;
 
+            if (objPosInAiLocal.y < -0.5f || objPosInAiLocal.y > _height)
+            return false;
+
+            
             //Calculating angle and check 
             objPosInAiLocal.y = 0;
             float deltaAngle = Vector3.Angle(objPosInAiLocal, transform.forward);
@@ -103,10 +107,9 @@ namespace Sensors
                 return false;
             }
 
-            if (obj.layer == 10)
-            {
-                return true;
-            }
+
+            if (obj.gameObject.CompareTag("Door")) return true;
+
             if (Physics.Linecast(_eyeTransform.position, obj.gameObject.transform.position, _obstacleLayers) )
             {
 
@@ -117,6 +120,7 @@ namespace Sensors
 
 
             }
+            
             
             return true;
 

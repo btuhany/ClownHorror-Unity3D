@@ -13,7 +13,10 @@ namespace Controllers
         [SerializeField] LayerMask _layer;
         [SerializeField] float _walkingSoundLevel;
         [SerializeField] float _runningSoundLevel;
-
+        [SerializeField] float _walkingSoundLevelOnNormalDiff;
+        [SerializeField] float _walkingSoundLevelOnHardDiff;
+        [SerializeField] float _runningSoundLevelOnNormalDiff;
+        [SerializeField] float _runningSoundLevelOnHardDiff;
 
         [Header("Sound Playing Frequencies In A Loop (shorter is faster)")]
         [SerializeField][Range(0.5f, 2)] float _walkTime;
@@ -39,6 +42,16 @@ namespace Controllers
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+        }
+        private void OnEnable()
+        {
+            GameManager.Instance.OnNormalDiff += HandleOnNormalDiff;
+            GameManager.Instance.OnNormalDiff += HandleOnHardDiff;
+        }
+        private void OnDisable()
+        {
+            GameManager.Instance.OnNormalDiff -= HandleOnNormalDiff;
+            GameManager.Instance.OnNormalDiff -= HandleOnHardDiff;
         }
 
         private void Update()
@@ -113,7 +126,16 @@ namespace Controllers
             var sound = new Sound(transform.position, range, soundType, layer, gameObj);
             Sounds.CreateWaves(sound);
         }
-
+        public void HandleOnNormalDiff()
+        {
+            _walkingSoundLevel = _walkingSoundLevelOnNormalDiff;
+            _runningSoundLevel = _runningSoundLevelOnNormalDiff;
+        }
+        public void HandleOnHardDiff()
+        {
+            _walkingSoundLevel = _walkingSoundLevelOnHardDiff;
+            _runningSoundLevel = _runningSoundLevelOnHardDiff;
+        }
 
     }
 

@@ -14,6 +14,8 @@ namespace AI
         [Header("Sight Sensor")]
         [Range(1, 150f)] public float NormalSightAngle;
         [Range(1, 150f)] public float HardSightAngle;
+        [Range(1, 100f)] public float NormalSightDistance;
+        [Range(1, 100f)] public float HardSightDistance;
         [Header("Chase Player State")]
         [Range(0, 5f)] public float MaxSetDestTime;
         [Range(0, 30f)] public float EasyChaseTimeout;

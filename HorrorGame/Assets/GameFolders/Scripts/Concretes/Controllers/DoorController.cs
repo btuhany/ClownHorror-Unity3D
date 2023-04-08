@@ -100,9 +100,9 @@ public class DoorController : Interactable
     private void OnCollisionEnter(Collision collision)
     {
         
-        if(collision.gameObject.CompareTag("Enemy") && _isUnlocked && !_isOpened)
+        if(collision.gameObject.CompareTag("Enemy") && _isUnlocked && !_isOpened && !_isPlaying)
         {
-            OpenOrClose();
+            OpenIfClosedAndUnlocked();
         }
     }
 }

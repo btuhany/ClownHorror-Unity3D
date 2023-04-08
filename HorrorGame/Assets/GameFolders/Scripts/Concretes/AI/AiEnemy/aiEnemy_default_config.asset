@@ -31,9 +31,11 @@ MonoBehaviour:
   - 9
   - 12
   - 24
-  NormalSightAngle: 45
-  HardSightAngle: 64
-  MaxSetDestTime: 0
+  NormalSightAngle: 47
+  HardSightAngle: 66
+  NormalSightDistance: 29
+  HardSightDistance: 32
+  MaxSetDestTime: 0.2
   EasyChaseTimeout: 2.3
   NormalChaseTimeout: 1.4
   HardChaseTimeout: 0.2
@@ -41,7 +43,7 @@ MonoBehaviour:
   WanderRandomPointRadius: 9.6
   WanderRandomSamplePointRange: 1.75
   WanderForwardDistance: 9.75
-  IdleWaitTime: 0.91
+  IdleWaitTime: 0.94
   MaxRotationTime: 1.11
   DelayAfterRotate: 1.04
   SeekForwardDistance: 3.58

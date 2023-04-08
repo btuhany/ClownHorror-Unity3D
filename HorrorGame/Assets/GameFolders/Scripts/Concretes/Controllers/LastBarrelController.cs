@@ -8,8 +8,10 @@ public class LastBarrelController : Interactable
     [SerializeField] List<AudioClip> _audioClips= new List<AudioClip>();
     AudioSource _audio;
     bool _isLightenedUp;
+    [SerializeField] OutlineHighlight _outline;
     private void Awake()
     {
+        _outline = GetComponent<OutlineHighlight>();
         _audio= GetComponent<AudioSource>();
     }
     public override void Interact()
@@ -18,6 +20,7 @@ public class LastBarrelController : Interactable
         {
             _fire.SetActive(true);
             _isLightenedUp = true;
+            _outline.OutlineWidth = 0f;
             StartCoroutine(PlaySoundsInOrder());
             PlayerInventoryManager.Instance.RemoveFromList(CollectableID.Fuel);
         }
