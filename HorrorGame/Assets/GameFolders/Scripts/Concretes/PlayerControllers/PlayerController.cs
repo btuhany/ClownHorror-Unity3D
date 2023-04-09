@@ -66,6 +66,7 @@ namespace Controllers
 
             if (_input.PauseUnpause)
             {
+                
                 GameManager.Instance.PauseResumeGame();
             }
 

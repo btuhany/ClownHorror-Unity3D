@@ -23,7 +23,6 @@ public class MenuPanel : MonoBehaviour
     }
     public void PlayButton()
     {
-       
         GameManager.Instance.StartGame();
     }
 }

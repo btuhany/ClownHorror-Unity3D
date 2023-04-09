@@ -10,7 +10,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
 {
     [SerializeField] Transform _player;
     [SerializeField] Transform _enemyWhiteClownTransform;
-    [SerializeField] AiEnemy _enemy;
+    
     [SerializeField] Transform[] _eventRandomEnemyPositions;
     [SerializeField] Transform _eventPlayerPos;
 
@@ -28,7 +28,7 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
     }
     public void GameStarted()
     {
-        StartCoroutine(GetTransformsWithDelay());
+        StartCoroutine(GetTransformsWithDelay(7f));
     }
     private void Start()
     {
@@ -75,12 +75,19 @@ public class ClownEventManager : SingletonMonoObject<ClownEventManager>
         MoveGameObjectsToEventArea();
       
     }
-    IEnumerator GetTransformsWithDelay()
+    IEnumerator GetTransformsWithDelay(float delay)
     {
-        yield return new WaitForSeconds(5f);
-        _player = FindFirstObjectByType<PlayerController>().transform;
-        _enemy = FindFirstObjectByType<AiEnemy>();
-        _enemyWhiteClownTransform = _enemy.transform;
+        yield return new WaitForSeconds(delay);
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        AiEnemy enemy = FindFirstObjectByType<AiEnemy>();
+        if ( player == null || enemy == null)
+        {
+            StopAllCoroutines();
+            StartCoroutine(GetTransformsWithDelay(delay + 5f));
+            yield break;
+        }
+        _player = player.transform;
+        _enemyWhiteClownTransform = enemy.transform;
         yield return null;
     }
 

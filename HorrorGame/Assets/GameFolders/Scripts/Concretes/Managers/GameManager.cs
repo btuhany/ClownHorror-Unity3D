@@ -1,10 +1,8 @@
-using AI;
-using DG.Tweening;
+
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
+
 using UnityEngine;
-using UnityEngine.AI;
+
 using UnityEngine.SceneManagement;
 
 
@@ -21,6 +19,7 @@ public class GameManager : SingletonMonoObject<GameManager>
     public event System.Action OnGameUnpaused;
     public event System.Action OnGamePaused;
     public event System.Action OnGameOver;
+    public event System.Action OnGameStarted;
     public event System.Action OnGameCompleted;
     public event System.Action OnGameRestart;
     public event System.Action OnNormalDiff;
@@ -87,6 +86,8 @@ public class GameManager : SingletonMonoObject<GameManager>
     {
         if(_isInGame)
         {
+         
+            Cursor.lockState = CursorLockMode.Confined;
             Time.timeScale= 0f;
             SoundManager.Instance.PauseAllSounds();
             OnGamePaused?.Invoke();
@@ -94,7 +95,8 @@ public class GameManager : SingletonMonoObject<GameManager>
             _isInGame= false;
         }
         else if(_isGamePaused)
-        {   
+        {
+            Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1f;
             SoundManager.Instance.UnpauseAllSounds();
             OnGameUnpaused?.Invoke();
@@ -113,6 +115,7 @@ public class GameManager : SingletonMonoObject<GameManager>
     }
     public void StartGame()
     {
+        OnGameStarted?.Invoke();
         _isInGame = true;
         SoundManager.Instance.StopAllSounds();
         SoundManager.Instance.PlaySoundFromSingleSource(5);
