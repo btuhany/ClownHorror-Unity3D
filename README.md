@@ -21,7 +21,7 @@ It has different states such as
 - Player can grab&throw clownboxes to burn them in fire barrells, fragile and non-fragile items to create sounds and distract the clown.
 
 ## In-Game Footage
-<img src="refimgs/ref1.JPG" width="1000">  
+<img src="refimgs/ref1.JPG" width="500">  
 <img src="refimgs/ref2.JPG" width="500" > <img src="refimgs/ref6.JPG" width="500" >
 <img src="refimgs/ref3.JPG" width="500" > <img src="refimgs/ref4.JPG" width="500" >
 <img src="refimgs/ref5.JPG" width="500" > <img src="refimgs/ref6.JPG" width="500" >
