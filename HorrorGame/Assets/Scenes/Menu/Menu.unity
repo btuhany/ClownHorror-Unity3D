@@ -1769,19 +1769,21 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- You must find the 6 "clown boxes" and burn them in the fire barrels.
+  m_text: '- You need to find and burn six "clown boxes" scattered throughout the
+    house.
 
-    -
-    Some barrels does not have fire so you should lighten them up.
+    - You can unlock doors with keys found in different parts of the
+    house, collect ammo, and gather fuels and firelighter to light up the fire on
+    barrels without fire.
 
-    - The clown
-    has the ability to see and hear you. So try your best to be quiet.
+    - The clown can see and hear you, so it''s important
+    to be quiet and cautious.
 
-    - You
-    can use the objects to distract the clown.
+    - You can use various items to make noise and
+    distract the clown.
 
-    - The clown gets stronger to
-    the end of the game.'
+    - The game gets harder as you progress, so it''s important
+    to play carefully and strategically.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5fde1cbaa2aaad04da6b1dc90ba2aacf, type: 2}
   m_sharedMaterial: {fileID: 8697104583252277568, guid: 5fde1cbaa2aaad04da6b1dc90ba2aacf, type: 2}
@@ -1894,8 +1896,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.581482, y: -278.94}
-  m_SizeDelta: {x: -986.8926, y: -760.82}
+  m_AnchoredPosition: {x: -18.95868, y: -192}
+  m_SizeDelta: {x: -948.9752, y: -760.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1518675564
 MonoBehaviour:
@@ -4780,6 +4782,10 @@ PrefabInstance:
     - target: {fileID: 8163752550227473736, guid: 800b804add7b86c45bcaf335bc5a20c6, type: 3}
       propertyPath: Loop
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8163752550440822923, guid: 800b804add7b86c45bcaf335bc5a20c6, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 800b804add7b86c45bcaf335bc5a20c6, type: 3}

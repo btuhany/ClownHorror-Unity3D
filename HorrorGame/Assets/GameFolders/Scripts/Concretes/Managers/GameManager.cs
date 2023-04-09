@@ -108,6 +108,7 @@ public class GameManager : SingletonMonoObject<GameManager>
     }
     public void RestartGame()
     {
+        _isInGame = true;
         StopAllCoroutines();
         OnGameRestart?.Invoke();
         Time.timeScale = 1f;
