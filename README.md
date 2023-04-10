@@ -1,9 +1,9 @@
 # White Clown Horrr Game - Unity3D
 Gameplay: https://youtu.be/khtL9FvYUIg 
-This is a first-person action-horror game with stealth options.
-Player must locate and burn six "clown boxes" scattered throughout the house, all while remaining alive and undercover from the "White Clown". 
-The house contains different items for player to distract the clown, key items to unlocking the doors, ammos for the handgun and fuels & firelighter to start a fire to use it to burn clown boxes.
-Game gets harder to the end of the game. After burning the each clownboxes, an different event like a dream state ("ClownEvent") starts; player teleports to an different area than the house where clown starts to run at her/him, in this event player should kill/stun the clown to end the current event and they teleport back to the house. 
+- This is a first-person action-horror game with stealth options.
+- Player must locate and burn six "clown boxes" scattered throughout the house, all while remaining alive and undercover from the "White Clown". 
+- The house contains different items for player to distract the clown, key items to unlocking the doors, ammos for the handgun and fuels & firelighter to start a fire to use it to burn clown boxes.
+- Game gets harder to the end of the game. After burning the each clownboxes, an different event like a dream state ("ClownEvent") starts; player teleports to an different area than the house where clown starts to run at her/him, in this event player should kill/stun the clown to end the current event and they teleport back to the house. 
 
 ## The Clown
 The White Clown has ability to see, hear the player and attack to her/him. It reacts to noises and can open unlocked doors.
