@@ -1,4 +1,4 @@
-# White Clown Horrr Game - Unity3D
+# Clown Horror Game - Unity3D
 Gameplay: https://youtu.be/khtL9FvYUIg 
 Itch.io:  https://btuhan.itch.io/white-clown-horror
 - This is a first-person action-horror game with stealth options.
